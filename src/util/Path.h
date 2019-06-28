@@ -20,22 +20,27 @@ using std::string;
 class Path
 {
 public:
-	Path();
-	Path(const Path& other);
-	Path(string path);
-	Path(const char* path);
-	virtual ~Path();
+	Path() = default;
+	Path(const Path& other) = default;
+	Path(Path&& other) = default;
+
+	// Converting constructor it is intended not to use explicit there until c++17 (return {some_string}; will work).
+	Path(string path);       // NOLINT
+	Path(const char* path);  // NOLINT
+
+	~Path() = default;
+
 
 public:
 	/**
 	 * @return true if empty
 	 */
-	bool isEmpty();
+	bool isEmpty() const;
 
 	/**
 	 * Check if this file / folder exists
 	 */
-	bool exists();
+	bool exists() const;
 
 	/**
 	 * Delete the file
@@ -44,25 +49,12 @@ public:
 	 */
 	bool deleteFile();
 
-	/**
-	 * Compare the path with another one
-	 */
-	bool operator ==(const Path& other);
+	bool operator==(const Path& other) const;
 
-	/**
-	 * Assign path
-	 */
-	void operator =(const Path& other);
-
-	/**
-	 * Assign path
-	 */
-	void operator =(const string& path);
-
-	/**
-	 * Assign path
-	 */
-	void operator =(const char* path);
+	Path& operator=(const Path& other) = default;
+	Path& operator=(Path&& other) = default;
+	Path& operator=(string path);
+	Path& operator=(const char* path);
 
 	/**
 	 * Check if the path ends with this extension
@@ -70,7 +62,7 @@ public:
 	 * @param ext Extension, needs to be lowercase
 	 * @return true if the extension is there
 	 */
-	bool hasExtension(string ext);
+	bool hasExtension(const string& ext) const;
 
 	/**
 	 * Clear the the last known extension (last .pdf, .pdf.xoj, .pdf.xopp etc.)
@@ -80,7 +72,7 @@ public:
 	/**
 	 * @return true if this file has .xopp or .xoj extension
 	 */
-	bool hasXournalFileExt();
+	bool hasXournalFileExt() const;
 
 	/**
 	 * Return the Path as String
@@ -95,17 +87,17 @@ public:
 	/**
 	 * Get the parent path
 	 */
-	Path getParentPath();
+	Path getParentPath() const;
 
 	/**
 	 * Return the Filename of the path
 	 */
-	string getFilename();
+	string getFilename() const;
 
 	/**
 	 * Convert this path to Uri
 	 */
-	string toUri(GError** error = NULL);
+	string toUri(GError** error = nullptr);
 
 #ifndef BUILD_THUMBNAILER
 	/**
@@ -117,15 +109,15 @@ public:
 	/**
 	 * Get escaped path, all " and \ are escaped
 	 */
-	string getEscapedPath();
+	string getEscapedPath() const;
 
 	// Append operations
 public:
 	/**
 	 * Modifies this path by appending the other path.
 	 */
-	void operator /=(Path p);
-	void operator /=(string p);
+	void operator/=(const Path& p);
+	void operator/=(const string& p);
 	void operator /=(const char* p);
 
 	/**
@@ -134,19 +126,19 @@ public:
 	 * If this method is going to be used multiple times, instead use /= to
 	 * avoid making multiple copies.
 	 */
-	Path operator /(Path p);
-	Path operator /(string p);
-	Path operator /(const char* p);
+	Path operator/(const Path& p) const;
+	Path operator/(const string& p) const;
+	Path operator/(const char* p) const;
 
-	void operator +=(Path p);
-	void operator +=(string p);
+	void operator+=(const Path& p);
+	void operator+=(const string& p);
 	void operator +=(const char* p);
 
 public:
 	/**
 	 * Convert an uri to a path, if the uri does not start with file:// an empty Path is returned
 	 */
-	static Path fromUri(string uri);
+	static Path fromUri(const string& uri);
 #ifndef BUILD_THUMBNAILER
 	static Path fromGFile(GFile* file);
 #endif

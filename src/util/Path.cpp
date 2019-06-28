@@ -1,20 +1,14 @@
 #include "Path.h"
+
 #include "StringUtils.h"
 
 #include <glib/gstdio.h>
-#include <string.h>
 
-Path::Path()
-{
-}
-
-Path::Path(const Path& other)
- : path(other.path)
-{
-}
+#include <utility>
+#include <cstring>
 
 Path::Path(string path)
- : path(path)
+ : path(std::move(path))
 {
 }
 
@@ -23,14 +17,10 @@ Path::Path(const char* path)
 {
 }
 
-Path::~Path()
-{
-}
-
 /**
  * @return true if empty
  */
-bool Path::isEmpty()
+bool Path::isEmpty() const
 {
 	return path.empty();
 }
@@ -38,7 +28,7 @@ bool Path::isEmpty()
 /**
  * Check if this is a file which exists
  */
-bool Path::exists()
+bool Path::exists() const
 {
 	return g_file_test(path.c_str(), G_FILE_TEST_EXISTS);
 }
@@ -57,18 +47,13 @@ bool Path::deleteFile()
 	}
 
 	int result = g_unlink(c_str());
-	if (result == 0)
-	{
-		return true;
-	}
-
-	return false;
+	return result == 0;
 }
 
 /**
  * Compare the path with another one
  */
-bool Path::operator ==(const Path& other)
+bool Path::operator==(const Path& other) const
 {
 	return this->path == other.path;
 }
@@ -76,31 +61,25 @@ bool Path::operator ==(const Path& other)
 /**
  * Assign path
  */
-void Path::operator =(const Path& other)
+Path& Path::operator=(string p)
 {
-	this->path = other.path;
+	this->path = std::move(p);
+	return *this;
 }
 
 /**
  * Assign path
  */
-void Path::operator =(const string& path)
+Path& Path::operator=(const char* p)
 {
-	this->path = path;
-}
-
-/**
- * Assign path
- */
-void Path::operator =(const char* path)
-{
-	this->path = path;
+	this->path = p;
+	return *this;
 }
 
 /**
  * @return true if this file has .xopp or .xoj extension
  */
-bool Path::hasXournalFileExt()
+bool Path::hasXournalFileExt() const
 {
 	return hasExtension(".xoj") || hasExtension(".xopp");
 }
@@ -111,7 +90,7 @@ bool Path::hasXournalFileExt()
  * @param ext Extension, needs to be lowercase
  * @return true if the extension is there
  */
-bool Path::hasExtension(string ext)
+bool Path::hasExtension(const string& ext) const
 {
 	if (ext.length() > path.length())
 	{
@@ -124,22 +103,20 @@ bool Path::hasExtension(string ext)
 	return pathExt == ext;
 }
 
-#define REMOVE_EXTENSION(ext) \
-	if (StringUtils::endsWith(plower, ext)) \
-	{ \
-		path = path.substr(0, path.length() - strlen(ext)); \
-		return;\
-	}
-
 /**
  * Clear the the last known extension (last .pdf, .pdf.xoj, .pdf.xopp etc.)
  */
 void Path::clearExtensions()
 {
 	string plower = StringUtils::toLowerCase(path);
-	
-	REMOVE_EXTENSION(".xoj");
-	REMOVE_EXTENSION(".xopp");
+	auto rm_ext = [&](string const& ext) {
+		if (StringUtils::endsWith(plower, ext))
+		{
+			this->path = path.substr(0, path.length() - ext.size());
+		}
+	};
+	rm_ext(".xoj");
+	rm_ext(".xopp");
 }
 
 /**
@@ -161,7 +138,7 @@ const char* Path::c_str() const
 /**
  * Get escaped path, all " and \ are escaped
  */
-string Path::getEscapedPath()
+string Path::getEscapedPath() const
 {
 	string escaped = path;
 	StringUtils::replaceAllChars(escaped, {
@@ -172,14 +149,14 @@ string Path::getEscapedPath()
 	return escaped;
 }
 
-void Path::operator /=(Path p)
+void Path::operator/=(const Path& p)
 {
 	*this /= p.str();
 }
 
-void Path::operator /=(string p)
+void Path::operator/=(const string& p)
 {
-	if (path.size() > 0)
+	if (!path.empty())
 	{
 		char c = path.at(path.size() - 1);
 		if (c != '/' && c != '\\')
@@ -195,29 +172,29 @@ void Path::operator /=(const char* p)
 	*this /= string(p);
 }
 
-Path Path::operator /(Path p)
+Path Path::operator/(const Path& p) const
 {
 	return *this / p.c_str();
 }
 
-Path Path::operator /(string p)
+Path Path::operator/(const string& p) const
 {
 	return *this / p.c_str();
 }
 
-Path Path::operator /(const char* p)
+Path Path::operator/(const char* p) const
 {
 	Path ret(*this);
 	ret /= p;
 	return ret;
 }
 
-void Path::operator +=(Path p)
+void Path::operator+=(const Path& p)
 {
 	path += p.str();
 }
 
-void Path::operator +=(string p)
+void Path::operator+=(const string& p)
 {
 	path += p;
 }
@@ -230,7 +207,7 @@ void Path::operator +=(const char* p)
 /**
  * Return the Filename of the path
  */
-string Path::getFilename()
+string Path::getFilename() const
 {
 	size_t separator = path.find_last_of("/\\");
 
@@ -247,9 +224,9 @@ string Path::getFilename()
  */
 string Path::toUri(GError** error)
 {
-	char * uri = g_filename_to_uri(path.c_str(), NULL, error);
+	char* uri = g_filename_to_uri(path.c_str(), nullptr, error);
 
-	if (uri == NULL)
+	if (uri == nullptr)
 	{
 		return "";
 	}
@@ -272,29 +249,29 @@ GFile* Path::toGFile()
 /**
  * Get the parent path
  */
-Path Path::getParentPath()
+Path Path::getParentPath() const
 {
 	size_t separator = path.find_last_of("/\\");
 
 	if (separator == string::npos)
 	{
-		return "";
+		return Path{""};
 	}
 
-	return path.substr(0, separator);
+	return Path{path.substr(0, separator)};
 }
 
 /**
  * Convert an uri to a path, if the uri does not start with file:// an empty Path is returned
  */
-Path Path::fromUri(string uri)
+Path Path::fromUri(const string& uri)
 {
 	if (!StringUtils::startsWith(uri, "file://"))
 	{
 		return Path();
 	}
 
-	gchar* filename = g_filename_from_uri (uri.c_str(), NULL, NULL);
+	gchar* filename = g_filename_from_uri(uri.c_str(), nullptr, nullptr);
 	Path p(filename);
 	g_free(filename);
 
