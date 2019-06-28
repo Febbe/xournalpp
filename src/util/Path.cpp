@@ -4,8 +4,8 @@
 
 #include <glib/gstdio.h>
 
-#include <utility>
 #include <cstring>
+#include <utility>
 
 Path::Path(string path)
  : path(std::move(path))

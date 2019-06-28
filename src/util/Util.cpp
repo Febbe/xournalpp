@@ -1,16 +1,13 @@
-#include <utility>
-
 #include "Util.h"
 
-#include <config.h>
-#include <config-dev.h>
-#include <i18n.h>
-#include <StringUtils.h>
-#include <XojMsgBox.h>
+#include "config.h"
+#include "config-dev.h"
+#include "i18n.h"
+#include "StringUtils.h"
+#include "XojMsgBox.h"
 
-#include <sys/types.h>
 #include <unistd.h>
-
+#include <utility>
 
 class CallbackUiData {
 public:
