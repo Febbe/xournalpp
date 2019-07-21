@@ -255,7 +255,7 @@ Path Path::getParentPath() const
 
 	if (separator == string::npos)
 	{
-		return Path{""};
+		return {};
 	}
 
 	return Path{path.substr(0, separator)};
