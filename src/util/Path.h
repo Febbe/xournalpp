@@ -132,7 +132,7 @@ public:
 
 	void operator+=(const Path& p);
 	void operator+=(const string& p);
-	void operator +=(const char* p);
+	void operator+=(const char* p);
 
 public:
 	/**
