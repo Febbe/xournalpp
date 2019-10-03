@@ -22,7 +22,7 @@ bool KeyboardInputHandler::handleImpl(InputEvent* event)
 {
 	XOJ_CHECK_TYPE(KeyboardInputHandler);
 
-	auto keyEvent = (GdkEventKey*) event->sourceEvent;
+	auto keyEvent = (GdkEventKey*) event->gdkEvent();
 	GtkXournal* xournal = inputContext->getXournal();
 
 	if (keyEvent->type == GDK_KEY_PRESS)

@@ -16,6 +16,8 @@
 #include "control/settings/Settings.h"
 #include "model/Point.h"
 
+#include <memory>
+
 enum InputEventType
 {
 	UNKNOWN,
@@ -44,32 +46,64 @@ enum InputDeviceClass
 	INPUT_DEVICE_IGNORE
 };
 
-class InputEvent
+inline void deleter(GdkEvent* p)
 {
-public:
-	GdkEvent* sourceEvent = nullptr;
+	gdk_event_free(p);
+};
+
+struct InputEvent
+{
+	void bindGdkEvent(GdkEvent* gep);
+	GdkEvent* gdkEvent();
 
 	InputEventType type = UNKNOWN;
-
 	InputDeviceClass deviceClass = INPUT_DEVICE_IGNORE;
+
 	gchar* deviceName = nullptr;
-
-
 	gdouble absoluteX = 0;
+
 	gdouble absoluteY = 0;
 	gdouble relativeX = 0;
 	gdouble relativeY = 0;
-
 	guint button = 0;
+
 	GdkModifierType state = (GdkModifierType) 0;
 	gdouble pressure = Point::NO_PRESSURE;
-
 	GdkEventSequence* sequence = nullptr;
+
 	guint32 timestamp = 0;
 
-	~InputEvent();
-
-	InputEvent* copy();
+private:
+	struct GdkEventGuard
+	{
+		static inline GdkEvent* _safeInit(GdkEvent* p)
+		{
+			return p ? gdk_event_copy(p) : p;
+		}
+		GdkEventGuard() = default;
+		explicit GdkEventGuard(GdkEvent* p)
+		 : impl{_safeInit(p), &deleter}
+		{
+		}
+		GdkEventGuard(GdkEventGuard const& g)
+		 : impl{_safeInit(g.impl.get()), &deleter}
+		{
+		}
+		GdkEventGuard(GdkEventGuard&&) = default;
+		~GdkEventGuard() = default;
+		GdkEventGuard& operator=(GdkEventGuard&&) = default;
+		GdkEventGuard& operator=(GdkEventGuard const& o)
+		{
+			impl.reset(_safeInit(o.impl.get()));
+			return *this;
+		}
+		GdkEventGuard& operator=(GdkEvent* p)
+		{
+			impl.reset(_safeInit(p));
+			return *this;
+		}
+		std::unique_ptr<GdkEvent, decltype(&deleter)> impl{nullptr, &deleter};
+	} sourceEvent{};
 };
 
 class InputEvents

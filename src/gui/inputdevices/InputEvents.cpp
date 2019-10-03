@@ -4,34 +4,16 @@
 
 #include "InputEvents.h"
 
-InputEvent::~InputEvent()
+void InputEvent::bindGdkEvent(GdkEvent* gep)
 {
-	gdk_event_free(this->sourceEvent);
+	sourceEvent = gep;
 }
 
-InputEvent* InputEvent::copy()
+GdkEvent* InputEvent::gdkEvent()
 {
-	auto inputEvent = new InputEvent();
-
-	inputEvent->sourceEvent = gdk_event_copy(this->sourceEvent);
-	inputEvent->type = this->type;
-	inputEvent->deviceClass = this->deviceClass;
-	inputEvent->deviceName = this->deviceName;
-
-	inputEvent->absoluteX = this->absoluteX;
-	inputEvent->absoluteY = this->absoluteY;
-	inputEvent->relativeX = this->relativeX;
-	inputEvent->relativeY = this->relativeY;
-
-	inputEvent->button = this->button;
-	inputEvent->state = this->state;
-	inputEvent->pressure = this->pressure;
-
-	inputEvent->sequence = this->sequence;
-	inputEvent->timestamp = this->timestamp;
-
-	return inputEvent;
+	return sourceEvent.impl.get();
 }
+
 
 InputEventType InputEvents::translateEventType(GdkEventType type)
 {
@@ -109,7 +91,7 @@ InputEvent* InputEvents::translateEvent(GdkEvent* sourceEvent, Settings* setting
 {
 	auto targetEvent = new InputEvent();
 
-	targetEvent->sourceEvent = sourceEvent;
+	targetEvent->bindGdkEvent(sourceEvent);
 
 	// Map the event type to our internal ones
 	GdkEventType sourceEventType = gdk_event_get_event_type(sourceEvent);

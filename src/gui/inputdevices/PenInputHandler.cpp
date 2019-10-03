@@ -39,7 +39,7 @@ void PenInputHandler::updateLastEvent(InputEvent* event)
 	}
 
 	InputEvent* oldEvent = this->lastEvent;
-	this->lastEvent = event->copy();
+	this->lastEvent = new InputEvent(*event);
 
 	//Update the refcount of the events for the GTK garbage collector
 	if (oldEvent != nullptr)
@@ -51,7 +51,7 @@ void PenInputHandler::updateLastEvent(InputEvent* event)
 	if (getPageAtCurrentPosition(event))
 	{
 		InputEvent* oldHitEvent = this->lastHitEvent;
-		this->lastHitEvent = event->copy();
+		this->lastHitEvent = new InputEvent(*event);
 
 		//Update the refcount of the events for the GTK garbage collector
 		if (oldHitEvent != nullptr)

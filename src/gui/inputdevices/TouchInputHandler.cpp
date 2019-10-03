@@ -80,8 +80,8 @@ void TouchInputHandler::actionMotion(InputEvent* event)
 	}
 
 	//  Manually scroll if non-touchscreen device was mapped to a touchscreen (GTK wont handle this)
-	if (this->lastPosX >= 0.0 && this->lastPosY >= 0.0
-			&& event->deviceClass == INPUT_DEVICE_TOUCHSCREEN && gdk_device_get_source(gdk_event_get_source_device(event->sourceEvent)) != GDK_SOURCE_TOUCHSCREEN)
+	if (this->lastPosX >= 0.0 && this->lastPosY >= 0.0 && event->deviceClass == INPUT_DEVICE_TOUCHSCREEN &&
+	    gdk_device_get_source(gdk_event_get_source_device(event->gdkEvent())) != GDK_SOURCE_TOUCHSCREEN)
 	{
 
 		double offsetX = event->absoluteX - this->lastPosX;
