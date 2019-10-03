@@ -29,6 +29,11 @@ class Stroke : public AudioElement
 {
 public:
 	Stroke();
+	Stroke(Stroke const&) = default;
+	Stroke(Stroke&&) = default;
+
+	Stroke& operator=(Stroke const&) = default;
+	Stroke& operator=(Stroke&&) = default;
 	virtual ~Stroke();
 
 public:
@@ -120,9 +125,7 @@ private:
 	StrokeTool toolType = STROKE_TOOL_PEN;
 
 	// The array with the points
-	Point* points = NULL;
-	int pointCount = 0;
-	int pointAllocCount = 0;
+	std::vector<Point> points{};
 
 	/**
 	 * Dashed line
