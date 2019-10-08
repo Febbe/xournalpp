@@ -73,9 +73,8 @@ void AutosaveJob::run()
 	}
 }
 
-JobType AutosaveJob::getType()
+JobType AutosaveJob::getType() const
 {
-	XOJ_CHECK_TYPE(AutosaveJob);
 	return JOB_TYPE_AUTOSAVE;
 }
 

@@ -45,24 +45,18 @@ double CircleRecognizer::scoreCircle(Stroke* s, Inertia& inertia)
 	double y0 = inertia.centerY();
 	double r0 = inertia.rad();
 
-	ArrayIterator<Point> it = s->pointIterator();
+	auto const& points = s->pointIterator();
 
-	if (!it.hasNext())
+	if (points.empty())
 	{
 		return 0;
 	}
 
-	Point p1 = it.next();
-
-	while (it.hasNext())
+	for (auto i = begin(points), j = begin(points) + 1; i != end(points) || j != end(points); ++i, ++j)
 	{
-		Point p2 = it.next();
-
-		double dm = hypot(p2.x - p1.x, p2.y - p1.y);
-		double deltar = hypot(p1.x - x0, p1.y - y0) - r0;
+		double dm = hypot(j->x - i->x, j->y - i->y);
+		double deltar = hypot(i->x - x0, i->y - y0) - r0;
 		sum += dm * fabs(deltar);
-
-		p1 = p2;
 	}
 
 	return sum / (inertia.getMass() * r0);

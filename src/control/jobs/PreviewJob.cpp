@@ -24,14 +24,14 @@ PreviewJob::~PreviewJob()
 	XOJ_RELEASE_TYPE(PreviewJob);
 }
 
-void* PreviewJob::getSource()
+void* PreviewJob::getSource() const
 {
 	XOJ_CHECK_TYPE(PreviewJob);
 
 	return this->sidebarPreview;
 }
 
-JobType PreviewJob::getType()
+JobType PreviewJob::getType() const
 {
 	XOJ_CHECK_TYPE(PreviewJob);
 
@@ -65,13 +65,10 @@ void PreviewJob::finishPaint()
 
 	// Make sure the Job does not get deleted until the
 	// Repaint is also finished in UI Thread
-	ref();
 
-	Util::execInUiThread([=]() {
-		gtk_widget_queue_draw(this->sidebarPreview->widget);
-
-		// After the UI job is also done, it can be unreferenced
-		unref();
+	Util::execInUiThread([job = std::static_pointer_cast<PreviewJob>(shared_from_this())]()
+	                     {
+		                     gtk_widget_queue_draw(job->sidebarPreview->widget);
 	});
 
 	g_mutex_unlock(&this->sidebarPreview->drawingMutex);

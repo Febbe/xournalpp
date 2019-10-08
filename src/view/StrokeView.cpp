@@ -19,11 +19,11 @@ StrokeView::~StrokeView()
 
 void StrokeView::drawFillStroke()
 {
-	ArrayIterator<Point> points = s->pointIterator();
+	auto const& points = s->pointIterator();
 
-	if (points.hasNext())
+	if (!points.empty())
 	{
-		Point p = points.next();
+		Point const& p = points.front();
 		cairo_move_to(cr, p.x, p.y);
 	}
 	else
@@ -31,10 +31,9 @@ void StrokeView::drawFillStroke()
 		return;
 	}
 
-	while (points.hasNext())
+	for (auto it = begin(points) + 1; it != end(points); ++it)
 	{
-		Point p = points.next();
-		cairo_line_to(cr, p.x, p.y);
+		cairo_line_to(cr, it->x, it->y);
 	}
 
 	cairo_fill(cr);
@@ -109,7 +108,6 @@ void StrokeView::drawNoPressure()
 {
 	int count = 1;
 	double width = s->getWidth();
-	ArrayIterator<Point> points = s->pointIterator();
 
 	bool group = false;
 	if (s->getFill() != -1 && s->getToolType() == STROKE_TOOL_HIGHLIGHTER)
@@ -126,12 +124,10 @@ void StrokeView::drawNoPressure()
 	cairo_set_line_width(cr, width * scaleFactor);
 	applyDashed(0);
 
-	Point lastPoint = points.get();
+	auto const& points = s->pointIterator();
 
-	while (points.hasNext())
+	for (auto const& p :points)
 	{
-		Point p = points.next();
-
 		if (startPoint <= count)
 		{
 			cairo_line_to(cr, p.x, p.y);
@@ -141,8 +137,7 @@ void StrokeView::drawNoPressure()
 			cairo_move_to(cr, p.x, p.y);
 		}
 
-		count++;
-		lastPoint = p;
+		++count;
 	}
 
 	cairo_stroke(cr);
@@ -171,32 +166,32 @@ void StrokeView::drawWithPressuire()
 {
 	int count = 1;
 	double width = s->getWidth();
-	ArrayIterator<Point> points = s->pointIterator();
+	auto const& points = s->pointIterator();
 
-	Point lastPoint1 = points.next();
+	Point const* lastPoint1 = &points.front();
 	double dashOffset = 0;
-	while (points.hasNext())
+	for (auto it = begin(points) + 1; it != end(points); ++it)
 	{
-		Point p = points.next();
+		Point const& p = *it;
 		if (startPoint <= count)
 		{
-			if (lastPoint1.z != Point::NO_PRESSURE)
+			if (lastPoint1->z != Point::NO_PRESSURE)
 			{
-				width = lastPoint1.z;
+				width = lastPoint1->z;
 			}
 
 			// Set width
 			cairo_set_line_width(cr, width * scaleFactor);
 			applyDashed(dashOffset);
 
-			cairo_move_to(cr, lastPoint1.x, lastPoint1.y);
+			cairo_move_to(cr, lastPoint1->x, lastPoint1->y);
 			cairo_line_to(cr, p.x, p.y);
 			cairo_stroke(cr);
 		}
 		count++;
-		dashOffset += lastPoint1.lineLengthTo(p);
+		dashOffset += lastPoint1->lineLengthTo(p);
 
-		lastPoint1 = p;
+		lastPoint1 = &p;
 	}
 
 	cairo_stroke(cr);

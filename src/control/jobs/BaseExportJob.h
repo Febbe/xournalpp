@@ -18,22 +18,22 @@
 
 class Control;
 
-class BaseExportJob : public BlockingJob
+struct BaseExportJob : public BlockingJob
 {
-public:
-	BaseExportJob(Control* control, string name);
+	using pointer = std::shared_ptr<BaseExportJob>;
 
-protected:
 	virtual ~BaseExportJob();
 
-public:
 	virtual void afterRun();
 
-public:
 	virtual bool showFilechooser();
+
 	string getFilterName();
 
 protected:
+
+	BaseExportJob(Control* control, string name);
+
 	void initDialog();
 	virtual void addFilterToDialog() = 0;
 	void addFileFilterToDialog(string name, string pattern);

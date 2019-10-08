@@ -11,12 +11,14 @@
 
 #pragma once
 
+#include <vector>
+#include <utility>
+
 #include "AudioElement.h"
 #include "Point.h"
+#include "Arrayiterator.h"
 #include "LineStyle.h"
 #include "Element.h"
-
-#include <Arrayiterator.h>
 
 enum StrokeTool
 {
@@ -72,7 +74,8 @@ public:
 	void setLastPoint(Point p);
 	int getPointCount() const;
 	void freeUnusedPointItems();
-	ArrayIterator<Point> pointIterator() const;
+
+	std::vector<Point> const& pointIterator() const;
 	Point getPoint(int index) const;
 	const Point* getPoints() const;
 

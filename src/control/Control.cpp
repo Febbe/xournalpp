@@ -75,7 +75,7 @@ Control::Control(GladeSearchpath* gladeSearchPath)
 {
 	XOJ_INIT_TYPE(Control);
 
-	this->recent = new RecentManager();
+	this->recent = new RecentManager(); // not thread safe
 	this->undoRedo = new UndoRedoHandler(this);
 	this->recent->addListener(this);
 	this->undoRedo->addUndoRedoListener(this);
@@ -402,9 +402,7 @@ bool Control::autosaveCallback(Control* control)
 		g_message("Info: autosave document...");
 	}
 
-	AutosaveJob* job = new AutosaveJob(control);
-	control->scheduler->addJob(job, JOB_PRIORITY_NONE);
-	job->unref();
+	control->scheduler->addJob(AutosaveJob::create(control), JOB_PRIORITY_NONE);
 
 	return true;
 }
@@ -2712,7 +2710,7 @@ bool Control::save(bool synchron)
 		}
 	}
 
-	auto* job = new SaveJob(this);
+	SaveJob::pointer job = SaveJob::create(this);
 	bool result = true;
 	if (synchron)
 	{
@@ -2724,8 +2722,6 @@ bool Control::save(bool synchron)
 	{
 		this->scheduler->addJob(job, JOB_PRIORITY_URGENT);
 	}
-	job->unref();
-
 	return result;
 }
 
@@ -2842,16 +2838,16 @@ void Control::exportAsPdf()
 {
 	XOJ_CHECK_TYPE(Control);
 
-	exportBase(new PdfExportJob(this));
+	exportBase(PdfExportJob::create(this));
 }
 
 void Control::exportAs()
 {
 	XOJ_CHECK_TYPE(Control);
-	exportBase(new CustomExportJob(this));
+	exportBase(CustomExportJob::create(this));
 }
 
-void Control::exportBase(BaseExportJob* job)
+void Control::exportBase(BaseExportJob::pointer job)
 {
 	if (job->showFilechooser())
 	{
@@ -2862,7 +2858,6 @@ void Control::exportBase(BaseExportJob* job)
 		// The job blocked, so we have to unblock, because the job unblocks only after run
 		unblock();
 	}
-	job->unref();
 }
 
 bool Control::saveAs()
@@ -2917,13 +2912,13 @@ void Control::quit(bool allowCancel)
 
 	this->closeDocument();
 
-	this->scheduler->lock();
+	auto guard = this->scheduler->aquire_lock();
 
 	audioController->stopRecording();
 	settings->save();
 
 	this->scheduler->removeAllJobs();
-	this->scheduler->unlock();
+	this->scheduler->unlock(std::move(guard));
 	gtk_main_quit();
 }
 

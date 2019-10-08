@@ -58,13 +58,13 @@ public:
 	 * @param p The other point.
 	 * @return The Euclidean distance to the other point.
 	 */
-	double lineLengthTo(const Point& p);
+	double lineLengthTo(const Point& p) const;
 
 	/**
 	 * @brief The slope to another point.
 	 * @param p The other point.
 	 */
-	double slopeTo(const Point& p);
+	double slopeTo(const Point& p) const;
 
 	/**
 	 * @brief Compute new Point in the direction from this to another Point.
@@ -72,14 +72,14 @@ public:
 	 * @param length The line length or vector length.
 	 * @return The new Point.
 	 */
-	Point lineTo(const Point& p, double length);
+	Point lineTo(const Point& p, double length) const;
 
 	/**
 	 * @brief Compare if this Point has the same position as another Point.
 	 * @param p The other Point.
 	 * @return True if the coordinates are equal. False otherwise.
 	 */
-	bool equalsPos(const Point& p);
+	bool equalsPos(const Point& p) const;
 
 public:
 	XOJ_TYPE_ATTRIB;

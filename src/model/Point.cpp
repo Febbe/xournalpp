@@ -38,21 +38,21 @@ Point::~Point()
 	XOJ_RELEASE_TYPE(Point);
 }
 
-double Point::lineLengthTo(const Point& p)
+double Point::lineLengthTo(const Point& p) const
 {
 	XOJ_CHECK_TYPE(Point);
 
 	return std::hypot(this->x - p.x, this->y - p.y);
 }
 
-double Point::slopeTo(const Point& p)
+double Point::slopeTo(const Point& p) const
 {
 	XOJ_CHECK_TYPE(Point);
 
 	return std::atan2(this->x - p.x, this->y - p.y);
 }
 
-Point Point::lineTo(const Point& p, double length)
+Point Point::lineTo(const Point& p, double length) const
 {
 	XOJ_CHECK_TYPE(Point);
 
@@ -69,7 +69,7 @@ Point Point::lineTo(const Point& p, double length)
 	return Point(x, y);
 }
 
-bool Point::equalsPos(const Point& p)
+bool Point::equalsPos(const Point& p) const
 {
 	XOJ_CHECK_TYPE(Point);
 

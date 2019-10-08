@@ -24,12 +24,10 @@ RenderJob::~RenderJob()
 {
 	XOJ_CHECK_TYPE(RenderJob);
 
-	this->view = NULL;
-
 	XOJ_RELEASE_TYPE(RenderJob);
 }
 
-void* RenderJob::getSource()
+void* RenderJob::getSource() const
 {
 	XOJ_CHECK_TYPE(RenderJob);
 
@@ -195,7 +193,7 @@ void RenderJob::repaintWidget(GtkWidget* widget)
 	});
 }
 
-JobType RenderJob::getType()
+JobType RenderJob::getType() const
 {
 	XOJ_CHECK_TYPE(RenderJob);
 

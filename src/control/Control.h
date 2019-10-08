@@ -74,7 +74,7 @@ public:
 	void print();
 	void exportAsPdf();
 	void exportAs();
-	void exportBase(BaseExportJob* job);
+	void exportBase(std::shared_ptr<BaseExportJob>);
 	void quit(bool allowCancel = true);
 
 	/**

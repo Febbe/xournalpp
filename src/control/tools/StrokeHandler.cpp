@@ -197,10 +197,10 @@ void StrokeHandler::onButtonReleaseEvent(const PositionInputData& pos)
 	// twice the same Point is also OK
 	if (stroke->getPointCount() == 1)
 	{
-		ArrayIterator<Point> it = stroke->pointIterator();
-		if (it.hasNext())
+		auto const& points = stroke->pointIterator();
+		for (auto const& p:points)
 		{
-			stroke->addPoint(it.next());
+			stroke->addPoint(p);
 		}
 		// No pressure sensitivity
 		stroke->clearPressure();

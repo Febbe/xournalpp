@@ -16,6 +16,11 @@
 #include "Job.h"
 #include <XournalType.h>
 
+#include <mutex>
+#include <atomic>
+#include <condition_variable>
+#include <deque>
+
 /**
  * @file Scheduler.h
  * @brief A file containing the defintion of the Scheduler
@@ -60,7 +65,7 @@ enum JobPriority
 class Scheduler
 {
 public:
-	Scheduler();
+	Scheduler(std::string name = "scheduler");
 	virtual ~Scheduler();
 
 public:
@@ -72,7 +77,7 @@ public:
 	 *
 	 * The Job is now owned by the scheduler, and automatically freed if it is done
 	 */
-	void addJob(Job* job, JobPriority priority);
+	void addJob(Job::pointer job, JobPriority priority);
 
 	void start();
 	void stop();
@@ -80,12 +85,12 @@ public:
 	/**
 	 * Locks the complete scheduler
 	 */
-	void lock();
+	std::unique_lock<std::mutex> aquire_lock();
 
 	/**
 	 * Unlocks the complete scheduler
 	 */
-	void unlock();
+	void unlock(std::unique_lock<std::mutex> lifetime_guard);
 
 	/**
 	 * Don't render the next X ms so the scrolling performance is better
@@ -99,38 +104,34 @@ public:
 
 private:
 	static gpointer jobThreadCallback(Scheduler* scheduler);
-	Job* getNextJobUnlocked(bool onlyNotRender = false, bool* hasRenderJobs = NULL);
+
+	inline Job::pointer getNextJobUnlocked(bool onlyNotRender = false);
+	Job::pointer getNextJobUnlocked(bool onlyNotRender, bool& hasRenderJobs);
 
 	static bool jobRenderThreadTimer(Scheduler* scheduler);
 
 protected:
 	XOJ_TYPE_ATTRIB;
 
-	bool threadRunning = true;
+	std::atomic<bool> threadRunning{true};
 
 	int jobRenderThreadTimerId = 0;
 
 	GThread* thread = NULL;
 
-	GCond jobQueueCond;
-	GMutex jobQueueMutex;
-
-	GMutex schedulerMutex;
+	std::atomic<bool> cond{false};
+	std::condition_variable jobQueueCond{};
+	std::mutex jobQueueMutex;
+	std::mutex schedulerMutex;
 
 	/**
 	 * This is need to be sure there is no job running if we delete a page, else we may access delete memory...
 	 */
-	GMutex jobRunningMutex;
+	std::mutex jobRunningMutex;
 
-	GQueue queueUrgent;
-	GQueue queueHigh;
-	GQueue queueLow;
-	GQueue queueNone;
-
-	GQueue* jobQueue[JOB_N_PRIORITIES];
+	std::array<std::deque<Job::pointer>, JOB_N_PRIORITIES> jobQueue;
 
 	GTimeVal* blockRenderZoomTime = NULL;
-	GMutex blockRenderMutex;
-
-	string name;
+	std::mutex blockRenderMutex;
+	std::string name = "scheduler";
 };

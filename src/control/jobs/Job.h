@@ -12,49 +12,33 @@
 #pragma once
 
 #include <XournalType.h>
+#include <memory>
 
 enum JobType
 {
 	JOB_TYPE_BLOCKING, JOB_TYPE_PREVIEW, JOB_TYPE_RENDER, JOB_TYPE_AUTOSAVE
 };
 
-class Job
+struct Job : public std::enable_shared_from_this<Job>
 {
-public:
-	Job();
+	using pointer = std::shared_ptr<Job>;
 
-protected:
-	virtual ~Job();
+	virtual JobType getType() const = 0;
 
-public:
-
-	/**
-	 * Unref the Job, the initial refcount is set to 1 on creation
-	 */
-	void unref();
-
-	/**
-	 * Increase the refcount
-	 */
-	void ref();
-
-	/**
-	 * Delete Job because e.g. the source was removed
-	 */
-	void deleteJob();
-
-public:
-	virtual JobType getType() = 0;
-
-public:
 	/**
 	 * this method is called
-	 */
+ 	 */
 	virtual void execute();
 
-	virtual void* getSource();
+	virtual void* getSource() const;
 
 protected:
+	/**
+	 * Virtual class..., childs shall only construct it via a create function
+	 */
+	Job();
+	virtual ~Job();
+
 	/**
 	 * override this method
 	 */
@@ -79,9 +63,5 @@ private:
 
 private:
 	XOJ_TYPE_ATTRIB;
-
 	int afterRunId = 0;
-
-	int refCount = 1;
-	GMutex refMutex;
 };

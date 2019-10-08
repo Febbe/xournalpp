@@ -1,14 +1,13 @@
+#include <algorithm>
 #include "XournalScheduler.h"
 
 #include "PreviewJob.h"
 #include "RenderJob.h"
 
 XournalScheduler::XournalScheduler()
- : Scheduler()
+		: Scheduler()
 {
 	XOJ_INIT_TYPE(XournalScheduler);
-
-	this->name = "XournalScheduler";
 }
 
 XournalScheduler::~XournalScheduler()
@@ -33,93 +32,43 @@ void XournalScheduler::removePage(XojPageView* view)
 void XournalScheduler::removeAllJobs()
 {
 	XOJ_CHECK_TYPE(XournalScheduler);
-
-	g_mutex_lock(&this->jobQueueMutex);
-
-	for (int priority = JOB_PRIORITY_URGENT; priority < JOB_N_PRIORITIES; priority++)
-	{
-		int length = g_queue_get_length(this->jobQueue[priority]);
-		for (int i = 0; i < length; i++)
-		{
-			Job* job = (Job*) g_queue_peek_nth(this->jobQueue[priority], i);
-
-			JobType type = job->getType();
-			if (type == JOB_TYPE_PREVIEW || type == JOB_TYPE_RENDER)
-			{
-				job->deleteJob();
-				g_queue_remove(this->jobQueue[priority], job);
-				job->unref();
-			}
-		}
-	}
-
-	g_mutex_unlock(&this->jobQueueMutex);
-
+	std::lock_guard<std::mutex> _{this->jobQueueMutex};
+	jobQueue = {};
 }
 
-void XournalScheduler::finishTask()
+/*[[nodiscard]]*/ std::unique_lock<std::mutex> XournalScheduler::finishTask()
 {
 	XOJ_CHECK_TYPE(XournalScheduler);
-
-	g_mutex_lock(&this->jobRunningMutex);
-	g_mutex_unlock(&this->jobRunningMutex);
+	return std::unique_lock<std::mutex>{this->jobRunningMutex};
 }
 
 void XournalScheduler::removeSource(void* source, JobType type, JobPriority priority)
 {
 	XOJ_CHECK_TYPE(XournalScheduler);
 
-	g_mutex_lock(&this->jobQueueMutex);
+	std::lock_guard<std::mutex> _{this->jobQueueMutex};
 
-	int length = g_queue_get_length(this->jobQueue[priority]);
-	for (int i = 0; i < length; i++)
-	{
-		Job* job = (Job*) g_queue_peek_nth(this->jobQueue[priority], i);
-
-		if (job->getType() == type)
-		{
-			if (job->getSource() == source)
-			{
-				job->deleteJob();
-				g_queue_remove(this->jobQueue[priority], job);
-				job->unref();
-				break;
-			}
-		}
-	}
+	std::remove_if(begin(this->jobQueue[priority]), end(this->jobQueue[priority]),
+	               [type, source](Job::pointer const& job)
+	               {
+		               return job->getType() == type && job->getSource() == source;
+	               });
 
 	// wait until the last job is done
 	// we can be sure we don't access "source"
 	finishTask();
-
-	g_mutex_unlock(&this->jobQueueMutex);
 }
 
 bool XournalScheduler::existsSource(void* source, JobType type, JobPriority priority)
 {
 	XOJ_CHECK_TYPE(XournalScheduler);
 
-	bool exists = false;
-	g_mutex_lock(&this->jobQueueMutex);
-
-	int length = g_queue_get_length(this->jobQueue[priority]);
-	for (int i = 0; i < length; i++)
-	{
-		Job* job = (Job*) g_queue_peek_nth(this->jobQueue[priority], i);
-
-		if (job->getType() == type)
-		{
-			if (job->getSource() == source)
-			{
-				exists = true;
-				break;
-			}
-		}
-	}
-
-	g_mutex_unlock(&this->jobQueueMutex);
-
-	return exists;
+	std::lock_guard<std::mutex> _{this->jobQueueMutex};
+	return std::find_if(begin(this->jobQueue[priority]), end(this->jobQueue[priority]),
+	                    [type, source](Job::pointer const& job)
+	                    {
+		                    return job->getType() == type && job->getSource() == source;
+	                    }) != end(this->jobQueue[priority]);
 }
 
 void XournalScheduler::addRepaintSidebar(SidebarPreviewBaseEntry* preview)
@@ -131,9 +80,8 @@ void XournalScheduler::addRepaintSidebar(SidebarPreviewBaseEntry* preview)
 		return;
 	}
 
-	PreviewJob* job = new PreviewJob(preview);
-	addJob(job, JOB_PRIORITY_HIGH);
-	job->unref();
+	auto job = PreviewJob::create(preview);
+	addJob(std::move(job), JOB_PRIORITY_HIGH);
 }
 
 void XournalScheduler::addRerenderPage(XojPageView* view)
@@ -145,7 +93,6 @@ void XournalScheduler::addRerenderPage(XojPageView* view)
 		return;
 	}
 
-	RenderJob* job = new RenderJob(view);
-	addJob(job, JOB_PRIORITY_URGENT);
-	job->unref();
+	auto job = RenderJob::create(view);
+	addJob(std::move(job), JOB_PRIORITY_URGENT);
 }

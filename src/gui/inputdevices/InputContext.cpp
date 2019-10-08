@@ -6,6 +6,7 @@
 #include "InputEvents.h"
 
 #include <util/DeviceListHelper.h>
+#include <iostream>
 
 InputContext::InputContext(XournalView* view, ScrollHandling* scrollHandling)
 {
@@ -88,6 +89,29 @@ bool InputContext::eventCallback(GtkWidget* widget, GdkEvent* event, InputContex
 bool InputContext::handle(GdkEvent* sourceEvent)
 {
 	XOJ_CHECK_TYPE(InputContext);
+
+//	std::cout << "event: " << sourceEvent->any.type << std::endl;
+//	switch ((guint) sourceEvent->any.type){
+//		case GDK_TOUCH_BEGIN:
+//		case GDK_TOUCH_UPDATE:
+//		case GDK_TOUCH_END:
+//		case GDK_TOUCH_CANCEL:
+//			if (sourceEvent->touch.axes){
+//				std::cout << "achsis " << sizeof(*sourceEvent->touch.axes) << std::endl;
+//				std::cout << "achsis " << gdk_device_get_n_axes (sourceEvent->touch.device) << std::endl;
+//			}
+//			break;
+//		case GDK_MOTION_NOTIFY:
+//			if (sourceEvent->motion.axes){
+//				auto axes = gdk_device_get_n_axes (sourceEvent->motion.device);
+//				std::cout << "device: " << sourceEvent->motion.device << " " << gdk_device_get_name(sourceEvent->motion.device) << std::endl;
+//				std::cout << "achsis: " << gdk_device_get_n_axes (sourceEvent->motion.device) << std::endl;
+//				for(int i = 0; i<axes;++i){
+//					std::cout << "axis ["<<i<<"]: " << sourceEvent->motion.axes[i] << std::endl;
+//				}
+//			}
+//
+//	}
 
 	printDebug(sourceEvent);
 

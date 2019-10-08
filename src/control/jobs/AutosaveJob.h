@@ -17,19 +17,23 @@
 
 class Control;
 
-class AutosaveJob : public Job
+struct AutosaveJob : public Job
 {
-public:
-	AutosaveJob(Control* control);
-
-protected:
+	using pointer = std::shared_ptr<AutosaveJob>;
 	virtual ~AutosaveJob();
 
+	static pointer create(Control* control)
+	{
+		new pointer{new AutosaveJob{control}};
+	}
+
+protected:
+	AutosaveJob(Control* control);
 public:
 	virtual void run();
 	void afterRun();
 
-	virtual JobType getType();
+	JobType getType() const override;
 
 private:
 	XOJ_TYPE_ATTRIB;

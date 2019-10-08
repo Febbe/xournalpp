@@ -21,21 +21,24 @@
 #include <map>
 
 
-class CustomExportJob : public BaseExportJob
+struct CustomExportJob : public BaseExportJob
 {
-public:
-	CustomExportJob(Control* control);
+	using pointer = std::shared_ptr<CustomExportJob>;
 
-protected:
+	static pointer create(Control* control)
+	{
+		return pointer{new CustomExportJob{control}};
+	}
+
 	virtual ~CustomExportJob();
 
-public:
 	void run();
 
-public:
 	virtual bool showFilechooser();
 
 protected:
+
+	CustomExportJob(Control* control);
 	virtual void afterRun();
 
 	virtual void addFilterToDialog();

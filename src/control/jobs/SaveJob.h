@@ -15,15 +15,17 @@
 
 #include <XournalType.h>
 
-class SaveJob : public BlockingJob
+struct SaveJob : public BlockingJob
 {
-public:
-	SaveJob(Control* control);
+	using pointer = std::shared_ptr<SaveJob>;
 
-protected:
+	static pointer create(Control* control)
+	{
+		return pointer{new SaveJob{control}};
+	}
+
 	virtual ~SaveJob();
 
-public:
 	virtual void run();
 
 	bool save();
@@ -31,7 +33,9 @@ public:
 	static void updatePreview(Control* control);
 
 protected:
-	virtual void afterRun();
+	SaveJob(Control* control);
+
+	virtual void afterRun() const;
 
 private:
 	XOJ_TYPE_ATTRIB;

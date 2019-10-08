@@ -30,14 +30,14 @@ void XojPage::reference()
 {
 	XOJ_CHECK_TYPE(XojPage);
 
-	this->ref++;
+	++this->ref;
 }
 
 void XojPage::unreference()
 {
 	XOJ_CHECK_TYPE(XojPage);
 
-	this->ref--;
+	--this->ref;
 	if (ref < 1)
 	{
 		delete this;

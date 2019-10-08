@@ -121,10 +121,13 @@ int XojPageView::getLastVisibleTime()
 {
 	XOJ_CHECK_TYPE(XojPageView);
 
+	g_mutex_lock(&this->drawingMutex);
 	if (this->crBuffer == nullptr)
 	{
+		g_mutex_unlock(&this->drawingMutex);
 		return -1;
 	}
+	g_mutex_unlock(&this->drawingMutex);
 
 	return this->lastVisibleTime;
 }

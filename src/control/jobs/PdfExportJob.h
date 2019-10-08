@@ -13,18 +13,22 @@
 
 #include "BaseExportJob.h"
 
-class PdfExportJob : public BaseExportJob
+struct PdfExportJob : public BaseExportJob
 {
-public:
-	PdfExportJob(Control* control);
+	using pointer = std::shared_ptr<PdfExportJob>;
 
-protected:
+	static pointer create(Control* control)
+	{
+		return pointer{new PdfExportJob{control}};
+	}
+
 	virtual ~PdfExportJob();
 
-public:
 	void run();
 
 protected:
+
+	PdfExportJob(Control* control);
 	virtual void addFilterToDialog();
 	virtual bool isUriValid(string& uri);
 

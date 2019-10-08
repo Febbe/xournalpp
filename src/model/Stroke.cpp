@@ -209,11 +209,11 @@ int Stroke::getPointCount() const
 	return this->points.size();
 }
 
-ArrayIterator<Point> Stroke::pointIterator() const
+std::vector<Point> const& Stroke::pointIterator() const
 {
 	XOJ_CHECK_TYPE(Stroke);
 
-	return ArrayIterator<Point>(points.data(), points.size());
+	return points;
 }
 
 void Stroke::deletePointsFrom(int index)

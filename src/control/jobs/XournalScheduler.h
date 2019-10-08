@@ -23,7 +23,7 @@ class XournalScheduler : public Scheduler
 {
 public:
 	XournalScheduler();
-	virtual ~XournalScheduler();
+	~XournalScheduler() override;
 
 public:
 	/**
@@ -43,7 +43,7 @@ public:
 	/**
 	 * Blocks until all currently running Job%s have been executed
 	 */
-	void finishTask();
+	std::unique_lock<std::mutex> finishTask();
 
 private:
 	/**

@@ -32,7 +32,7 @@ void SaveJob::run()
 	}
 }
 
-void SaveJob::afterRun()
+void SaveJob::afterRun() const
 {
 	XOJ_CHECK_TYPE(SaveJob);
 

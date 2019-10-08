@@ -2,6 +2,8 @@
 #include <config-debug.h>
 
 #include <inttypes.h>
+#include <algorithm>
+//#include <hwloc/helper.h>
 
 #ifdef DEBUG_SHEDULER
 #define SDEBUG g_message
@@ -9,30 +11,9 @@
 #define SDEBUG(msg, ...)
 #endif
 
-Scheduler::Scheduler()
+Scheduler::Scheduler(std::string name) : name(std::move(name))
 {
 	XOJ_INIT_TYPE(Scheduler);
-
-	this->name = "Scheduler";
-
-	// Thread
-	g_cond_init(&this->jobQueueCond);
-
-	g_mutex_init(&this->jobQueueMutex);
-	g_mutex_init(&this->jobRunningMutex);
-	g_mutex_init(&this->schedulerMutex);
-	g_mutex_init(&this->blockRenderMutex);
-
-	// Queue
-	GQueue init = G_QUEUE_INIT;
-	this->queueUrgent = init;
-	this->queueHigh = init;
-	this->queueLow = init;
-	this->queueNone = init;
-	this->jobQueue[JOB_PRIORITY_URGENT] = &this->queueUrgent;
-	this->jobQueue[JOB_PRIORITY_HIGH] = &this->queueHigh;
-	this->jobQueue[JOB_PRIORITY_LOW] = &this->queueLow;
-	this->jobQueue[JOB_PRIORITY_NONE] = &this->queueNone;
 }
 
 Scheduler::~Scheduler()
@@ -48,12 +29,6 @@ Scheduler::~Scheduler()
 	}
 
 	stop();
-
-	Job * job = NULL;
-	while ((job = getNextJobUnlocked()) != NULL)
-	{
-		job->unref();
-	}
 
 	if (this->blockRenderZoomTime)
 	{
@@ -80,7 +55,8 @@ void Scheduler::stop()
 		return;
 	}
 	this->threadRunning = false;
-	g_cond_broadcast(&this->jobQueueCond);
+	this->cond = true;
+	this->jobQueueCond.notify_all();
 
 	if (this->thread)
 	{
@@ -88,87 +64,80 @@ void Scheduler::stop()
 	}
 }
 
-void Scheduler::addJob(Job* job, JobPriority priority)
+void Scheduler::addJob(std::shared_ptr<Job> job, JobPriority priority)
 {
+	std::lock_guard<std::mutex> _{this->jobQueueMutex};
 	XOJ_CHECK_TYPE(Scheduler);
 	SDEBUG("Adding job...");
 
-	g_mutex_lock(&this->jobQueueMutex);
-
-	job->ref();
-	g_queue_push_tail(this->jobQueue[priority], job);
-	g_cond_broadcast(&this->jobQueueCond);
+	this->jobQueue[priority].emplace_back(std::move(job));
+	this->cond = true;
+	this->jobQueueCond.notify_all();
 
 	SDEBUG("add job: %" PRId64, (uint64_t) job);
-
-	g_mutex_unlock(&this->jobQueueMutex);
 }
 
-Job* Scheduler::getNextJobUnlocked(bool onlyNotRender, bool* hasRenderJobs)
+inline Job::pointer Scheduler::getNextJobUnlocked(bool onlyNotRender)
+{
+	bool discard{};
+	return getNextJobUnlocked(onlyNotRender, discard);
+}
+
+Job::pointer Scheduler::getNextJobUnlocked(bool onlyNotRender, bool& hasRenderJobs)
 {
 	XOJ_CHECK_TYPE(Scheduler);
 
-	Job* job = NULL;
+	Job::pointer returner;
 
-	for (int i = JOB_PRIORITY_URGENT; i < JOB_N_PRIORITIES; i++)
+	for (auto&& queue :this->jobQueue)
 	{
-		if (onlyNotRender)
+		auto iter = begin(queue);
+		if (!returner)
 		{
-			for (GList* l = this->jobQueue[i]->head; l != NULL; l = l->next)
+			iter = std::find_if(iter, end(queue), [onlyNotRender, &hasRenderJobs](Job::pointer const& job)
 			{
-				job = (Job*) l->data;
+				return !(onlyNotRender && (hasRenderJobs |= (job->getType() == JOB_TYPE_RENDER)));
+			});
+			if (iter == end(queue)) continue;
+			returner = std::move(*iter);
+			iter = queue.erase(iter);
+		}
 
-				if (job->getType() != JOB_TYPE_RENDER)
-				{
-					g_queue_delete_link(this->jobQueue[i], l);
-					return job;
-				}
-				else if (hasRenderJobs)
-				{
-					*hasRenderJobs = true;
-				}
-			}
-		}
-		else
+		hasRenderJobs |= (end(queue) != std::find_if(iter, end(queue), [](Job::pointer const& job)
 		{
-			job = (Job*) g_queue_pop_head(this->jobQueue[i]);
-			if (job)
-			{
-				return job;
-			}
-		}
+			return job->getType() == JOB_TYPE_RENDER;
+		}));
 	}
 
-	return NULL;
+	return returner;
 }
 
 /**
  * Locks the complete scheduler
  */
-void Scheduler::lock()
+std::unique_lock<std::mutex> Scheduler::aquire_lock()
 {
 	XOJ_CHECK_TYPE(Scheduler);
 
-	g_mutex_lock(&this->schedulerMutex);
+	return std::unique_lock<std::mutex>{this->schedulerMutex};
 }
 
 /**
  * Unlocks the complete scheduler
  */
-void Scheduler::unlock()
+void Scheduler::unlock(std::unique_lock<std::mutex> ignore)
 {
 	XOJ_CHECK_TYPE(Scheduler);
-
-	g_mutex_unlock(&this->schedulerMutex);
+	(void) ignore;
 }
 
-#define ZOOM_WAIT_US_TIMEOUT 300000 // 0.3s
+constexpr auto ZOOM_WAIT_US_TIMEOUT = 300000; // 0.3s
 
 void Scheduler::blockRerenderZoom()
 {
 	XOJ_CHECK_TYPE(Scheduler);
 
-	g_mutex_lock(&this->blockRenderMutex);
+	std::lock_guard<std::mutex> _{this->blockRenderMutex};
 
 	if (this->blockRenderZoomTime == NULL)
 	{
@@ -177,27 +146,24 @@ void Scheduler::blockRerenderZoom()
 
 	g_get_current_time(this->blockRenderZoomTime);
 	g_time_val_add(this->blockRenderZoomTime, ZOOM_WAIT_US_TIMEOUT);
-
-	g_mutex_unlock(&this->blockRenderMutex);
 }
 
 void Scheduler::unblockRerenderZoom()
 {
 	XOJ_CHECK_TYPE(Scheduler);
+	{ //lock guard keep code block!
+		std::lock_guard<std::mutex> _{this->blockRenderMutex};
 
-	g_mutex_lock(&this->blockRenderMutex);
-
-	g_free(this->blockRenderZoomTime);
-	this->blockRenderZoomTime = NULL;
-	if (this->jobRenderThreadTimerId)
-	{
-		g_source_remove(this->jobRenderThreadTimerId);
-		this->jobRenderThreadTimerId = 0;
+		g_free(this->blockRenderZoomTime);
+		this->blockRenderZoomTime = NULL;
+		if (this->jobRenderThreadTimerId)
+		{
+			g_source_remove(this->jobRenderThreadTimerId);
+			this->jobRenderThreadTimerId = 0;
+		}
 	}
-
-	g_mutex_unlock(&this->blockRenderMutex);
-
-	g_cond_broadcast(&this->jobQueueCond);
+	this->cond = true;
+	this->jobQueueCond.notify_all();
 }
 
 /**
@@ -228,12 +194,15 @@ bool Scheduler::jobRenderThreadTimer(Scheduler* scheduler)
 
 	scheduler->jobRenderThreadTimerId = 0;
 
-	g_mutex_lock(&scheduler->blockRenderMutex);
-	g_free(scheduler->blockRenderZoomTime);
-	scheduler->blockRenderZoomTime = NULL;
-	g_mutex_unlock(&scheduler->blockRenderMutex);
+	{
+		std::lock_guard<std::mutex> _{scheduler->blockRenderMutex};
+		g_free(scheduler->blockRenderZoomTime);
+		scheduler->blockRenderZoomTime = NULL;
+	}
 
-	g_cond_broadcast(&scheduler->jobQueueCond);
+	scheduler->cond = true;
+	scheduler->jobQueueCond.notify_all();
+	//g_cond_broadcast(&scheduler->jobQueueCond);
 
 	return false;
 }
@@ -245,9 +214,10 @@ gpointer Scheduler::jobThreadCallback(Scheduler* scheduler)
 	while (scheduler->threadRunning)
 	{
 		// lock the whole scheduler
-		g_mutex_lock(&scheduler->schedulerMutex);
-
-		g_mutex_lock(&scheduler->blockRenderMutex);
+		// Todo: cpp17 replace with std::scoped_lock
+		std::unique_lock<std::mutex> sched_m_guard{scheduler->schedulerMutex, std::defer_lock};
+		std::unique_lock<std::mutex> rend_m_guard{scheduler->blockRenderMutex, std::defer_lock};
+		std::lock(sched_m_guard, rend_m_guard);
 		bool onlyNoneRenderJobs = false;
 		glong diff = 1000;
 		if (scheduler->blockRenderZoomTime)
@@ -266,22 +236,22 @@ gpointer Scheduler::jobThreadCallback(Scheduler* scheduler)
 				onlyNoneRenderJobs = true;
 			}
 		}
-		g_mutex_unlock(&scheduler->blockRenderMutex);
+		rend_m_guard.unlock();
 
-		g_mutex_lock(&scheduler->jobQueueMutex);
+		std::unique_lock<std::mutex> job_queue_m_guard{scheduler->jobQueueMutex};
 		bool hasOnlyRenderJobs = false;
-		Job* job = scheduler->getNextJobUnlocked(onlyNoneRenderJobs, &hasOnlyRenderJobs);
-		if (job != NULL)
+		Job::pointer job = scheduler->getNextJobUnlocked(onlyNoneRenderJobs, hasOnlyRenderJobs);
+		if (job)
 		{
 			hasOnlyRenderJobs = false;
 		}
 
 		SDEBUG("get job: %" PRId64, (uint64_t) job);
 
-		if (job == NULL)
+		if (!job)
 		{
 			// unlock the whole scheduler
-			g_mutex_unlock(&scheduler->schedulerMutex);
+			sched_m_guard.unlock();
 
 			if (hasOnlyRenderJobs)
 			{
@@ -292,26 +262,25 @@ gpointer Scheduler::jobThreadCallback(Scheduler* scheduler)
 				scheduler->jobRenderThreadTimerId = g_timeout_add(diff, (GSourceFunc) jobRenderThreadTimer, scheduler);
 			}
 
-			g_cond_wait(&scheduler->jobQueueCond, &scheduler->jobQueueMutex);
-			g_mutex_unlock(&scheduler->jobQueueMutex);
-
+			while (!scheduler->cond)
+			{
+				scheduler->jobQueueCond.wait(job_queue_m_guard);
+			}
+			//Todo check this
+			scheduler->cond = false;
+			//implicid wait and scope: job_queue_m_guard.unlock()
 			continue;
 		}
 
 		SDEBUG("do job: %" PRId64, (uint64_t) job);
 
-		g_mutex_unlock(&scheduler->jobQueueMutex);
+		job_queue_m_guard.unlock();
 
-		g_mutex_lock(&scheduler->jobRunningMutex);
+		std::lock_guard<std::mutex> _jrm_guard(scheduler->jobRunningMutex);
 
 		job->execute();
-
-		job->unref();
-		g_mutex_unlock(&scheduler->jobRunningMutex);
-
-		// unlock the whole scheduler
-		g_mutex_unlock(&scheduler->schedulerMutex);
-
+		//scope unlock jobRunningMutex "_jrm_guard"
+		//scope unlock the whole scheduler
 		SDEBUG("next");
 	}
 

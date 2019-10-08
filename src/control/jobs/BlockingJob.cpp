@@ -41,7 +41,7 @@ bool BlockingJob::finished(Control* control)
 	return false;
 }
 
-JobType BlockingJob::getType()
+JobType BlockingJob::getType() const
 {
 	return JOB_TYPE_BLOCKING;
 }

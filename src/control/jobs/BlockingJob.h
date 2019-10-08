@@ -19,20 +19,20 @@
 
 class Control;
 
-class BlockingJob : public Job
+struct BlockingJob : public Job
 {
-public:
-	BlockingJob(Control* control, string name);
+	using pointer = std::shared_ptr<BlockingJob>;
 
-protected:
 	virtual ~BlockingJob();
 
-public:
 	void execute();
 
-	virtual JobType getType();
+	JobType getType() const override;
 
 protected:
+
+	BlockingJob(Control* control, string name);
+
 	static bool finished(Control* control);
 
 private:

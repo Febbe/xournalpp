@@ -1013,7 +1013,7 @@ void XournalView::documentChanged(DocumentChangeType type)
 	}
 
 	XournalScheduler* scheduler = this->control->getScheduler();
-	scheduler->lock();
+	auto guard = scheduler->aquire_lock();
 	scheduler->removeAllJobs();
 
 	clearSelection();
@@ -1041,7 +1041,7 @@ void XournalView::documentChanged(DocumentChangeType type)
 	layoutPages();
 	scrollTo(0, 0);
 
-	scheduler->unlock();
+	scheduler->unlock(std::move(guard));
 }
 
 bool XournalView::cut()

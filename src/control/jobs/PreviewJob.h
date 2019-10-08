@@ -23,20 +23,25 @@ class Document;
 /**
  * @brief A Job which renders a SidebarPreviewPage
  */
-class PreviewJob : public Job
+struct PreviewJob : public Job
 {
-public:
-	PreviewJob(SidebarPreviewBaseEntry* sidebar);
+	using pointer = std::shared_ptr<PreviewJob>;
+
+	static pointer create(SidebarPreviewBaseEntry* sidebar)
+	{
+		return pointer{new PreviewJob{sidebar}};
+	}
+
+	~PreviewJob() override;
+
+	void* getSource() const override;
+
+	void run() override;
+
+	JobType getType() const override;
 
 protected:
-	virtual ~PreviewJob();
-
-public:
-	virtual void* getSource();
-
-	virtual void run();
-
-	virtual JobType getType();
+	explicit PreviewJob(SidebarPreviewBaseEntry* sidebar);
 
 private:
 	void initGraphics();

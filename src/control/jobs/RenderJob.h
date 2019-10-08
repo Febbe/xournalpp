@@ -20,20 +20,25 @@
 class Rectangle;
 class XojPageView;
 
-class RenderJob : public Job
+struct RenderJob : public Job
 {
-public:
-	RenderJob(XojPageView* view);
+	using pointer = std::shared_ptr<RenderJob>;
 
+	static pointer create(XojPageView* view)
+	{
+		return pointer{new RenderJob{view}};
+	}
+
+	~RenderJob() override;
 protected:
-	virtual ~RenderJob();
+	explicit RenderJob(XojPageView* view);
 
 public:
-	virtual JobType getType();
+	JobType getType() const override;
 
-	void* getSource();
+	void* getSource() const override;
 
-	void run();
+	void run() override;
 
 private:
 	/**

@@ -18,6 +18,7 @@
 
 #include <XournalType.h>
 #include <Util.h>
+#include <atomic>
 
 
 class XojPage : public PageHandler
@@ -85,7 +86,7 @@ private:
 	/**
 	 * The reference counter
 	 */
-	int ref = 0;
+	std::atomic<int> ref{0};
 
 	/**
 	 * The Background image if any
