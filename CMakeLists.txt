@@ -54,6 +54,11 @@ endforeach ()
 # this section should decrease in size for newer CMake versions.
 ################################
 
+## For touch workaround, may need to be disabled for a Wayland Build
+if (${CMAKE_SYSTEM_NAME} MATCHES "Linux" OR ${CMAKE_SYSTEM_NAME} MATCHES "FreeBSD")
+	set(xournalpp_LDFLAGS ${xournalpp_LDFLAGS} "-lX11 -lXi")
+endif ()
+
 ################################
 # Project compiler flags
 ################################
