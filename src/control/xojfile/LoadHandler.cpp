@@ -826,12 +826,12 @@ void LoadHandler::parseTexImage()
 
 void LoadHandler::parseAttachment()
 {
-	const char* path = LoadHandlerHelper::getAttrib("path",false, this);
 	if (this->pos != PARSER_POS_IN_IMAGE || this->pos != PARSER_POS_IN_TEXIMAGE)
 	{
 		g_warning("Found attachment tag as child of a tag that should not have such a child (ignoring this tag)");
 		return;
 	}
+	const char* path = LoadHandlerHelper::getAttrib("path", false, this);
 
 	//Todo(fabian) move the following 4 lines into readZipAttachment
 	gpointer data = nullptr;
