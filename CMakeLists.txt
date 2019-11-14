@@ -242,7 +242,7 @@ configure_file(
 
 option(xournalpp_LINT "enable lint (clang-tidy) target" OFF)
 if (xournalpp_LINT)
-	include(cmake/clang-tidy.cmake)
+	include(clang-tidy)
 endif ()
 
 ## Source building ##
