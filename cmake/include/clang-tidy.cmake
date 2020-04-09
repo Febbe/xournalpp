@@ -9,8 +9,11 @@ if (NOT CLANG_TIDY_COMMAND)
     message(FATAL_ERROR "CMake_RUN_CLANG_TIDY is ON but clang-tidy is not found!")
 endif ()
 
-set(CMAKE_CXX_CLANG_TIDY "${CLANG_TIDY_COMMAND};--fix-errors;--format-style=file")
-
+if (LINT_FIXUP)
+    set(CMAKE_CXX_CLANG_TIDY "${CLANG_TIDY_COMMAND};--fix-errors;--format-style=file")
+else (LINT_FIXUP)
+    set(CMAKE_CXX_CLANG_TIDY "${CLANG_TIDY_COMMAND};--format-style=file")
+endif ()
 # Create a preprocessor definition that depends on .clang-tidy content so
 # the compile command will change when .clang-tidy changes.  This ensures
 # that a subsequent build re-runs clang-tidy on all sources even if they

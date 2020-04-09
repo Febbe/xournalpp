@@ -1,42 +1,86 @@
-Checks: "cppcoreguidelines*,\
--cppcoreguidelines-pro-bounds-pointer-arithmetic,\
--cppcoreguidelines-pro-type-cstyle-cast,\
+Checks: "*,\
 -readability-identifier-naming,\
--misc-unused-parameters,\
--cppcoreguidelines-pro-type-union-access,\
--clang-analyzer-alpha*,\
+\
+-readability-implicit-bool-conversion,\
+-cppcoreguidelines-pro-type-reinterpret-cast,\
+-clang-analyzer-optin.cplusplus.VirtualCall,\
+-cppcoreguidelines-pro-type-vararg,\
+-cert-err58-cpp,\
+-*-non-private-member-variables-in-classes,\
+-*-magic-numbers,\
+-readability-isolate-declaration,\
+-modernize-use-nodiscard,\
+\
+-cppcoreguidelines-pro-type-cstyle-cast, \
+-cppcoreguidelines-pro-type-union-access, \
 -google-build-using-namespace,\
 -clang-analyzer-optin.osx*,\
 -clang-analyzer-osx*,\
 -llvm-include-order,\
 -llvm-header-guard,\
--readability-named-parameter,\
--readability-implicit-bool-cast,\
--readability-implicit-bool-conversion,\
--cppcoreguidelines-pro-type-reinterpret-cast,\
--cppcoreguidelines-pro-type-vararg,\
--misc-move-const-arg,\
 -google-runtime-references,\
--cert-err58-cpp,\
--fuchsia-overloaded-operator,\
--fuchsia-default-arguments,\
--hicpp-vararg,\
--clang-analyzer-optin.cplusplus.VirtualCall,\
 -cppcoreguidelines-owning-memory,\
--*-magic-numbers,\
--*-non-private-member-variables-in-classes,\
+-fuchsia-overloaded-operator,\
 -fuchsia-statically-constructed-objects,\
--readability-isolate-declaration,\
 -fuchsia-multiple-inheritance,\
 -fuchsia-default-arguments-calls,\
 -fuchsia-trailing-return,\
 -portability-simd-intrinsics,\
--modernize-use-nodiscard,\
--hicpp-multiway-paths-covered,\
--hicpp-deprecated-headers,\
--hicpp-uppercase-literal-suffix,\
--cert-msc32-c,\
--cert-msc51-cpp"
+-cert-msc51-cpp, \
+-llvmlibc*, \
+-bugprone-reserved-identifier*,\
+\
+-cert-con36-c, \
+-cert-con54-cpp, \
+-cert-dcl03-c, \
+-cert-dcl16-c, \
+-cert-dcl37-c, \
+-cert-dcl51-cpp, \
+-cert-dcl54-cpp, \
+-cert-err09-cpp, \
+-cert-err61-cpp, \
+-cert-fio38-c, \
+-cert-msc30-c, \
+-cert-msc32-c, \
+-cert-oop11-cpp, \
+-cert-oop54-cpp, \
+-cert-pos44-c, \
+-cppcoreguidelines-avoid-c-arrays, \
+-cppcoreguidelines-avoid-magic-numbers, \
+-cppcoreguidelines-avoid-non-const-global-variables, \
+-cppcoreguidelines-explicit-virtual-functions, \
+-cppcoreguidelines-non-private-member-variables-in-classes, \
+-fuchsia-header-anon-namespaces, \
+-google-readability-braces-around-statements, \
+-google-readability-function-size, \
+-google-readability-namespace-comments, \
+-hicpp-avoid-c-arrays, \
+-hicpp-braces-around-statements, \
+-hicpp-deprecated-headers, \
+-hicpp-explicit-conversions, \
+-hicpp-function-size, \
+-hicpp-invalid-access-moved, \
+-hicpp-member-init, \
+-hicpp-move-const-arg, \
+-hicpp-named-parameter, \
+-hicpp-new-delete-operators, \
+-hicpp-no-array-decay, \
+-hicpp-no-malloc, \
+-hicpp-noexcept-move, \
+-hicpp-special-member-functions, \
+-hicpp-static-assert, \
+-hicpp-undelegated-constructor, \
+-hicpp-uppercase-literal-suffix, \
+-hicpp-use-auto, \
+-hicpp-use-emplace, \
+-hicpp-use-equals-default, \
+-hicpp-use-equals-delete, \
+-hicpp-use-noexcept, \
+-hicpp-use-nullptr, \
+-hicpp-use-override, \
+-hicpp-vararg, \
+-llvm-qualified-auto \
+"
 #WarningsAsErrors: '*'
 HeaderFilterRegex: '*.(h|hpp|hxx)'
 AnalyzeTemporaryDtors: false
@@ -111,10 +155,6 @@ CheckOptions:
     value:           '1'
   - key:             readability-implicit-bool-conversion.AllowPointerConditions
     value:           '1'
-  - key:             readability-implicit-bool-cast.AllowIntegerConditions
-    value:           '1'
-  - key:             readability-implicit-bool-cast.AllowPointerConditions
-    value:           '1'
   - key:             readability-braces-around-statements.ShortStatementLines
     value:           '1'
   - key:             llvm-namespace-comment.ShortNamespaceLines
@@ -122,6 +162,57 @@ CheckOptions:
   - key:             llvm-namespace-comment.SpacesBeforeComments
     value:           '2'
   - key:             misc-assert-side-effect.AssertMacros
-    value:           assert
+    value:           assert|g_assert*
   - key:             cppcoreguidelines-macro-usage.AllowedRegexp
     value:           DEBUG*|GTK_*|GDK_*|G_*|RELEASE*|assert|g_assert*
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
