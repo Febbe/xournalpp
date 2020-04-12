@@ -1,4 +1,5 @@
 Checks: "*,\
+-readability-make-member-function-const,\
 -readability-identifier-naming,\
 \
 -readability-implicit-bool-conversion,\
