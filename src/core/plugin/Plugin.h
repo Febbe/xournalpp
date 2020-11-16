@@ -80,6 +80,9 @@ public:
     /// Plugin version
     auto getVersion() const -> std::string const&;
 
+    /// @return the path to the plugin folder
+    auto getPath() const -> fs::path const&;
+
     /// The plugin is enabled
     auto isEnabled() const -> bool;
 
@@ -116,6 +119,8 @@ public:
     /// Get Plugin from lua engine
     static auto getPluginFromLua(lua_State* lua) -> Plugin*;
 
+    constexpr friend auto tieer(Plugin const& plugin) { return std::tie(plugin.name, plugin.version, plugin.path); }
+
 private:
     Control* control;                              ///< The main controller
     std::unique_ptr<lua_State, LuaDeleter> lua{};  ///< Lua engine
@@ -132,6 +137,10 @@ private:
     bool inInitUi = false;        ///< Flag to check if init ui is currently running
     bool valid = false;           ///< Flag if the plugin is valid / correct loaded
 };
+
+constexpr bool operator==(Plugin const& lhs, Plugin const& rhs) noexcept { return tieer(lhs) == tieer(rhs); }
+
+constexpr bool operator<(Plugin const& lhs, Plugin const& rhs) noexcept { return tieer(lhs) == tieer(rhs); }
 
 #else
 struct Plugin final {};  ///< empty struct, since Plugin is not compiled

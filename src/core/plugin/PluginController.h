@@ -11,7 +11,9 @@
 
 #pragma once
 
+#include <map>
 #include <memory>
+#include <set>
 #include <string>
 #include <vector>
 
@@ -25,13 +27,6 @@ public:
     explicit PluginController(Control* control);
 
 public:
-    /**
-     * Load all plugins within this folder
-     *
-     * @param path The path which contains the plugin folders
-     */
-    void loadPluginsFrom(fs::path const& path);
-
     /**
      * Register toolbar item and all other UI stuff
      */
