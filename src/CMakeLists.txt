@@ -1,5 +1,10 @@
 cmake_minimum_required(VERSION 3.11)
 
+# Todo: add to target by generator expression
+#if (DEV_ENABLE_GCOV)
+#    add_definitions(--coverage)
+#endif (DEV_ENABLE_GCOV)
+
 ##############################
 # xoj default option target
 ##############################
@@ -25,76 +30,14 @@ add_subdirectory(util)
 
 add_subdirectory(xoj-preview-extractor)
 
-if (DEV_ENABLE_GCOV)
-    add_definitions(--coverage)
-endif (DEV_ENABLE_GCOV)
-
-# Used to compile xournalpp and xournalpp-test
-set(xournalpp_LDFLAGS
-        ${xournalpp_LDFLAGS}
-        )
-
-##############################
-# xournalpp-core
-##############################
-
-# These dirs are xournalpp only so it's safe to add them recursively
-unset(xournalpp_SOURCES_RECURSE)
-file(GLOB_RECURSE xournalpp_SOURCES_RECURSE
-        audio/*.cpp
-        control/*.cpp
-        enums/*.cpp
-        gui/*.cpp
-        io/*.cpp
-        model/*.cpp
-        plugin/*.cpp
-        undo/*.cpp
-        view/*.cpp
-        audio/*.h
-        control/*.h
-        enums/*.h
-        gui/*.h
-        io/*.h
-        model/*.h
-        plugin/*.h
-        undo/*.h
-        view/*.h
-        )
-
-# Here GLOB_RECURSE wouldn't be safe
-unset(xournalpp_SOURCES)
-file(GLOB xournalpp_SOURCES
-        pdf/base/*.cpp
-        pdf/base/*.h
-        )
-
-# Concatenate SOURCES lists
-set(xournalpp_SOURCES ${xournalpp_SOURCES_RECURSE} ${xournalpp_SOURCES})
-unset(xournalpp_SOURCES_RECURSE)
-
-file(GLOB xournalpp_SOURCES_RECURSE pdf/popplerapi/*.cpp)
-
-# Concatenate SOURCES lists
-set(xournalpp_SOURCES ${xournalpp_SOURCES_RECURSE} ${xournalpp_SOURCES})
-unset(xournalpp_SOURCES_RECURSE)
-
-set(xournalpp_include_dirs "${PROJECT_SOURCE_DIR}/src")
-
-# Used for xournalpp and xournalpp-test
-add_library(xournalpp-core STATIC ${xournalpp_SOURCES})
-target_compile_features(xournalpp-core PUBLIC ${PROJECT_CXX_FEATURES})
-target_link_libraries(xournalpp-core
-        PRIVATE xoj::util ${xournalpp_LDFLAGS}
-        PUBLIC xoj::stacktrace xoj::defaults)
-target_include_directories(xournalpp-core PRIVATE)
-target_include_directories(xournalpp-core PRIVATE ${xournalpp_include_dirs})
+add_subdirectory(core)
 
 ##############################
 # xournalpp main program
 ##############################
 
 add_executable(xournalpp Xournalpp.cpp)
-target_link_libraries(xournalpp PRIVATE xournalpp-core)
+target_link_libraries(xournalpp PRIVATE xoj::core)
 
 install(TARGETS xournalpp
         RUNTIME DESTINATION bin
