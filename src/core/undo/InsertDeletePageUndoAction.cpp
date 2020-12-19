@@ -5,7 +5,7 @@
 #include "model/Document.h"
 #include "model/PageRef.h"
 
-#include "i18n.h"
+#include "util/i18n.h"
 
 InsertDeletePageUndoAction::InsertDeletePageUndoAction(const PageRef& page, int pagePos, bool inserted):
         UndoAction("InsertDeletePageUndoAction") {

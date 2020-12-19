@@ -2,8 +2,8 @@
 
 #include <utility>
 
-#include "serializing/ObjectInputStream.h"
-#include "serializing/ObjectOutputStream.h"
+#include "util/serializing/ObjectInputStream.h"
+#include "util/serializing/ObjectOutputStream.h"
 
 XojFont::XojFont() = default;
 

@@ -17,10 +17,10 @@
 
 #include "Layout.h"
 #include "PageView.h"
-#include "Rectangle.h"
+#include "util/Rectangle.h"
 #include "RepaintHandler.h"
 #include "Shadow.h"
-#include "Util.h"
+#include "util/Util.h"
 #include "XournalppCursor.h"
 #include "filesystem.h"
 

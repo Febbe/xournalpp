@@ -15,7 +15,7 @@
 #include <vector>
 
 #include "AbstractInputHandler.h"
-#include "XournalType.h"
+#include "util/XournalType.h"
 
 class KeyboardInputHandler: public AbstractInputHandler {
 private:

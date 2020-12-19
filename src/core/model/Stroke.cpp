@@ -3,10 +3,10 @@
 #include <cmath>
 #include <numeric>
 
-#include "serializing/ObjectInputStream.h"
-#include "serializing/ObjectOutputStream.h"
+#include "util/serializing/ObjectInputStream.h"
+#include "util/serializing/ObjectOutputStream.h"
 
-#include "i18n.h"
+#include "util/i18n.h"
 
 Stroke::Stroke(): AudioElement(ELEMENT_STROKE) {}
 

@@ -14,8 +14,8 @@
 #include <string>
 #include <vector>
 
-#include "OutputStream.h"
-#include "XournalType.h"
+#include "util/OutputStream.h"
+#include "util/XournalType.h"
 
 class XMLAttribute {
 public:

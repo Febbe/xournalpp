@@ -14,9 +14,9 @@
 #include <string>
 #include <vector>
 
-#include "serializing/Serializeable.h"
+#include "util/serializing/Serializeable.h"
 
-#include "XournalType.h"
+#include "util/XournalType.h"
 
 
 class LineStyle: public Serializeable {

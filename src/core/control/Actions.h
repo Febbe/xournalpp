@@ -20,7 +20,7 @@
 #include "enums/ActionGroup.enum.h"
 #include "enums/ActionType.enum.h"
 
-#include "XournalType.h"
+#include "util/XournalType.h"
 
 class ActionHandler;
 

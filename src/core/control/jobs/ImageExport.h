@@ -18,8 +18,8 @@
 
 #include "view/DocumentView.h"
 
-#include "PageRange.h"
-#include "XournalType.h"
+#include "util/PageRange.h"
+#include "util/XournalType.h"
 #include "filesystem.h"
 
 class Document;

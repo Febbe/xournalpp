@@ -4,8 +4,8 @@
 
 #include <gtk/gtk.h>
 
-#include "StringUtils.h"
-#include "i18n.h"
+#include "util/StringUtils.h"
+#include "util/i18n.h"
 
 ToolbarData::ToolbarData(bool predefined): predefined(predefined) {}
 

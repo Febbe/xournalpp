@@ -4,7 +4,7 @@
 #include "pdf/base/XojPdfExport.h"
 #include "pdf/base/XojPdfExportFactory.h"
 
-#include "i18n.h"
+#include "util/i18n.h"
 
 PdfExportJob::PdfExportJob(Control* control): BaseExportJob(control, _("PDF Export")) {}
 

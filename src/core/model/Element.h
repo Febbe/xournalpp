@@ -16,11 +16,11 @@
 
 #include <gtk/gtk.h>
 
-#include "serializing/Serializeable.h"
+#include "util/serializing/Serializeable.h"
 
-#include "Color.h"
-#include "Rectangle.h"
-#include "XournalType.h"
+#include "util/Color.h"
+#include "util/Rectangle.h"
+#include "util/XournalType.h"
 
 enum ElementType { ELEMENT_STROKE = 1, ELEMENT_IMAGE, ELEMENT_TEXIMAGE, ELEMENT_TEXT };
 

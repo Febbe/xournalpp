@@ -17,7 +17,7 @@
 #include "pdf/base/XojPdfPage.h"
 
 #include "BaseElementView.h"
-#include "XournalType.h"
+#include "util/XournalType.h"
 
 class PdfPagesDialog;
 

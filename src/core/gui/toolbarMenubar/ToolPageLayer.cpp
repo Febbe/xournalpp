@@ -8,7 +8,7 @@
 #include "gui/GladeGui.h"
 #include "gui/widgets/PopupMenuButton.h"
 
-#include "i18n.h"
+#include "util/i18n.h"
 
 ToolPageLayer::ToolPageLayer(LayerController* lc, GladeGui* gui, ActionHandler* handler, string id, ActionType type):
         AbstractToolItem(std::move(id), handler, type, nullptr), lc(lc), gui(gui), menu(gtk_menu_new()) {

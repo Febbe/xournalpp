@@ -1,6 +1,6 @@
 #include "BaseBackgroundPainter.h"
 
-#include "Util.h"
+#include "util/Util.h"
 
 BaseBackgroundPainter::BaseBackgroundPainter() { resetConfig(); }
 

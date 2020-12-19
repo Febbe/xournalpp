@@ -7,7 +7,7 @@
 #include "gui/widgets/gtkmenutooltogglebutton.h"
 
 #include "ToolMenuHandler.h"
-#include "i18n.h"
+#include "util/i18n.h"
 
 class ToolDrawType {
 public:

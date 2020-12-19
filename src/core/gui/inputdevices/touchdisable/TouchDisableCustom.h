@@ -15,7 +15,7 @@
 #include <vector>
 
 #include "TouchDisableInterface.h"
-#include "XournalType.h"
+#include "util/XournalType.h"
 
 
 class TouchDisableCustom: public TouchDisableInterface {

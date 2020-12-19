@@ -5,9 +5,9 @@
 
 #include "control/Control.h"
 
-#include "XojMsgBox.h"
+#include "util/XojMsgBox.h"
 #include "config.h"
-#include "i18n.h"
+#include "util/i18n.h"
 
 
 template <typename T>

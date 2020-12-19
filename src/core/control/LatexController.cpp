@@ -14,11 +14,11 @@
 #include "undo/InsertUndoAction.h"
 
 #include "Control.h"
-#include "StringUtils.h"
-#include "Util.h"
-#include "XojMsgBox.h"
-#include "i18n.h"
-#include "pixbuf-utils.h"
+#include "util/StringUtils.h"
+#include "util/Util.h"
+#include "util/XojMsgBox.h"
+#include "util/i18n.h"
+#include "util/pixbuf-utils.h"
 
 LatexController::LatexController(Control* control):
         control(control),

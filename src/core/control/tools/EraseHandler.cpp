@@ -15,8 +15,8 @@
 #include "undo/EraseUndoAction.h"
 #include "undo/UndoRedoHandler.h"
 
-#include "Range.h"
-#include "Rectangle.h"
+#include "util/Range.h"
+#include "util/Rectangle.h"
 
 EraseHandler::EraseHandler(UndoRedoHandler* undo, Document* doc, const PageRef& page, ToolHandler* handler,
                            Redrawable* view) {

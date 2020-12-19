@@ -7,7 +7,7 @@
 #include "gui/GladeGui.h"
 #include "gui/widgets/SpinPageAdapter.h"
 
-#include "i18n.h"
+#include "util/i18n.h"
 
 ToolPageSpinner::ToolPageSpinner(GladeGui* gui, ActionHandler* handler, string id, ActionType type):
         AbstractToolItem(std::move(id), handler, type, nullptr) {

@@ -17,7 +17,7 @@
 #include "model/TexImage.h"
 
 #include "Layout.h"
-#include "Range.h"
+#include "util/Range.h"
 #include "Redrawable.h"
 
 class EditSelection;

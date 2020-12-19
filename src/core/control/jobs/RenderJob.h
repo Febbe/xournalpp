@@ -17,8 +17,8 @@
 #include <gtk/gtk.h>
 
 #include "Job.h"
-#include "Rectangle.h"
-#include "XournalType.h"
+#include "util/Rectangle.h"
+#include "util/XournalType.h"
 
 class XojPageView;
 

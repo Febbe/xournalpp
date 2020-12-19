@@ -3,10 +3,10 @@
 #include <utility>
 
 #include "view/TextView.h"  // Hack: Needed to calculate the view size
-#include "serializing/ObjectInputStream.h"
-#include "serializing/ObjectOutputStream.h"
+#include "util/serializing/ObjectInputStream.h"
+#include "util/serializing/ObjectOutputStream.h"
 
-#include "Stacktrace.h"
+#include "util/Stacktrace.h"
 
 Text::Text(): AudioElement(ELEMENT_TEXT) {
     this->font.setName("Sans");

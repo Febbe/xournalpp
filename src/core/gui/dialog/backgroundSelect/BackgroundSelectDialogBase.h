@@ -16,7 +16,7 @@
 
 #include "gui/GladeGui.h"
 
-#include "XournalType.h"
+#include "util/XournalType.h"
 
 class Document;
 class Settings;

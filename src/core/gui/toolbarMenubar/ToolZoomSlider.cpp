@@ -7,8 +7,8 @@
 
 #include "control/zoom/ZoomControl.h"
 
-#include "StringUtils.h"
-#include "i18n.h"
+#include "util/StringUtils.h"
+#include "util/i18n.h"
 
 ToolZoomSlider::ToolZoomSlider(ActionHandler* handler, string id, ActionType type, ZoomControl* zoom):
         AbstractToolItem(std::move(id), handler, type, nullptr), zoom(zoom) {

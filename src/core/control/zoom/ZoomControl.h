@@ -17,9 +17,9 @@
 
 #include "model/DocumentListener.h"
 
-#include "Point.h"
-#include "Rectangle.h"
-#include "XournalType.h"
+#include "util/Point.h"
+#include "util/Rectangle.h"
+#include "util/XournalType.h"
 
 constexpr auto DEFAULT_ZOOM_MAX{7};
 constexpr auto DEFAULT_ZOOM_MIN{0.3};

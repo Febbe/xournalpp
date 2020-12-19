@@ -4,7 +4,7 @@
 #include "gui/Shadow.h"
 
 #include "BackgroundSelectDialogBase.h"
-#include "Util.h"
+#include "util/Util.h"
 
 BaseElementView::BaseElementView(int id, BackgroundSelectDialogBase* dlg): dlg(dlg), id(id) {
     this->widget = gtk_drawing_area_new();

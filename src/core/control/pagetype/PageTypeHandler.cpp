@@ -4,8 +4,8 @@
 
 #include "gui/GladeSearchpath.h"
 
-#include "XojMsgBox.h"
-#include "i18n.h"
+#include "util/XojMsgBox.h"
+#include "util/i18n.h"
 
 PageTypeHandler::PageTypeHandler(GladeSearchpath* gladeSearchPath) {
     auto file = gladeSearchPath->findFile("", "pagetemplates.ini");

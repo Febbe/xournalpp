@@ -15,7 +15,7 @@
 #include <vector>
 
 #include "BlockingJob.h"
-#include "XournalType.h"
+#include "util/XournalType.h"
 
 class SaveJob: public BlockingJob {
 public:

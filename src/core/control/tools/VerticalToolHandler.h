@@ -22,7 +22,7 @@
 #include "view/ElementContainer.h"
 
 #include "SnapToGridInputHandler.h"
-#include "XournalType.h"
+#include "util/XournalType.h"
 
 class VerticalToolHandler: public ElementContainer {
 public:

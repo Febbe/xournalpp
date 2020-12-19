@@ -6,10 +6,10 @@
 #include "control/xojfile/SaveHandler.h"
 #include "view/DocumentView.h"
 
-#include "PathUtil.h"
-#include "XojMsgBox.h"
+#include "util/PathUtil.h"
+#include "util/XojMsgBox.h"
 #include "filesystem.h"
-#include "i18n.h"
+#include "util/i18n.h"
 
 
 SaveJob::SaveJob(Control* control): BlockingJob(control, _("Save")) {}

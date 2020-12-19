@@ -6,8 +6,8 @@
 #include <config.h>
 
 #include "GladeSearchpath.h"
-#include "XojMsgBox.h"
-#include "i18n.h"
+#include "util/XojMsgBox.h"
+#include "util/i18n.h"
 
 GladeGui::GladeGui(GladeSearchpath* gladeSearchPath, const string& glade, const string& mainWnd) {
     this->gladeSearchPath = gladeSearchPath;

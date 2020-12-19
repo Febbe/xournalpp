@@ -16,7 +16,7 @@
 
 #include <gtk/gtk.h>
 
-#include "XournalType.h"
+#include "util/XournalType.h"
 
 typedef struct _LinkDest XojLinkDest;
 typedef struct _LinkDestClass XojLinkDestClass;

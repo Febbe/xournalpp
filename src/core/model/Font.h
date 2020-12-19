@@ -16,9 +16,9 @@
 
 #include <gtk/gtk.h>
 
-#include "serializing/Serializeable.h"
+#include "util/serializing/Serializeable.h"
 
-#include "XournalType.h"
+#include "util/XournalType.h"
 
 class XojFont: public Serializeable {
 public:

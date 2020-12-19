@@ -17,7 +17,7 @@
 #include "control/layer/LayerCtrlListener.h"
 #include "gui/sidebar/previews/base/SidebarPreviewBase.h"
 
-#include "XournalType.h"
+#include "util/XournalType.h"
 
 class SidebarPreviewLayers: public SidebarPreviewBase, public LayerCtrlListener {
 public:

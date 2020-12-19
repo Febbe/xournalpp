@@ -18,7 +18,7 @@
 
 #include "gui/GladeGui.h"
 
-#include "XournalType.h"
+#include "util/XournalType.h"
 
 enum SidebarActions {
     SIDEBAR_ACTION_NONE = 0,

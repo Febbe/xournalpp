@@ -22,7 +22,7 @@
 
 #include "InputEvents.h"
 #include "PositionInputData.h"
-#include "XournalType.h"
+#include "util/XournalType.h"
 
 class InputContext;
 

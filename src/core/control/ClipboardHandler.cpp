@@ -6,13 +6,13 @@
 #include <config.h>
 
 #include "view/DocumentView.h"
-#include "serializing/BinObjectEncoding.h"
-#include "serializing/ObjectInputStream.h"
-#include "serializing/ObjectOutputStream.h"
+#include "util/serializing/BinObjectEncoding.h"
+#include "util/serializing/ObjectInputStream.h"
+#include "util/serializing/ObjectOutputStream.h"
 
 #include "Control.h"
-#include "Util.h"
-#include "pixbuf-utils.h"
+#include "util/Util.h"
+#include "util/pixbuf-utils.h"
 
 ClipboardListener::~ClipboardListener() = default;
 

@@ -7,8 +7,8 @@
 #include "util/DeviceListHelper.h"
 
 #include "SettingsDialog.h"
-#include "Util.h"
-#include "i18n.h"
+#include "util/Util.h"
+#include "util/i18n.h"
 
 DeviceClassConfigGui::DeviceClassConfigGui(GladeSearchpath* gladeSearchPath, GtkWidget* w, Settings* settings,
                                            const InputDevice& device):

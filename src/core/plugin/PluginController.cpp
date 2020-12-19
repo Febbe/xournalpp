@@ -9,7 +9,7 @@
 #include "gui/dialog/PluginDialog.h"
 
 #include "Plugin.h"
-#include "StringUtils.h"
+#include "util/StringUtils.h"
 
 
 PluginController::PluginController(Control* control): control(control) {

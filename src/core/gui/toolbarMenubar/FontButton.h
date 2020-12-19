@@ -18,7 +18,7 @@
 #include "model/Font.h"
 
 #include "AbstractToolItem.h"
-#include "XournalType.h"
+#include "util/XournalType.h"
 
 class FontButton: public AbstractToolItem {
 public:

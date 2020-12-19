@@ -2,8 +2,8 @@
 
 #include <cmath>
 
-#include "serializing/ObjectInputStream.h"
-#include "serializing/ObjectOutputStream.h"
+#include "util/serializing/ObjectInputStream.h"
+#include "util/serializing/ObjectOutputStream.h"
 
 Element::Element(ElementType type): type(type) {}
 

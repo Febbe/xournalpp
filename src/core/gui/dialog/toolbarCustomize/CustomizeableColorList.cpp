@@ -4,7 +4,7 @@
 
 #include <config.h>
 
-#include "i18n.h"
+#include "util/i18n.h"
 
 CustomizeableColorList::CustomizeableColorList() {
     this->addPredefinedColor(0x000000U, _("Black"));

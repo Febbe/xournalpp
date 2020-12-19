@@ -9,7 +9,7 @@
 #include "undo/SwapUndoAction.h"
 
 #include "SidebarPreviewPageEntry.h"
-#include "i18n.h"
+#include "util/i18n.h"
 
 SidebarPreviewPages::SidebarPreviewPages(Control* control, GladeGui* gui, SidebarToolbar* toolbar):
         SidebarPreviewBase(control, gui, toolbar), contextMenu(gui->get("sidebarPreviewContextMenu")) {

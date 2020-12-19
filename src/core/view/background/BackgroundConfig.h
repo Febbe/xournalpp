@@ -14,7 +14,7 @@
 #include <map>
 #include <string>
 
-#include "XournalType.h"
+#include "util/XournalType.h"
 using std::map;
 
 class BackgroundConfig {

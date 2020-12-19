@@ -1,6 +1,6 @@
 #include "BackgroundImage.h"
 
-#include "Stacktrace.h"
+#include "util/Stacktrace.h"
 
 /*
  * The contents of a background image

@@ -19,9 +19,9 @@
 #include "MainWindowToolbarMenu.h"
 #include "ToolbarDefinitions.h"
 #include "ToolitemDragDrop.h"
-#include "XojMsgBox.h"
+#include "util/XojMsgBox.h"
 #include "XournalView.h"
-#include "i18n.h"
+#include "util/i18n.h"
 
 #ifdef MAC_INTEGRATION
 #include <gtkosxapplication.h>

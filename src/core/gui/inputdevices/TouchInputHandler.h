@@ -16,8 +16,8 @@
 #include <vector>
 
 #include "AbstractInputHandler.h"
-#include "Point.h"
-#include "XournalType.h"
+#include "util/Point.h"
+#include "util/XournalType.h"
 
 class InputContext;
 

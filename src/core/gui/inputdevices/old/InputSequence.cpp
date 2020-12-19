@@ -15,7 +15,7 @@
 #include "model/Point.h"
 
 #include "NewGtkInputDevice.h"
-#include "Util.h"
+#include "util/Util.h"
 
 
 InputSequence::InputSequence(NewGtkInputDevice* inputHandler): inputHandler(inputHandler) {

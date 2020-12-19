@@ -17,7 +17,7 @@
 #include "control/Tool.h"
 
 #include "SettingsEnums.h"
-#include "XournalType.h"
+#include "util/XournalType.h"
 
 class ToolHandler;
 

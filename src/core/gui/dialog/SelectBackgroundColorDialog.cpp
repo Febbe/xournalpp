@@ -2,8 +2,8 @@
 
 #include "control/Control.h"
 
-#include "Util.h"
-#include "i18n.h"
+#include "util/Util.h"
+#include "util/i18n.h"
 
 static inline std::array<GdkRGBA, 9> background1 = {
         Util::rgb_to_GdkRGBA(0xfabebeU),  //

@@ -1,6 +1,6 @@
 #include "EmergencySaveRestore.h"
 
-#include "i18n.h"
+#include "util/i18n.h"
 
 EmergencySaveRestore::EmergencySaveRestore(): UndoAction("EmergencySaveRestore") {}
 

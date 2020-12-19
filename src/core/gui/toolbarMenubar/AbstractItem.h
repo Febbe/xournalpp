@@ -18,7 +18,7 @@
 
 #include "control/Actions.h"
 
-#include "XournalType.h"
+#include "util/XournalType.h"
 
 class AbstractItem: public ActionEnabledListener, public ActionSelectionListener {
 public:

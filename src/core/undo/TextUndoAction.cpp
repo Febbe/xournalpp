@@ -8,8 +8,8 @@
 #include "model/PageRef.h"
 #include "model/Text.h"
 
-#include "Rectangle.h"
-#include "i18n.h"
+#include "util/Rectangle.h"
+#include "util/i18n.h"
 
 TextUndoAction::TextUndoAction(const PageRef& page, Layer* layer, Text* text, string lastText, TextEditor* textEditor):
         UndoAction("TextUndoAction") {

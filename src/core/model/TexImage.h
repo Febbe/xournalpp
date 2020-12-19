@@ -18,7 +18,7 @@
 #include <poppler.h>
 
 #include "Element.h"
-#include "XournalType.h"
+#include "util/XournalType.h"
 
 
 class TexImage: public Element {

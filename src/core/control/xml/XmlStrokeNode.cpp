@@ -1,6 +1,6 @@
 #include "XmlStrokeNode.h"
 
-#include "Util.h"
+#include "util/Util.h"
 
 XmlStrokeNode::XmlStrokeNode(const char* tag): XmlNode(tag) {
     this->points = nullptr;

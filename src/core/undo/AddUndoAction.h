@@ -15,7 +15,7 @@
 #include <vector>
 
 #include "UndoAction.h"
-#include "XournalType.h"
+#include "util/XournalType.h"
 
 class Element;
 class Layer;

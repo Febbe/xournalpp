@@ -3,7 +3,7 @@
 #include <utility>
 
 #include "BaseElementView.h"
-#include "Util.h"
+#include "util/Util.h"
 
 
 BackgroundSelectDialogBase::BackgroundSelectDialogBase(GladeSearchpath* gladeSearchPath, Document* doc,

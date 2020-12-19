@@ -20,7 +20,7 @@
 #include "AudioQueue.h"
 #include "PortAudioProducer.h"
 #include "VorbisConsumer.h"
-#include "XournalType.h"
+#include "util/XournalType.h"
 
 struct AudioRecorder {
     explicit AudioRecorder(Settings& settings): settings(settings) {}

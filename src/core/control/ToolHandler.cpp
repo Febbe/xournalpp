@@ -9,7 +9,7 @@
 #include "model/StrokeStyle.h"
 
 #include "Actions.h"
-#include "Util.h"
+#include "util/Util.h"
 
 
 ToolListener::~ToolListener() = default;

@@ -16,8 +16,8 @@
 #include "gui/inputdevices/old/NewGtkInputDevice.h"
 #include "gui/scroll/ScrollHandling.h"
 
-#include "Rectangle.h"
-#include "Util.h"
+#include "util/Rectangle.h"
+#include "util/Util.h"
 
 static void gtk_xournal_class_init(GtkXournalClass* klass);
 static void gtk_xournal_init(GtkXournal* xournal);

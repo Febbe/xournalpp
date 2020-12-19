@@ -17,8 +17,8 @@
 
 #include "BaseExportJob.h"
 #include "ImageExport.h"
-#include "PageRange.h"
-#include "i18n.h"
+#include "util/PageRange.h"
+#include "util/i18n.h"
 
 
 class CustomExportJob: public BaseExportJob {

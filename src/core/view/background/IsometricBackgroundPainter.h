@@ -15,7 +15,7 @@
 #include <vector>
 
 #include "BaseBackgroundPainter.h"
-#include "XournalType.h"
+#include "util/XournalType.h"
 
 class IsometricBackgroundPainter: public BaseBackgroundPainter {
 public:

@@ -19,7 +19,7 @@
 #include "model/DocumentListener.h"
 #include "model/PageRef.h"
 
-#include "XournalType.h"
+#include "util/XournalType.h"
 
 class PageTypeMenu;
 class Control;

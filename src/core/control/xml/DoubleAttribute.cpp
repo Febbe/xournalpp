@@ -1,6 +1,6 @@
 #include "DoubleAttribute.h"
 
-#include "Util.h"
+#include "util/Util.h"
 
 DoubleAttribute::DoubleAttribute(const char* name, double value): XMLAttribute(name) { this->value = value; }
 

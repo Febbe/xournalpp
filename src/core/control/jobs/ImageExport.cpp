@@ -9,8 +9,8 @@
 #include "view/PdfView.h"
 
 #include "ProgressListener.h"
-#include "Util.h"
-#include "i18n.h"
+#include "util/Util.h"
+#include "util/i18n.h"
 
 
 ImageExport::ImageExport(Document* doc, fs::path file, ExportGraphicsFormat format, bool hideBackground,

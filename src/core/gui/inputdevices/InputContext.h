@@ -32,7 +32,7 @@
 #include "StylusInputHandler.h"
 #include "TouchDrawingInputHandler.h"
 #include "TouchInputHandler.h"
-#include "XournalType.h"
+#include "util/XournalType.h"
 #include "config-debug.h"
 
 class InputContext {

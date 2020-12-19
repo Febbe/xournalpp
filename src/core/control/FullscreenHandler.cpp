@@ -3,7 +3,7 @@
 #include "gui/MainWindow.h"
 
 #include "Control.h"
-#include "StringUtils.h"
+#include "util/StringUtils.h"
 
 
 FullscreenHandler::FullscreenHandler(Settings* settings): settings(settings) {}

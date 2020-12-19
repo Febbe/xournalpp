@@ -6,7 +6,7 @@
 #include "model/Document.h"
 #include "view/DocumentView.h"
 
-#include "PathUtil.h"
+#include "util/PathUtil.h"
 
 PrintHandler::PrintHandler() = default;
 

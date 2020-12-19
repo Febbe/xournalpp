@@ -3,8 +3,8 @@
 #include "model/Element.h"
 #include "model/PageRef.h"
 
-#include "Range.h"
-#include "i18n.h"
+#include "util/Range.h"
+#include "util/i18n.h"
 
 ScaleUndoAction::ScaleUndoAction(const PageRef& page, vector<Element*>* elements, double x0, double y0, double fx,
                                  double fy, double rotation, bool restoreLineWidth):

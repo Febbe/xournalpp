@@ -6,7 +6,7 @@
 #include "model/eraser/EraseableStroke.h"
 
 #include "PageLayerPosEntry.h"
-#include "i18n.h"
+#include "util/i18n.h"
 
 EraseUndoAction::EraseUndoAction(const PageRef& page): UndoAction("EraseUndoAction") { this->page = page; }
 

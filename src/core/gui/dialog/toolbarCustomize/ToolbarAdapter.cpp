@@ -11,8 +11,8 @@
 
 #include "ToolItemDragCurrentData.h"
 #include "ToolbarDragDropHelper.h"
-#include "Util.h"
-#include "i18n.h"
+#include "util/Util.h"
+#include "util/i18n.h"
 
 ToolbarAdapter::ToolbarAdapter(GtkWidget* toolbar, string toolbarName, ToolMenuHandler* toolHandler,
                                MainWindow* window) {

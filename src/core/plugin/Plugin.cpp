@@ -4,7 +4,7 @@
 #include <utility>
 
 #include "config.h"
-#include "i18n.h"
+#include "util/i18n.h"
 
 extern "C" {
 #include <lauxlib.h>

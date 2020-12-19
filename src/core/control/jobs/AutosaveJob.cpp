@@ -3,9 +3,9 @@
 #include "control/Control.h"
 #include "control/xojfile/SaveHandler.h"
 
-#include "XojMsgBox.h"
+#include "util/XojMsgBox.h"
 #include "filesystem.h"
-#include "i18n.h"
+#include "util/i18n.h"
 
 AutosaveJob::AutosaveJob(Control* control): control(control) {}
 

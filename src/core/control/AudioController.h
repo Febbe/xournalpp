@@ -20,7 +20,7 @@
 #include "gui/toolbarMenubar/ToolMenuHandler.h"
 
 #include "Control.h"
-#include "XournalType.h"
+#include "util/XournalType.h"
 #include "filesystem.h"
 
 class AudioPlayer;

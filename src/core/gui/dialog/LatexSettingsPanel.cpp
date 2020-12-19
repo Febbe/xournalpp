@@ -5,9 +5,9 @@
 
 #include "control/latex/LatexGenerator.h"
 
-#include "PathUtil.h"
+#include "util/PathUtil.h"
 #include "filesystem.h"
-#include "i18n.h"
+#include "util/i18n.h"
 
 LatexSettingsPanel::LatexSettingsPanel(GladeSearchpath* gladeSearchPath):
         GladeGui(gladeSearchPath, "latexSettings.glade", "latexSettingsPanel"),

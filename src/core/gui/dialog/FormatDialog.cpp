@@ -4,8 +4,8 @@
 
 #include "model/FormatDefinitions.h"
 
-#include "StringUtils.h"
-#include "i18n.h"
+#include "util/StringUtils.h"
+#include "util/i18n.h"
 
 
 FormatDialog::FormatDialog(GladeSearchpath* gladeSearchPath, Settings* settings, double width, double height):

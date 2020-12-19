@@ -5,7 +5,7 @@
 #include "view/background/MainBackgroundPainter.h"
 
 #include "PageTypeHandler.h"
-#include "i18n.h"
+#include "util/i18n.h"
 
 PageTypeMenuChangeListener::~PageTypeMenuChangeListener() = default;
 PageTypeApplyListener::~PageTypeApplyListener() = default;

@@ -2,7 +2,7 @@
 
 #include "plugin/Plugin.h"
 
-#include "i18n.h"
+#include "util/i18n.h"
 
 
 PluginDialogEntry::PluginDialogEntry(Plugin* plugin, GladeSearchpath* gladeSearchPath, GtkWidget* w):

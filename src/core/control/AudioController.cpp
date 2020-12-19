@@ -2,9 +2,9 @@
 
 #include <cinttypes>
 
-#include "Util.h"
-#include "XojMsgBox.h"
-#include "i18n.h"
+#include "util/Util.h"
+#include "util/XojMsgBox.h"
+#include "util/i18n.h"
 
 auto AudioController::startRecording() -> bool {
     if (!this->isRecording()) {

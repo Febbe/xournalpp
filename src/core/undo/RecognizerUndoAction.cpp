@@ -4,8 +4,8 @@
 #include "model/Layer.h"
 #include "model/Stroke.h"
 
-#include "Stacktrace.h"
-#include "i18n.h"
+#include "util/Stacktrace.h"
+#include "util/i18n.h"
 
 RecognizerUndoAction::RecognizerUndoAction(const PageRef& page, Layer* layer, Stroke* original, Stroke* recognized):
         UndoAction("RecognizerUndoAction") {

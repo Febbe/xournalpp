@@ -15,7 +15,7 @@
 #include <vector>
 
 #include "ToolbarEntry.h"
-#include "XournalType.h"
+#include "util/XournalType.h"
 
 class ToolbarData {
 public:

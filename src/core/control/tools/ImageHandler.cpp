@@ -10,8 +10,8 @@
 #include "model/Layer.h"
 #include "undo/InsertUndoAction.h"
 
-#include "XojMsgBox.h"
-#include "i18n.h"
+#include "util/XojMsgBox.h"
+#include "util/i18n.h"
 
 ImageHandler::ImageHandler(Control* control, XojPageView* view) {
     this->control = control;

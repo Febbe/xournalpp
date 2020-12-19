@@ -37,8 +37,8 @@
 #include "util/XojMsgBox.h"
 
 #include "PageViewFindObjectHelper.h"
-#include "Range.h"
-#include "Rectangle.h"
+#include "util/Range.h"
+#include "util/Rectangle.h"
 #include "RepaintHandler.h"
 #include "TextEditor.h"
 #include "XournalView.h"
@@ -46,8 +46,8 @@
 #include "config-debug.h"
 #include "config-features.h"
 #include "config.h"
-#include "i18n.h"
-#include "pixbuf-utils.h"
+#include "util/i18n.h"
+#include "util/pixbuf-utils.h"
 
 XojPageView::XojPageView(XournalView* xournal, const PageRef& page) {
     this->page = page;

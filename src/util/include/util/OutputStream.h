@@ -16,7 +16,7 @@
 
 #include <zlib.h>
 
-#include "XournalType.h"
+#include "util/XournalType.h"
 #include "filesystem.h"
 
 class OutputStream {

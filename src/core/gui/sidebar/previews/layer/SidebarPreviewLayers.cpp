@@ -5,7 +5,7 @@
 #include "control/layer/LayerController.h"
 
 #include "SidebarPreviewLayerEntry.h"
-#include "i18n.h"
+#include "util/i18n.h"
 
 SidebarPreviewLayers::SidebarPreviewLayers(Control* control, GladeGui* gui, SidebarToolbar* toolbar):
         SidebarPreviewBase(control, gui, toolbar), lc(control->getLayerController()) {

@@ -1,10 +1,10 @@
-#include "DeviceListHelper.h"
+#include "util/DeviceListHelper.h"
 
 #include <algorithm>
 #include <utility>
 #include <vector>
 
-#include "i18n.h"
+#include "util/i18n.h"
 
 void storeNewUnlistedDevice(std::vector<InputDevice>& deviceList, GdkDevice* device) {
     // This could potentially be problematic with systems having a multitude of input devices as it searches linearily

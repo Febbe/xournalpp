@@ -10,8 +10,8 @@
 #include "undo/PageBackgroundChangedUndoAction.h"
 
 #include "Control.h"
-#include "XojMsgBox.h"
-#include "i18n.h"
+#include "util/XojMsgBox.h"
+#include "util/i18n.h"
 
 
 PageBackgroundChangeController::PageBackgroundChangeController(Control* control):

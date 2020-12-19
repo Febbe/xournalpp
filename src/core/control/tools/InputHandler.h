@@ -21,7 +21,7 @@
 #include "model/PageRef.h"
 #include "model/Stroke.h"
 
-#include "XournalType.h"
+#include "util/XournalType.h"
 
 class DocumentView;
 class XournalView;

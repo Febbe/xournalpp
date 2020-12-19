@@ -15,12 +15,12 @@
 #include <vector>
 
 #include "control/Control.h"
-#include "control/settings/Settings.h"w
+#include "control/settings/Settings.h"
 
 #include "AudioQueue.h"
 #include "PortAudioConsumer.h"
 #include "VorbisProducer.h"
-#include "XournalType.h"
+#include "util/XournalType.h"
 
 class AudioPlayer final {
 public:

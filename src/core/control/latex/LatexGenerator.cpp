@@ -7,7 +7,7 @@
 
 #include <glib.h>
 
-#include "i18n.h"
+#include "util/i18n.h"
 
 LatexGenerator::LatexGenerator(const LatexSettings& settings): settings(settings) {}
 

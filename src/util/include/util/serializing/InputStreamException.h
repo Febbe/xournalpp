@@ -15,7 +15,7 @@
 #include <string>
 #include <vector>
 
-#include "XournalType.h"
+#include "util/XournalType.h"
 
 class InputStreamException: public std::exception {
 public:

@@ -10,10 +10,10 @@
 #include "pdf/base/XojPdfExportFactory.h"
 
 #include "ImageExport.h"
-#include "PathUtil.h"
+#include "util/PathUtil.h"
 #include "SaveJob.h"
-#include "XojMsgBox.h"
-#include "i18n.h"
+#include "util/XojMsgBox.h"
+#include "util/i18n.h"
 
 
 CustomExportJob::CustomExportJob(Control* control): BaseExportJob(control, _("Custom Export")) {

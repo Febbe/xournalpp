@@ -24,7 +24,7 @@
 #include "model/Text.h"
 
 #include "ElementContainer.h"
-#include "XournalType.h"
+#include "util/XournalType.h"
 
 class EditSelection;
 class MainBackgroundPainter;

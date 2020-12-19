@@ -14,8 +14,8 @@
 #include "ToolItemDragCurrentData.h"
 #include "ToolbarDragDropHandler.h"
 #include "ToolbarDragDropHelper.h"
-#include "Util.h"
-#include "i18n.h"
+#include "util/Util.h"
+#include "util/i18n.h"
 
 using ToolItemDragData = struct _ToolItemDragData;
 

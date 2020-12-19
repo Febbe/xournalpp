@@ -5,7 +5,7 @@
 #include "gui/toolbarMenubar/model/ToolbarData.h"
 #include "gui/toolbarMenubar/model/ToolbarModel.h"
 
-#include "i18n.h"
+#include "util/i18n.h"
 
 enum { COLUMN_STRING, COLUMN_BOLD, COLUMN_POINTER, COLUMN_EDITABLE, N_COLUMNS };
 

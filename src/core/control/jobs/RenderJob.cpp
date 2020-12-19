@@ -10,8 +10,8 @@
 #include "view/DocumentView.h"
 #include "view/PdfView.h"
 
-#include "Rectangle.h"
-#include "Util.h"
+#include "util/Rectangle.h"
+#include "util/Util.h"
 
 RenderJob::RenderJob(XojPageView* view): view(view) {}
 

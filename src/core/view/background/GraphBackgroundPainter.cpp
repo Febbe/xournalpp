@@ -2,7 +2,7 @@
 
 #include <cmath>
 
-#include "Util.h"
+#include "util/Util.h"
 
 GraphBackgroundPainter::GraphBackgroundPainter() = default;
 

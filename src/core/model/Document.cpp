@@ -8,12 +8,12 @@
 #include "pdf/base/XojPdfAction.h"
 
 #include "LinkDestination.h"
-#include "PathUtil.h"
-#include "Stacktrace.h"
-#include "Util.h"
+#include "util/PathUtil.h"
+#include "util/Stacktrace.h"
+#include "util/Util.h"
 #include "XojPage.h"
 #include "filesystem.h"
-#include "i18n.h"
+#include "util/i18n.h"
 
 Document::Document(DocumentHandler* handler): handler(handler) { g_mutex_init(&this->documentLock); }
 

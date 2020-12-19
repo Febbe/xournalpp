@@ -14,7 +14,7 @@
 #include <string>
 #include <vector>
 
-#include "XournalType.h"
+#include "util/XournalType.h"
 
 /**
  * @brief Buttons that can have a configuration attached to them

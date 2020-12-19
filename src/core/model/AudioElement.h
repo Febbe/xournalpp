@@ -14,11 +14,11 @@
 #include <string>
 #include <vector>
 
-#include "serializing/ObjectInputStream.h"
-#include "serializing/ObjectOutputStream.h"
+#include "util/serializing/ObjectInputStream.h"
+#include "util/serializing/ObjectOutputStream.h"
 
 #include "Element.h"
-#include "XournalType.h"
+#include "util/XournalType.h"
 
 class AudioElement: public Element {
 protected:

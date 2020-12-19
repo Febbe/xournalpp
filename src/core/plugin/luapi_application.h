@@ -19,8 +19,8 @@
 #include "control/pagetype/PageTypeHandler.h"
 #include "gui/widgets/XournalWidget.h"
 
-#include "StringUtils.h"
-#include "XojMsgBox.h"
+#include "util/StringUtils.h"
+#include "util/XojMsgBox.h"
 using std::map;
 
 /**

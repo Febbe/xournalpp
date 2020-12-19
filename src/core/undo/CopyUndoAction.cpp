@@ -4,7 +4,7 @@
 #include "gui/XournalppCursor.h"
 #include "model/PageRef.h"
 
-#include "i18n.h"
+#include "util/i18n.h"
 
 CopyUndoAction::CopyUndoAction(const PageRef& pageref, int pageNr): UndoAction("CopyUndoAction") {
     this->page = pageref;

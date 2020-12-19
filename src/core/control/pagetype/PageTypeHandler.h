@@ -17,7 +17,7 @@
 
 #include "model/PageType.h"
 
-#include "XournalType.h"
+#include "util/XournalType.h"
 #include "filesystem.h"
 
 class PageTypeInfo {

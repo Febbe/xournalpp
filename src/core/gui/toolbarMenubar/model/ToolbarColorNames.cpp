@@ -8,7 +8,7 @@
 #include <glib/gstdio.h>
 #include <util/PathUtil.h>
 
-#include "i18n.h"
+#include "util/i18n.h"
 
 namespace {
 

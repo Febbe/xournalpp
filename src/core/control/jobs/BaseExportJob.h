@@ -15,8 +15,8 @@
 #include <vector>
 
 #include "BlockingJob.h"
-#include "PathUtil.h"
-#include "XournalType.h"
+#include "util/PathUtil.h"
+#include "util/XournalType.h"
 #include "filesystem.h"
 
 class Control;

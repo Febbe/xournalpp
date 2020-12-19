@@ -6,8 +6,8 @@
 #include "model/LinkDestination.h"
 #include "model/XojPage.h"
 
-#include "Util.h"
-#include "i18n.h"
+#include "util/Util.h"
+#include "util/i18n.h"
 
 SidebarIndexPage::SidebarIndexPage(Control* control, SidebarToolbar* toolbar): AbstractSidebarPage(control, toolbar) {
     this->treeViewBookmarks = gtk_tree_view_new();

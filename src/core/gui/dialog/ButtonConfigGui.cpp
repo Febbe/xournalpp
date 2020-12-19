@@ -7,8 +7,8 @@
 #include "util/DeviceListHelper.h"
 
 #include "SettingsDialog.h"
-#include "Util.h"
-#include "i18n.h"
+#include "util/Util.h"
+#include "util/i18n.h"
 
 #define ADD_TYPE_CB(icon, name, action) addToolToList(typeModel, icon, name, action)
 

@@ -15,7 +15,7 @@
 #include "control/settings/Settings.h"
 #include "gui/GladeGui.h"
 
-#include "PageRange.h"
+#include "util/PageRange.h"
 
 class ExportDialog: public GladeGui {
 public:

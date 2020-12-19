@@ -19,7 +19,7 @@
 
 #include "pdf/base/XojPdfPage.h"
 
-#include "XournalType.h"
+#include "util/XournalType.h"
 using std::list;
 
 class PdfCacheEntry;

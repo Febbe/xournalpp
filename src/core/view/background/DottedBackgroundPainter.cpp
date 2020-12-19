@@ -1,6 +1,6 @@
 #include "DottedBackgroundPainter.h"
 
-#include "Util.h"
+#include "util/Util.h"
 
 DottedBackgroundPainter::DottedBackgroundPainter() = default;
 

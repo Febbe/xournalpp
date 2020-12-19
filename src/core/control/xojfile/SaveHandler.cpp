@@ -20,8 +20,8 @@
 #include "model/TexImage.h"
 #include "model/Text.h"
 
-#include "PathUtil.h"
-#include "i18n.h"
+#include "util/PathUtil.h"
+#include "util/i18n.h"
 
 SaveHandler::SaveHandler() {
     this->root = nullptr;

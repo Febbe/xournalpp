@@ -19,7 +19,7 @@
 #include "gui/GladeGui.h"
 #include "gui/sidebar/AbstractSidebarPage.h"
 
-#include "XournalType.h"
+#include "util/XournalType.h"
 
 class PdfCache;
 class SidebarLayout;

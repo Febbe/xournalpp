@@ -13,7 +13,7 @@
 
 #include <gtk/gtk.h>
 
-#include "Range.h"
+#include "util/Range.h"
 
 class Element;
 

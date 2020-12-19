@@ -17,7 +17,7 @@
 #include <vector>
 
 #include "Job.h"
-#include "XournalType.h"
+#include "util/XournalType.h"
 
 /**
  * @file Scheduler.h

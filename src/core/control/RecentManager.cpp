@@ -4,10 +4,10 @@
 #include <filesystem.h>
 #include <gtk/gtk.h>
 
-#include "PathUtil.h"
-#include "StringUtils.h"
-#include "Util.h"
-#include "i18n.h"
+#include "util/PathUtil.h"
+#include "util/StringUtils.h"
+#include "util/Util.h"
+#include "util/i18n.h"
 
 #define MIME "application/x-xoj"
 #define MIME_PDF "application/x-pdf"

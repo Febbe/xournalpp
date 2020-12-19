@@ -20,7 +20,7 @@
 #include "gui/sidebar/previews/page/SidebarPreviewPageEntry.h"
 
 #include "Scheduler.h"
-#include "XournalType.h"
+#include "util/XournalType.h"
 
 class XournalScheduler: public Scheduler {
 public:

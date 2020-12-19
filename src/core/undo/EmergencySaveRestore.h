@@ -16,7 +16,7 @@
 #include <vector>
 
 #include "UndoAction.h"
-#include "XournalType.h"
+#include "util/XournalType.h"
 
 class EmergencySaveRestore: public UndoAction {
 public:

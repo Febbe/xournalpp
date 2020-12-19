@@ -12,8 +12,8 @@
 #pragma once
 
 #include "Attribute.h"
-#include "OutputStream.h"
-#include "Util.h"
+#include "util/OutputStream.h"
+#include "util/Util.h"
 
 class ProgressListener;
 

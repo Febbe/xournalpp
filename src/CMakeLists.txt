@@ -27,16 +27,16 @@ add_library(xoj::stacktrace ALIAS gnu_stacktrace)
 ##############################
 
 add_subdirectory(util)
-
-add_subdirectory(xoj-preview-extractor)
-
+##############################
+# xournalpp-core
+##############################
 add_subdirectory(core)
 
 ##############################
 # xournalpp main program
 ##############################
 
-add_executable(xournalpp Xournalpp.cpp)
+add_executable(xournalpp core/Xournalpp.cpp)
 target_link_libraries(xournalpp PRIVATE xoj::core)
 
 install(TARGETS xournalpp
@@ -48,3 +48,4 @@ if (ENABLE_CPPUNIT)
     add_subdirectory(${CMAKE_SOURCE_DIR}/test ${CMAKE_BINARY_DIR}/test)
 endif (ENABLE_CPPUNIT)
 
+add_subdirectory(xoj-preview-extractor)

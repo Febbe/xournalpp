@@ -2,7 +2,7 @@
 
 #include <config.h>
 
-#include "i18n.h"
+#include "util/i18n.h"
 
 PdfView::PdfView() = default;
 

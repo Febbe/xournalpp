@@ -19,7 +19,7 @@
 #include "control/tools/CursorSelectionType.h"
 #include "gui/inputdevices/InputEvents.h"
 
-#include "XournalType.h"
+#include "util/XournalType.h"
 
 class Control;
 

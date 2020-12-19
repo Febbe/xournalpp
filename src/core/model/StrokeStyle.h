@@ -15,7 +15,7 @@
 #include <vector>
 
 #include "LineStyle.h"
-#include "XournalType.h"
+#include "util/XournalType.h"
 
 class Stroke;
 

@@ -7,7 +7,7 @@
 #include "gui/widgets/gtkmenutooltogglebutton.h"
 
 #include "ToolMenuHandler.h"
-#include "i18n.h"
+#include "util/i18n.h"
 
 ToolSelectCombocontrol::ToolSelectCombocontrol(ToolMenuHandler* toolMenuHandler, ActionHandler* handler, string id):
         ToolButton(handler, std::move(id), ACTION_TOOL_SELECT_RECT, GROUP_TOOL, true, "rect-select",

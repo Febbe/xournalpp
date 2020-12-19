@@ -9,7 +9,7 @@
 #include "undo/RemoveLayerUndoAction.h"
 
 #include "LayerCtrlListener.h"
-#include "Util.h"
+#include "util/Util.h"
 
 LayerController::LayerController(Control* control): control(control), selectedPage(npos) {}
 

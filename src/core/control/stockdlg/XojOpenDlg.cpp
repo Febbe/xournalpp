@@ -3,10 +3,10 @@
 #include <config.h>
 #include <gio/gio.h>
 
-#include "PathUtil.h"
-#include "StringUtils.h"
-#include "XojPreviewExtractor.h"
-#include "i18n.h"
+#include "util/PathUtil.h"
+#include "util/StringUtils.h"
+#include "util/XojPreviewExtractor.h"
+#include "util/i18n.h"
 
 XojOpenDlg::XojOpenDlg(GtkWindow* win, Settings* settings): win(win), settings(settings) {
     dialog = gtk_file_chooser_dialog_new(_("Open file"), win, GTK_FILE_CHOOSER_ACTION_OPEN, _("_Cancel"),

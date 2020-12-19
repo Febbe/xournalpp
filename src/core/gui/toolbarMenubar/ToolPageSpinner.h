@@ -15,7 +15,7 @@
 #include <vector>
 
 #include "AbstractToolItem.h"
-#include "XournalType.h"
+#include "util/XournalType.h"
 
 class GladeGui;
 class SpinPageAdapter;

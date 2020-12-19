@@ -12,9 +12,9 @@
 #include "model/StrokeStyle.h"
 #include "model/XojPage.h"
 
-#include "GzUtil.h"
+#include "util/GzUtil.h"
 #include "LoadHandlerHelper.h"
-#include "i18n.h"
+#include "util/i18n.h"
 
 #define error2(var, ...)                                                                \
     if (var == nullptr) {                                                               \

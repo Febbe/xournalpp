@@ -22,7 +22,7 @@
 #include "control/settings/SettingsEnums.h"
 
 #include "Tool.h"
-#include "XournalType.h"
+#include "util/XournalType.h"
 
 // enum for ptrs that are dynamically pointing to different tools
 /**

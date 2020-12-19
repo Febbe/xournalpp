@@ -14,7 +14,7 @@
 #include <string>
 #include <vector>
 
-#include "XournalType.h"
+#include "util/XournalType.h"
 #include "filesystem.h"
 
 class ToolbarData;

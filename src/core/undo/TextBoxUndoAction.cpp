@@ -5,8 +5,8 @@
 #include "model/Layer.h"
 #include "model/PageRef.h"
 
-#include "Rectangle.h"
-#include "i18n.h"
+#include "util/Rectangle.h"
+#include "util/i18n.h"
 
 TextBoxUndoAction::TextBoxUndoAction(const PageRef& page, Layer* layer, Element* element, Element* oldelement):
         UndoAction("TextBoxUndoAction") {

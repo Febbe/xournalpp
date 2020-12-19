@@ -8,9 +8,9 @@
 #include "gui/toolbarMenubar/icon/ColorSelectImage.h"
 #include "gui/toolbarMenubar/model/ToolbarColorNames.h"
 
-#include "StringUtils.h"
-#include "Util.h"
-#include "i18n.h"
+#include "util/StringUtils.h"
+#include "util/Util.h"
+#include "util/i18n.h"
 
 bool ColorToolItem::inUpdate = false;
 

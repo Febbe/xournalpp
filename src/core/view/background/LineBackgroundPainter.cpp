@@ -1,6 +1,6 @@
 #include "LineBackgroundPainter.h"
 
-#include "Util.h"
+#include "util/Util.h"
 
 LineBackgroundPainter::LineBackgroundPainter(bool verticalLine): verticalLine(verticalLine) {}
 

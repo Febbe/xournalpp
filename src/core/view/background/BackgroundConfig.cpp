@@ -2,7 +2,7 @@
 
 #include <utility>
 
-#include "StringUtils.h"
+#include "util/StringUtils.h"
 
 BackgroundConfig::BackgroundConfig(const string& config) {
     for (const string& s: StringUtils::split(config, ',')) {

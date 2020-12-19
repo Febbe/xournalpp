@@ -26,7 +26,7 @@
 #include "model/PageRef.h"
 #include "model/Text.h"
 
-#include "XournalType.h"
+#include "util/XournalType.h"
 #include "filesystem.h"
 
 class Control;

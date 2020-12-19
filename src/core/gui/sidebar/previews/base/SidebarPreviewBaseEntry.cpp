@@ -4,7 +4,7 @@
 #include "gui/Shadow.h"
 
 #include "SidebarPreviewBase.h"
-#include "i18n.h"
+#include "util/i18n.h"
 
 SidebarPreviewBaseEntry::SidebarPreviewBaseEntry(SidebarPreviewBase* sidebar, const PageRef& page):
         sidebar(sidebar), page(page) {

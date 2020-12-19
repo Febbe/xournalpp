@@ -1,7 +1,7 @@
 #include "LoadHandlerHelper.h"
 
 #include "LoadHandler.h"
-#include "i18n.h"
+#include "util/i18n.h"
 
 #define error(...)                                                                                     \
     if (loadHandler->error == nullptr) {                                                               \

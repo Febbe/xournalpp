@@ -25,7 +25,7 @@
 #include "model/Text.h"
 
 #include "LoadHandlerHelper.h"
-#include "XournalType.h"
+#include "util/XournalType.h"
 
 enum ParserPosition {
     PARSER_POS_NOT_STARTED = 1,  // Waiting for opening <xounal> tag

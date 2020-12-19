@@ -18,7 +18,7 @@
 
 #include "gui/sidebar/previews/base/SidebarPreviewBase.h"
 
-#include "XournalType.h"
+#include "util/XournalType.h"
 
 class SidebarPreviewPages: public SidebarPreviewBase {
 public:

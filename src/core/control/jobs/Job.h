@@ -14,7 +14,7 @@
 #include <string>
 #include <vector>
 
-#include "XournalType.h"
+#include "util/XournalType.h"
 
 enum JobType { JOB_TYPE_BLOCKING, JOB_TYPE_PREVIEW, JOB_TYPE_RENDER, JOB_TYPE_AUTOSAVE };
 

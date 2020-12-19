@@ -4,8 +4,8 @@
 #include "model/Text.h"
 #include "pdf/base/XojPdfPage.h"
 
-#include "StringUtils.h"
-#include "Util.h"
+#include "util/StringUtils.h"
+#include "util/Util.h"
 
 TextView::TextView() = default;
 

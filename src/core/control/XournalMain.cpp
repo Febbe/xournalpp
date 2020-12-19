@@ -19,14 +19,14 @@
 #include "pdf/base/XojPdfExportFactory.h"
 
 #include "Control.h"
-#include "Stacktrace.h"
-#include "StringUtils.h"
-#include "XojMsgBox.h"
+#include "util/Stacktrace.h"
+#include "util/StringUtils.h"
+#include "util/XojMsgBox.h"
 #include "config-dev.h"
 #include "config-paths.h"
 #include "config.h"
 #include "filesystem.h"
-#include "i18n.h"
+#include "util/i18n.h"
 
 #if __linux__
 #include <libgen.h>

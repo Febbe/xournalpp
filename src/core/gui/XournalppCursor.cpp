@@ -4,9 +4,9 @@
 
 #include "control/Control.h"
 
-#include "Util.h"
+#include "util/Util.h"
 #include "XournalView.h"
-#include "pixbuf-utils.h"
+#include "util/pixbuf-utils.h"
 
 
 // NOTE:  Every cursor change must result in the setting of this->currentCursor to the new cursor type even for custom

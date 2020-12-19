@@ -16,7 +16,7 @@
 #include <gtk/gtk.h>
 
 #include "Element.h"
-#include "Point.h"
+#include "util/Point.h"
 #include "Stroke.h"
 
 

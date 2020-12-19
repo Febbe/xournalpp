@@ -18,8 +18,8 @@
 #include "Layer.h"
 #include "PageHandler.h"
 #include "PageType.h"
-#include "Util.h"
-#include "XournalType.h"
+#include "util/Util.h"
+#include "util/XournalType.h"
 
 
 class XojPage: public PageHandler {

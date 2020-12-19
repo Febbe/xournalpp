@@ -1,6 +1,6 @@
 #include "XmlTextNode.h"
 
-#include "StringUtils.h"
+#include "util/StringUtils.h"
 
 XmlTextNode::XmlTextNode(const char* tag, std::string text): XmlAudioNode(tag), text(std::move(text)) {}
 

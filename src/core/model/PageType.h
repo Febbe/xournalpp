@@ -14,7 +14,7 @@
 #include <string>
 #include <vector>
 
-#include "XournalType.h"
+#include "util/XournalType.h"
 
 enum class PageTypeFormat { Plain, Ruled, Lined, Staves, Graph, Dotted, IsoDotted, IsoGraph, Pdf, Image, Copy };
 

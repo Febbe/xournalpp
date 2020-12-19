@@ -16,7 +16,7 @@
 
 #include "gui/XojColor.h"
 
-#include "XournalType.h"
+#include "util/XournalType.h"
 
 class CustomizeableColorList {
 public:

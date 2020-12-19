@@ -15,7 +15,7 @@
 #include <vector>
 
 #include "Element.h"
-#include "XournalType.h"
+#include "util/XournalType.h"
 
 
 class Layer {

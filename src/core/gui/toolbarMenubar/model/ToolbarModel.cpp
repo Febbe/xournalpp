@@ -3,9 +3,9 @@
 #include <fstream>
 
 #include "ToolbarData.h"
-#include "XojMsgBox.h"
+#include "util/XojMsgBox.h"
 #include "filesystem.h"
-#include "i18n.h"
+#include "util/i18n.h"
 
 ToolbarModel::ToolbarModel() = default;
 

@@ -15,7 +15,7 @@
 #include <vector>
 
 #include "ToolBase.h"
-#include "XournalType.h"
+#include "util/XournalType.h"
 
 
 class Tool: public ToolBase {

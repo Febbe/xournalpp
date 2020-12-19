@@ -19,7 +19,7 @@
 
 #include "control/settings/LatexSettings.h"
 
-#include "Color.h"
+#include "util/Color.h"
 #include "filesystem.h"
 
 class LatexGenerator {

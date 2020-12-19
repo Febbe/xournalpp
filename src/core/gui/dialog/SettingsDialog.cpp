@@ -7,10 +7,10 @@
 #include "gui/widgets/ZoomCallib.h"
 
 #include "ButtonConfigGui.h"
-#include "DeviceListHelper.h"
-#include "StringUtils.h"
-#include "Util.h"
-#include "i18n.h"
+#include "util/DeviceListHelper.h"
+#include "util/StringUtils.h"
+#include "util/Util.h"
+#include "util/i18n.h"
 
 SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* settings, Control* control):
         GladeGui(gladeSearchPath, "settings.glade", "settingsDialog"),

@@ -14,14 +14,14 @@
 
 #include "FontButton.h"
 #include "MenuItem.h"
-#include "StringUtils.h"
+#include "util/StringUtils.h"
 #include "ToolButton.h"
 #include "ToolDrawCombocontrol.h"
 #include "ToolPageLayer.h"
 #include "ToolPageSpinner.h"
 #include "ToolSelectCombocontrol.h"
 #include "ToolZoomSlider.h"
-#include "i18n.h"
+#include "util/i18n.h"
 
 ToolMenuHandler::ToolMenuHandler(Control* control, GladeGui* gui, GtkWindow* parent) {
     this->parent = parent;

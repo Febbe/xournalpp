@@ -6,9 +6,9 @@
 #include "util/DeviceListHelper.h"
 
 #include "ButtonConfig.h"
-#include "Util.h"
+#include "util/Util.h"
 #include "filesystem.h"
-#include "i18n.h"
+#include "util/i18n.h"
 
 constexpr auto const* DEFAULT_FONT = "Sans";
 constexpr auto DEFAULT_FONT_SIZE = 12;

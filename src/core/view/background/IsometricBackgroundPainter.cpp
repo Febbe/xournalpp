@@ -2,7 +2,7 @@
 
 #include <cmath>
 
-#include "Util.h"
+#include "util/Util.h"
 
 IsometricBackgroundPainter::IsometricBackgroundPainter(bool drawLines): drawLines(drawLines) {}
 

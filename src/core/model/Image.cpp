@@ -2,10 +2,10 @@
 
 #include <utility>
 
-#include "serializing/ObjectInputStream.h"
-#include "serializing/ObjectOutputStream.h"
+#include "util/serializing/ObjectInputStream.h"
+#include "util/serializing/ObjectOutputStream.h"
 
-#include "pixbuf-utils.h"
+#include "util/pixbuf-utils.h"
 
 Image::Image(): Element(ELEMENT_IMAGE) {}
 

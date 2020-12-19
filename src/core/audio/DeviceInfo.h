@@ -15,7 +15,7 @@
 
 #include <portaudiocpp/PortAudioCpp.hxx>
 
-#include "XournalType.h"
+#include "util/XournalType.h"
 
 class DeviceInfo {
 public:

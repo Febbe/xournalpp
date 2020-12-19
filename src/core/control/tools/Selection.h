@@ -18,8 +18,8 @@
 #include "model/Element.h"
 #include "model/PageRef.h"
 
-#include "Util.h"
-#include "XournalType.h"
+#include "util/Util.h"
+#include "util/XournalType.h"
 
 class Selection: public ShapeContainer {
 public:

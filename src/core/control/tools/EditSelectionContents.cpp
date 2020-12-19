@@ -22,8 +22,8 @@
 #include "undo/SizeUndoAction.h"
 #include "undo/UndoRedoHandler.h"
 #include "view/DocumentView.h"
-#include "serializing/ObjectInputStream.h"
-#include "serializing/ObjectOutputStream.h"
+#include "util/serializing/ObjectInputStream.h"
+#include "util/serializing/ObjectOutputStream.h"
 
 #include "Selection.h"
 

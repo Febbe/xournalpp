@@ -9,8 +9,8 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 
-#include "PathUtil.h"
-#include "XojMsgBox.h"
+#include "util/PathUtil.h"
+#include "util/XojMsgBox.h"
 
 using namespace std;
 

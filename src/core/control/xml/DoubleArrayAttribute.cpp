@@ -2,7 +2,7 @@
 
 #include <algorithm>
 
-#include "Util.h"
+#include "util/Util.h"
 
 DoubleArrayAttribute::DoubleArrayAttribute(const char* name, std::vector<double>&& values):
         XMLAttribute(name), values(std::move(values)) {}

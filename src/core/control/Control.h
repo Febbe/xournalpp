@@ -29,11 +29,11 @@
 #include "Actions.h"
 #include "AudioController.h"
 #include "ClipboardHandler.h"
-#include "PathUtil.h"
+#include "util/PathUtil.h"
 #include "RecentManager.h"
 #include "ScrollHandler.h"
 #include "ToolHandler.h"
-#include "XournalType.h"
+#include "util/XournalType.h"
 
 class AudioController;
 class FullscreenHandler;

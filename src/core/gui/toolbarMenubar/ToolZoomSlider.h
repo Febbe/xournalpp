@@ -17,7 +17,7 @@
 #include "control/zoom/ZoomListener.h"
 
 #include "AbstractToolItem.h"
-#include "XournalType.h"
+#include "util/XournalType.h"
 
 #define SCALE_LOG_OFFSET 0.20753
 

@@ -4,7 +4,7 @@
 
 #include <config.h>
 
-#include "i18n.h"
+#include "util/i18n.h"
 
 FontButton::FontButton(ActionHandler* handler, GladeGui* gui, string id, ActionType type, string description,
                        GtkWidget* menuitem):

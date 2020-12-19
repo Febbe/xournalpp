@@ -20,7 +20,7 @@
 #include "model/DocumentChangeType.h"
 #include "model/DocumentListener.h"
 
-#include "XournalType.h"
+#include "util/XournalType.h"
 
 class Control;
 class SidebarToolbar;

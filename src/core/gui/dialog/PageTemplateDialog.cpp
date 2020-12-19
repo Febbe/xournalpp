@@ -9,10 +9,10 @@
 #include "model/FormatDefinitions.h"
 
 #include "FormatDialog.h"
-#include "PathUtil.h"
-#include "Util.h"
+#include "util/PathUtil.h"
+#include "util/Util.h"
 #include "filesystem.h"
-#include "i18n.h"
+#include "util/i18n.h"
 using std::ofstream;
 
 PageTemplateDialog::PageTemplateDialog(GladeSearchpath* gladeSearchPath, Settings* settings, PageTypeHandler* types):

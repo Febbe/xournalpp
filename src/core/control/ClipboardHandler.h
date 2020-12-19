@@ -18,7 +18,7 @@
 
 #include "control/tools/EditSelection.h"
 
-#include "XournalType.h"
+#include "util/XournalType.h"
 
 class ObjectInputStream;
 

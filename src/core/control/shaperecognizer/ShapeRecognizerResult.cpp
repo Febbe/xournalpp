@@ -1,7 +1,7 @@
 #include "ShapeRecognizerResult.h"
 
 #include "ShapeRecognizer.h"
-#include "Stacktrace.h"
+#include "util/Stacktrace.h"
 
 ShapeRecognizerResult::ShapeRecognizerResult(Stroke* result) { this->recognized = result; }
 

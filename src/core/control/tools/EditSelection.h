@@ -24,7 +24,7 @@
 
 #include "CursorSelectionType.h"
 #include "SnapToGridInputHandler.h"
-#include "XournalType.h"
+#include "util/XournalType.h"
 
 class UndoRedoHandler;
 class Layer;

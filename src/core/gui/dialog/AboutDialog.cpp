@@ -3,7 +3,7 @@
 #include <config.h>
 #include <gtk/gtk.h>
 
-#include "StringUtils.h"
+#include "util/StringUtils.h"
 
 AboutDialog::AboutDialog(GladeSearchpath* gladeSearchPath): GladeGui(gladeSearchPath, "about.glade", "aboutDialog") {
     gtk_label_set_markup(GTK_LABEL(get("lbBuildDate")), __DATE__ ", " __TIME__);

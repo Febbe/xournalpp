@@ -1,7 +1,7 @@
 #include "LineStyle.h"
 
-#include "serializing/ObjectInputStream.h"
-#include "serializing/ObjectOutputStream.h"
+#include "util/serializing/ObjectInputStream.h"
+#include "util/serializing/ObjectOutputStream.h"
 
 
 LineStyle::LineStyle() = default;

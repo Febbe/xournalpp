@@ -22,7 +22,7 @@
 #include "view/ElementContainer.h"
 
 #include "CursorSelectionType.h"
-#include "XournalType.h"
+#include "util/XournalType.h"
 
 class UndoRedoHandler;
 class Layer;

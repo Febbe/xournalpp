@@ -4,7 +4,7 @@
 
 #include "control/Control.h"
 
-#include "i18n.h"
+#include "util/i18n.h"
 
 SearchBar::SearchBar(Control* control): control(control) {
     MainWindow* win = control->getWindow();

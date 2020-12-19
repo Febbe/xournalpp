@@ -4,8 +4,8 @@
 #include "model/Font.h"
 #include "model/Text.h"
 
-#include "Rectangle.h"
-#include "i18n.h"
+#include "util/Rectangle.h"
+#include "util/i18n.h"
 
 class FontUndoActionEntry {
 public:

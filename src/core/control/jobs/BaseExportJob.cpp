@@ -4,9 +4,9 @@
 
 #include "control/Control.h"
 
-#include "StringUtils.h"
-#include "XojMsgBox.h"
-#include "i18n.h"
+#include "util/StringUtils.h"
+#include "util/XojMsgBox.h"
+#include "util/i18n.h"
 
 BaseExportJob::BaseExportJob(Control* control, const string& name): BlockingJob(control, name) {}
 

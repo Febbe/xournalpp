@@ -16,7 +16,7 @@
 
 #include <gtk/gtk.h>
 
-#include "XournalType.h"
+#include "util/XournalType.h"
 #include "filesystem.h"
 
 class RecentManagerListener {

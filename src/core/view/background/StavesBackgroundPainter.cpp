@@ -1,6 +1,6 @@
 #include "StavesBackgroundPainter.h"
 
-#include "Util.h"
+#include "util/Util.h"
 
 StavesBackgroundPainter::StavesBackgroundPainter() = default;
 

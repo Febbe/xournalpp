@@ -6,7 +6,7 @@
 #include "model/PageRef.h"
 
 #include "PageLayerPosEntry.h"
-#include "i18n.h"
+#include "util/i18n.h"
 
 AddUndoAction::AddUndoAction(const PageRef& page, bool eraser): UndoAction("AddUndoAction") {
     this->page = page;

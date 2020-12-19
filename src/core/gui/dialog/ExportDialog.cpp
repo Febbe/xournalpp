@@ -2,8 +2,8 @@
 
 #include <config.h>
 
-#include "PageRange.h"
-#include "i18n.h"
+#include "util/PageRange.h"
+#include "util/i18n.h"
 
 ExportDialog::ExportDialog(GladeSearchpath* gladeSearchPath):
         GladeGui(gladeSearchPath, "exportSettings.glade", "exportDialog") {

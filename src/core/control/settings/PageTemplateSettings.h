@@ -17,7 +17,7 @@
 #include "control/Tool.h"
 #include "model/PageType.h"
 
-#include "XournalType.h"
+#include "util/XournalType.h"
 
 class PageTemplateSettings {
 public:

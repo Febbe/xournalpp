@@ -4,8 +4,8 @@
 #include "model/Document.h"
 
 #include "PdfElementView.h"
-#include "Util.h"
-#include "i18n.h"
+#include "util/Util.h"
+#include "util/i18n.h"
 
 
 PdfPagesDialog::PdfPagesDialog(GladeSearchpath* gladeSearchPath, Document* doc, Settings* settings):

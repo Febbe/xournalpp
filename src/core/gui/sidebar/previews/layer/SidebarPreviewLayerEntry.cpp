@@ -3,7 +3,7 @@
 #include "gui/Shadow.h"
 
 #include "SidebarPreviewLayers.h"
-#include "i18n.h"
+#include "util/i18n.h"
 
 
 SidebarPreviewLayerEntry::SidebarPreviewLayerEntry(SidebarPreviewBase* sidebar, const PageRef& page, int layer,

@@ -1,6 +1,6 @@
 #include "UndoAction.h"
 
-#include "Rectangle.h"
+#include "util/Rectangle.h"
 
 UndoAction::UndoAction(std::string className): className(std::move(className)) {}
 

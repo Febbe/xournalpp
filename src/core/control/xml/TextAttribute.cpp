@@ -2,7 +2,7 @@
 
 #include <utility>
 
-#include "StringUtils.h"
+#include "util/StringUtils.h"
 
 TextAttribute::TextAttribute(string name, string value): XMLAttribute(std::move(name)), value(std::move(value)) {}
 

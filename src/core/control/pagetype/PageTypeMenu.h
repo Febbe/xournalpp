@@ -18,7 +18,7 @@
 
 #include "model/PageType.h"
 
-#include "XournalType.h"
+#include "util/XournalType.h"
 
 class PageTypeHandler;
 class PageTypeHandler;

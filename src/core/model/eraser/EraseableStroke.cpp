@@ -6,7 +6,7 @@
 
 #include "EraseableStrokePart.h"
 #include "PartList.h"
-#include "Range.h"
+#include "util/Range.h"
 
 EraseableStroke::EraseableStroke(Stroke* stroke): stroke(stroke) {
     this->parts = new PartList();

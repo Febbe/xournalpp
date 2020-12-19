@@ -17,7 +17,7 @@
 #include "model/TexImage.h"
 #include "model/Text.h"
 
-#include "i18n.h"
+#include "util/i18n.h"
 
 XojExportHandler::XojExportHandler() = default;
 

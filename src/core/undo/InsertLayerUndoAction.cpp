@@ -7,7 +7,7 @@
 #include "model/Layer.h"
 #include "model/PageRef.h"
 
-#include "i18n.h"
+#include "util/i18n.h"
 
 InsertLayerUndoAction::InsertLayerUndoAction(LayerController* layerController, const PageRef& page, Layer* layer,
                                              int layerPosition):

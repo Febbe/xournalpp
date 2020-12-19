@@ -2,7 +2,7 @@
 
 #include <cmath>
 
-#include "pixbuf-utils.h"
+#include "util/pixbuf-utils.h"
 
 ColorSelectImage::ColorSelectImage(Color color, bool circle): color(color), circle(circle) {
     widget = gtk_drawing_area_new();

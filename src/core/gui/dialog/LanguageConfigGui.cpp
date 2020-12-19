@@ -4,12 +4,12 @@
 
 #include "control/settings/Settings.h"
 
-#include "StringUtils.h"
-#include "XojMsgBox.h"
+#include "util/StringUtils.h"
+#include "util/XojMsgBox.h"
 #include "config-paths.h"
 #include "config.h"
 #include "filesystem.h"
-#include "i18n.h"
+#include "util/i18n.h"
 
 #ifdef _WIN32
 #undef PACKAGE_LOCALE_DIR
@@ -17,7 +17,7 @@
 #endif
 
 #ifdef __APPLE__
-#include "Stacktrace.h"
+#include "util/Stacktrace.h"
 #undef PACKAGE_LOCALE_DIR
 const char* PACKAGE_LOCALE_DIR = (Stacktrace::getExePath() / "../Resources/share/locale").c_str();
 #endif

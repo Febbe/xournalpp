@@ -18,7 +18,7 @@
 
 #include "audio/AudioPlayer.h"
 
-#include "PathUtil.h"
+#include "util/PathUtil.h"
 #include "XournalView.h"
 #include "filesystem.h"
 
