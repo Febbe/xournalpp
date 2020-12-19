@@ -15,7 +15,7 @@
 #include <string>
 #include <vector>
 
-#include "control/settings/Settings.h"
+#include "../control/settings/Settings.h"
 
 #include "AudioQueue.h"
 #include "PortAudioProducer.h"

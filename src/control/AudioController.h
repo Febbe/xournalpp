@@ -16,8 +16,8 @@
 
 #include "gui/toolbarMenubar/ToolMenuHandler.h"
 #include "settings/Settings.h"
-#include "util/audio/AudioPlayer.h"
-#include "util/audio/AudioRecorder.h"
+#include "audio/AudioPlayer.h"
+#include "audio/AudioRecorder.h"
 
 #include "Control.h"
 #include "XournalType.h"

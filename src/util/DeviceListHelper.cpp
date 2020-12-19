@@ -41,8 +41,7 @@ void addDevicesToList(std::vector<InputDevice>& deviceList, GList* devList, bool
     }
 }
 
-auto DeviceListHelper::getDeviceList(Settings* settings, bool ignoreTouchDevices) -> vector<InputDevice> {
-    vector<InputDevice> deviceList = settings->getKnownInputDevices();
+auto DeviceListHelper::getDeviceList(std::vector<InputDevice> deviceList, bool ignoreTouchDevices) -> vector<InputDevice> {
     if (ignoreTouchDevices) {
         deviceList.erase(
                 std::remove_if(deviceList.begin(), deviceList.end(),

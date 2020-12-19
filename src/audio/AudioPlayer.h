@@ -14,8 +14,8 @@
 #include <string>
 #include <vector>
 
-#include "control/Control.h"
-#include "control/settings/Settings.h"
+#include "../control/Control.h"
+#include "../control/settings/Settings.h"
 
 #include "AudioQueue.h"
 #include "PortAudioConsumer.h"

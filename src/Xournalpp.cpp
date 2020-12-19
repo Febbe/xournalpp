@@ -9,12 +9,8 @@
  * @license GNU GPLv2
  */
 
-#include <config-dev.h>
-
 #include "control/XournalMain.h"
-
-#include "CrashHandler.h"
-#include "Stacktrace.h"
+#include "control/CrashHandler.h"
 
 #ifdef _WIN32
 #include <windows.h>

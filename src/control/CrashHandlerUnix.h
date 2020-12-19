@@ -14,6 +14,7 @@
 #include <execinfo.h>
 
 #include "PathUtil.h"
+
 using std::ofstream;
 
 static bool alreadyCrashed = false;

@@ -16,7 +16,7 @@
 #include <limits>
 #include <optional>
 
-#include "util/audio/AudioPlayer.h"
+#include "audio/AudioPlayer.h"
 
 #include "PathUtil.h"
 #include "XournalView.h"

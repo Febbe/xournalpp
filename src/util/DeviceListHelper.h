@@ -17,8 +17,6 @@
 #include <gdk/gdk.h>
 #include <gtk/gtk.h>
 
-#include "control/settings/Settings.h"
-
 using std::string;
 using std::vector;
 
@@ -42,5 +40,14 @@ private:
 };
 
 namespace DeviceListHelper {
-vector<InputDevice> getDeviceList(Settings* settings, bool ignoreTouchDevices = false);
+template <typename T>
+vector<InputDevice> getDeviceList(T, bool);
+
+vector<InputDevice> getDeviceList(vector<InputDevice>, bool ignoreTouchDevices = false);
+
+template <typename Settings>
+vector<InputDevice> getDeviceList(Settings* settings, bool ignoreTouchDevices = false){
+    return getDeviceList(settings->getKnownInputDevices(), ignoreTouchDevices);
+}
+
 }

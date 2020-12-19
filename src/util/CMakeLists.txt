@@ -8,6 +8,5 @@ target_link_libraries(util PUBLIC std::filesystem cxx17 xoj::stacktrace xoj::def
 target_compile_features(util PUBLIC ${PROJECT_CXX_FEATURES})
 target_include_directories(util PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
-        #$<INSTALL_INTERFACE:>  # <prefix>/include/mylib
         )
 add_library(xoj::util ALIAS util)

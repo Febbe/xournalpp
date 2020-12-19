@@ -8,9 +8,9 @@
 #include "control/xojfile/SaveHandler.h"
 #include "model/Document.h"
 
-#include "PathUtil.h"
-#include "Stacktrace.h"
-#include "i18n.h"
+#include "util/PathUtil.h"
+#include "util/Stacktrace.h"
+#include "util/i18n.h"
 
 static Document* document = nullptr;
 

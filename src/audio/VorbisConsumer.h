@@ -18,7 +18,7 @@
 
 #include <sndfile.h>
 
-#include "control/settings/Settings.h"
+#include "../control/settings/Settings.h"
 
 #include "AudioQueue.h"
 #include "DeviceInfo.h"

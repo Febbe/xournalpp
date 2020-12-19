@@ -16,7 +16,6 @@
 
 #include <config.h>
 
-#include "XournalType.h"
 #include "filesystem.h"
 
 class GladeSearchpath;
