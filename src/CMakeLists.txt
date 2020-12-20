@@ -14,15 +14,6 @@ target_include_directories(defaults INTERFACE ${PROJECT_BINARY_DIR}/src)
 add_library(xoj::defaults ALIAS defaults)
 
 ##############################
-# stacktrace library
-##############################
-# Todo use platform independent stacktrace library
-# Currently this works only for linux systems
-add_library(gnu_stacktrace INTERFACE)
-target_link_options(gnu_stacktrace INTERFACE $<$<AND:$<NOT:$<PLATFORM_ID:Windows>>,$<OR:$<CXX_COMPILER_ID:Clang>,$<CXX_COMPILER_ID:GNU>>>:-rdynamic>)
-add_library(xoj::stacktrace ALIAS gnu_stacktrace)
-
-##############################
 # util
 ##############################
 

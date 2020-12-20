@@ -7,7 +7,7 @@ add_library(xournalpp-core STATIC ${xournalpp_sources})
 target_compile_features(xournalpp-core PUBLIC ${PROJECT_CXX_FEATURES})
 target_link_libraries(xournalpp-core
         PRIVATE xoj::util ${xournalpp_LDFLAGS}
-        PUBLIC xoj::stacktrace xoj::defaults)
-target_include_directories(xournalpp-core PRIVATE)
-target_include_directories(xournalpp-core PRIVATE ${xournalpp_include_dirs})
+        PUBLIC xoj::defaults xoj::external_modules std::filesystem cxx17
+        )
+target_include_directories(xournalpp-core PUBLIC ${xournalpp_include_dirs})
 add_library(xoj::core ALIAS xournalpp-core)
