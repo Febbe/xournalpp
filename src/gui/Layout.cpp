@@ -14,17 +14,17 @@
 /**
  * Padding outside the pages, including shadow
  */
-constexpr auto const XOURNAL_PADDING = 10;
+constexpr auto const XOURNAL_PADDING = 10.0;
 
 /**
  * Allowance for shadow between page pairs in paired page mode
  */
-constexpr auto const XOURNAL_ROOM_FOR_SHADOW = 3;
+constexpr auto const XOURNAL_ROOM_FOR_SHADOW = 3.0;
 
 /**
  * Padding between the pages
  */
-constexpr auto const XOURNAL_PADDING_BETWEEN = 15;
+constexpr auto const XOURNAL_PADDING_BETWEEN = 15.0;
 
 
 Layout::Layout(XournalView* view, ScrollHandling* scrollHandling): view(view), scrollHandling(scrollHandling) {
@@ -116,7 +116,12 @@ auto Layout::getVisibleRect() -> Rectangle<double> {
  */
 
 constexpr auto sumIf = [](auto base, auto addend, bool predicate) {
-    if constexpr (std::is_signed_v<decltype(base)> || std::is_signed_v<decltype(addend)>) {
+    if constexpr (std::is_floating_point_v<decltype(base)> || std::is_floating_point_v<decltype(addend)>) {
+        if (predicate) {
+            return base + addend;
+        }
+        return decltype(base + addend)(base);
+    } else if constexpr (std::is_signed_v<decltype(base)> || std::is_signed_v<decltype(addend)>) {
         using RT = std::make_signed_t<decltype(base + addend)>;
         if (predicate) {
             return RT(base) + RT(addend);
@@ -155,11 +160,11 @@ void Layout::recalculate_int() const {
     auto const hPadding =
             sumIf(XOURNAL_PADDING, settings->getAddHorizontalSpaceAmount(), settings->getAddHorizontalSpace());
 
-    pc.minWidth = as_unsigned(2 * hPadding + as_signed_strict((pc.widthCols.size() - 1) * XOURNAL_PADDING_BETWEEN));
-    pc.minHeight = as_unsigned(2 * vPadding + as_signed_strict((pc.heightRows.size() - 1) * XOURNAL_PADDING_BETWEEN));
+    pc.minWidth = 2.0 * hPadding + strict_cast<double>(pc.widthCols.size() - 1) * XOURNAL_PADDING_BETWEEN;
+    pc.minHeight = 2.0 * vPadding + strict_cast<double>(pc.heightRows.size() - 1) * XOURNAL_PADDING_BETWEEN;
 
-    pc.minWidth = floor_cast<size_t>(std::accumulate(begin(pc.widthCols), end(pc.widthCols), double(pc.minWidth)));
-    pc.minHeight = floor_cast<size_t>(std::accumulate(begin(pc.heightRows), end(pc.heightRows), double(pc.minHeight)));
+    pc.minWidth = std::accumulate(begin(pc.widthCols), end(pc.widthCols), pc.minWidth);
+    pc.minHeight = std::accumulate(begin(pc.heightRows), end(pc.heightRows), pc.minHeight);
     pc.valid = true;
 }
 
@@ -174,8 +179,8 @@ void Layout::layoutPages(int width, int height) {
         recalculate_int();
     }
     // Todo: remove, just a hack-hotfix
-    scrollHandling->setLayoutSize(std::max(width, strict_cast<int>(this->pc.minWidth)),
-                                  std::max(height, strict_cast<int>(this->pc.minHeight)));
+    scrollHandling->setLayoutSize(std::max(width, ceil_cast<int>(this->pc.minWidth)),
+                                  std::max(height, ceil_cast<int>(this->pc.minHeight)));
 
     size_t const len = this->view->viewPages.size();
     Settings* settings = this->view->getControl()->getSettings();
@@ -193,12 +198,11 @@ void Layout::layoutPages(int width, int height) {
     auto const h_padding =
             sumIf(XOURNAL_PADDING, settings->getAddHorizontalSpaceAmount(), settings->getAddHorizontalSpace());
 
-    auto const centeringXBorder = (width - as_signed(pc.minWidth)) / 2;
-    auto const centeringYBorder = (height - as_signed(pc.minHeight)) / 2;
+    auto const centeringXBorder = (width - pc.minWidth) / 2.0;
+    auto const centeringYBorder = (height - pc.minHeight) / 2.0;
 
-    using SBig = decltype(as_signed(h_padding * centeringXBorder));
-    auto const borderX = static_cast<double>(std::max<SBig>(h_padding, centeringXBorder));
-    auto const borderY = static_cast<double>(std::max<SBig>(v_padding, centeringYBorder));
+    auto const borderX = std::max(h_padding, centeringXBorder);
+    auto const borderY = std::max(v_padding, centeringYBorder);
 
     // initialize here and x again in loop below.
     auto x = borderX;
@@ -283,7 +287,7 @@ auto Layout::getPaddingAbovePage(size_t pageIndex) const -> int {
     // (x, y) coordinate pair gives grid indicies. This handles paired pages
     // and different page layouts for us.
     auto pageYLocation = this->mapper.at(pageIndex).second;
-    return strict_cast<int>(as_signed(pageYLocation) * XOURNAL_PADDING_BETWEEN + as_signed(paddingAbove));
+    return floor_cast<int>(double(pageYLocation) * XOURNAL_PADDING_BETWEEN + paddingAbove);
 }
 
 
@@ -299,8 +303,8 @@ auto Layout::getPaddingLeftOfPage(size_t pageIndex) const -> int {
     // No page pairing or we haven't rendered enough pages in the row for
     // page pairing to have an effect,
     if (!isPairedPages) {
-        return strict_cast<int>(pageXLocation * XOURNAL_PADDING_BETWEEN + XOURNAL_PADDING_BETWEEN / 2 +
-                                as_signed(paddingBefore));
+        return floor_cast<int>(static_cast<double>(pageXLocation) * XOURNAL_PADDING_BETWEEN +
+                               XOURNAL_PADDING_BETWEEN / 2 + paddingBefore);
     } else {
         auto columnPadding =
                 XOURNAL_PADDING_BETWEEN + strict_cast<int>(pageXLocation / 2) * (XOURNAL_PADDING_BETWEEN * 2);
@@ -366,7 +370,7 @@ auto Layout::getMinimalHeight() const -> int {
     if (!pc.valid) {
         recalculate_int();
     }
-    return strict_cast<int>(this->pc.minHeight);
+    return ceil_cast<int>(this->pc.minHeight);
 }
 
 auto Layout::getMinimalWidth() const -> int {
@@ -374,5 +378,5 @@ auto Layout::getMinimalWidth() const -> int {
     if (!pc.valid) {
         recalculate_int();
     }
-    return strict_cast<int>(this->pc.minWidth);
+    return ceil_cast<int>(this->pc.minWidth);
 }

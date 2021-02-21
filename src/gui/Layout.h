@@ -40,8 +40,8 @@ public:
         std::mutex m{};
 
         // The width and height of all our pages
-        size_t minWidth = 0;
-        size_t minHeight = 0;
+        double minWidth = 0.0;
+        double minHeight = 0.0;
         std::vector<double> widthCols;
         std::vector<double> heightRows;
         bool valid = false;
