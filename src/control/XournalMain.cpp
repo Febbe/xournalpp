@@ -283,9 +283,7 @@ auto exportImg(const char* input, const char* output, const char* range, int png
 
     imgExport.exportGraphics(&progress);
 
-    for (PageRangeEntry* e: exportRange) {
-        delete e;
-    }
+    for (PageRangeEntry* e: exportRange) { delete e; }
     exportRange.clear();
 
     string errorMsg = imgExport.getLastErrorMsg();
@@ -335,9 +333,7 @@ auto exportPdf(const char* input, const char* output, const char* range, ExportB
         // Do the export
         exportSuccess = pdfe->createPdf(path, exportRange, progressiveMode);
         // Clean up
-        for (PageRangeEntry* e: exportRange) {
-            delete e;
-        }
+        for (PageRangeEntry* e: exportRange) { delete e; }
         exportRange.clear();
     } else {
         exportSuccess = pdfe->createPdf(path, progressiveMode);
@@ -494,7 +490,7 @@ void on_open_files(GApplication*, gpointer, gint, gchar*, XMPtr) {
     // Todo: implement this, if someone files the bug report
 }
 
-void on_startup(GApplication* application, XMPtr app_data) {
+void on_startup(GtkApplication* application, XMPtr app_data) {
     initLocalisation();
     ensure_input_model_compatibility();
     MigrateResult migrateResult = migrateSettings();
@@ -505,7 +501,7 @@ void on_startup(GApplication* application, XMPtr app_data) {
 
     // init singleton
     // ToolbarColorNames::getInstance();
-    app_data->control = std::make_unique<Control>(application, app_data->gladePath.get());
+    app_data->control = std::make_unique<Control>(G_APPLICATION(application), app_data->gladePath.get());
     {
         auto icon = app_data->gladePath->getFirstSearchPath() / "icons";
         gtk_icon_theme_prepend_search_path(gtk_icon_theme_get_default(), icon.u8string().c_str());
@@ -523,7 +519,71 @@ void on_startup(GApplication* application, XMPtr app_data) {
         app_data->control->getSettings()->save();
     }
 
-    app_data->win = std::make_unique<MainWindow>(app_data->gladePath.get(), app_data->control.get());
+
+    //    struct GActionEntry {
+    //        const gchar *name;
+    //
+    //        void (* activate) (GSimpleAction *action,
+    //                           GVariant      *parameter,
+    //                           gpointer       user_data);
+    //
+    //        const gchar *parameter_type;
+    //
+    //        const gchar *state;
+    //
+    //        void (* change_state) (GSimpleAction *action,
+    //                               GVariant      *value,
+    //                               gpointer       user_data);
+    //    };
+
+    using GActionCallback = void (*)(GSimpleAction * action, GVariant * parameter, gpointer user_data);
+    GActionCallback show_about = +[](GSimpleAction* action, GVariant* parameter, gpointer user_data) {
+        std::cout << "hello from show_about" << std::endl;
+    };
+    GActionCallback quit_app = +[](GSimpleAction* action, GVariant* parameter, gpointer user_data) {
+        std::cout << "hello from quit_app" << std::endl;
+    };
+    GActionCallback new_activated = +[](GSimpleAction* action, GVariant* parameter, gpointer user_data) {
+        std::cout << "hello from new_activated" << std::endl;
+    };
+
+    static std::array app_entries = {GActionEntry{"about", show_about, NULL, NULL, NULL},
+                                     GActionEntry{"quit", quit_app, NULL, NULL, NULL},
+                                     GActionEntry{"new", new_activated, NULL, NULL, NULL}};
+    g_action_map_add_action_entries(G_ACTION_MAP(application), app_entries.data(), app_entries.size(), application);
+
+    auto* builder = gtk_builder_new();
+    gtk_builder_add_from_string(builder,
+                                "<interface>"
+                                "  <menu id='menubar'>"
+                                "    <submenu>"
+                                "      <attribute name='label' translatable='yes'>Sunny</attribute>"
+                                "      <section>"
+                                "        <item>"
+                                "          <attribute name='label' translatable='yes'>_New Window</attribute>"
+                                "          <attribute name='action'>app.new</attribute>"
+                                "        </item>"
+                                "        <item>"
+                                "          <attribute name='label' translatable='yes'>_About Sunny</attribute>"
+                                "          <attribute name='action'>app.about</attribute>"
+                                "        </item>"
+                                "        <item>"
+                                "          <attribute name='label' translatable='yes'>_Quit</attribute>"
+                                "          <attribute name='action'>app.quit</attribute>"
+                                "          <attribute name='accel'>&lt;Primary&gt;q</attribute>"
+                                "        </item>"
+                                "      </section>"
+                                "    </submenu>"
+                                "  </menu>"
+                                "</interface>",
+                                static_cast<gsize>(-1), nullptr);
+
+
+    GMenuModel* menubar = G_MENU_MODEL(gtk_builder_get_object(builder, "menubar"));
+    gtk_application_set_menubar(GTK_APPLICATION(application), menubar);
+    g_object_unref(builder);
+
+    app_data->win = std::make_unique<MainWindow>(application, app_data->gladePath.get(), app_data->control.get());
     app_data->control->initWindow(app_data->win.get());
 
     if (migrateResult.status != MigrateStatus::NotNeeded) {
@@ -613,6 +673,7 @@ auto XournalMain::run(int argc, char** argv) -> int {
 
     XournalMainPrivate app_data;
     GtkApplication* app = gtk_application_new("com.github.xournalpp.xournalpp", APP_FLAGS);
+    g_application_set_default(G_APPLICATION(app));
     g_signal_connect(app, "activate", G_CALLBACK(&on_activate), &app_data);
     g_signal_connect(app, "command-line", G_CALLBACK(&on_command_line), &app_data);
     g_signal_connect(app, "open", G_CALLBACK(&on_open_files), &app_data);

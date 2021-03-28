@@ -32,7 +32,7 @@ class MainWindowToolbarMenu;
 
 class MainWindow: public GladeGui, public LayerCtrlListener {
 public:
-    MainWindow(GladeSearchpath* gladeSearchPath, Control* control);
+    MainWindow(GtkApplication* app, GladeSearchpath* gladeSearchPath, Control* control);
     virtual ~MainWindow();
 
     // LayerCtrlListener

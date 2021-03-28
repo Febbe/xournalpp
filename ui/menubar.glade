@@ -1,0 +1,31 @@
+<interface>
+  <menu id="mainMenubarModel">
+    <section>
+      <attribute name="label" translatable="yes">_File</attribute>
+      <item>
+        <attribute name="action">gtk-new</attribute>
+      </item>
+    </section>
+    <section>
+      <attribute name="label" translatable="yes">_Edit</attribute>
+    </section>
+    <section>
+      <attribute name="label" translatable="yes">_View</attribute>
+    </section>
+    <section>
+      <attribute name="label" translatable="yes">_Navigation</attribute>
+    </section>
+    <section>
+      <attribute name="label" translatable="yes">_Journal</attribute>
+    </section>
+    <section>
+      <attribute name="label" translatable="yes">_Tools</attribute>
+    </section>
+    <section>
+      <attribute name="label" translatable="yes">_Plugin</attribute>
+    </section>
+    <section>
+      <attribute name="label" translatable="yes">_Help</attribute>
+    </section>
+  </menu>
+</interface>

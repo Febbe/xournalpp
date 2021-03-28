@@ -1,16 +1,21 @@
 #include "MainWindow.h"
 
+#include <utility>
+
 #include <config-dev.h>
 #include <config-features.h>
 #include <config.h>
+#include <gdk/gdk.h>
 
 #include "control/Control.h"
 #include "control/layer/LayerController.h"
 #include "gui/GladeSearchpath.h"
+#include "gui/inputdevices/InputEvents.h"
 #include "gui/scroll/ScrollHandling.h"
 #include "toolbarMenubar/ToolMenuHandler.h"
 #include "toolbarMenubar/model/ToolbarData.h"
 #include "toolbarMenubar/model/ToolbarModel.h"
+#include "util/DeviceListHelper.h"
 #include "widgets/SpinPageAdapter.h"
 #include "widgets/XournalWidget.h"
 
@@ -19,18 +24,14 @@
 #include "ToolbarDefinitions.h"
 #include "ToolitemDragDrop.h"
 #include "XojMsgBox.h"
+#include "XournalMenu.h"
 #include "XournalView.h"
 #include "i18n.h"
 
-#include <utility>
-
-#include <gdk/gdk.h>
-
-#include "gui/inputdevices/InputEvents.h"
-#include "util/DeviceListHelper.h"
-
-MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control):
+MainWindow::MainWindow(GtkApplication* app, GladeSearchpath* gladeSearchPath, Control* control):
         GladeGui(gladeSearchPath, "main.glade", "mainWindow") {
+    gtk_application_window_new(NULL);
+    gtk_window_set_application(GTK_WINDOW(this->window), app);
     this->control = control;
     this->toolbarWidgets = new GtkWidget*[TOOLBAR_DEFINITIONS_LEN];
     this->toolbarSelectMenu = new MainWindowToolbarMenu(this);
@@ -132,6 +133,23 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control):
     gtk_drag_dest_add_text_targets(this->window);
 
     LayerCtrlListener::registerListener(control->getLayerController());
+
+    auto* model = getXournalMenuModel();
+    //    gtk_application_set_menubar(app, model);
+    //    gtk_application_set_app_menu(app, model);
+    gtk_application_window_set_show_menubar(GTK_APPLICATION_WINDOW(window), true);
+    auto* header = gtk_header_bar_new();
+    gtk_header_bar_set_show_close_button(GTK_HEADER_BAR(header), true);
+    gtk_window_set_titlebar(GTK_WINDOW(window), header);
+
+    //    auto header_bar_floating = gtk_header_bar_new();
+    //    auto main_menu = get("mainMenubar");
+    //    g_object_ref(main_menu);
+    //    gtk_container_remove(GTK_CONTAINER(gtk_widget_get_parent(main_menu)), main_menu);
+    //    gtk_header_bar_pack_start(GTK_HEADER_BAR(header_bar_floating), main_menu);
+    //    gtk_header_bar_set_show_close_button(GTK_HEADER_BAR(header_bar_floating), true);
+    //    gtk_widget_set_visible(header_bar_floating, true);
+    //    gtk_window_set_titlebar(GTK_WINDOW(this->window), header_bar_floating);
 }
 
 gboolean MainWindow::isKeyForClosure(GtkAccelKey* key, GClosure* closure, gpointer data) { return closure == data; }
