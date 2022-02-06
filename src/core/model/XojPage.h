@@ -14,12 +14,14 @@
 #include <string>
 #include <vector>
 
+#include "util/Color.h"
 #include "util/Util.h"
 
 #include "BackgroundImage.h"
-#include "Layer.h"
 #include "PageHandler.h"
 #include "PageType.h"
+
+class Layer;
 
 template <class T>
 using optional = std::optional<T>;

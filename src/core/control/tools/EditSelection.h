@@ -18,6 +18,7 @@
 
 #include "control/Tool.h"
 #include "model/Font.h"
+#include "model/Layer.h"
 #include "model/PageRef.h"
 #include "model/Snapping.h"
 #include "undo/UndoAction.h"

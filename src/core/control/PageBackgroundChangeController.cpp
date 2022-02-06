@@ -7,6 +7,7 @@
 #include "control/stockdlg/ImageOpenDlg.h"
 #include "gui/dialog/backgroundSelect/ImagesDialog.h"
 #include "gui/dialog/backgroundSelect/PdfPagesDialog.h"
+#include "model/XojPage.h"
 #include "undo/GroupUndoAction.h"
 #include "undo/PageBackgroundChangedUndoAction.h"
 #include "util/XojMsgBox.h"

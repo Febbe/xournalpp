@@ -32,12 +32,14 @@
 #include "gui/toolbarMenubar/model/ToolbarData.h"
 #include "gui/toolbarMenubar/model/ToolbarModel.h"
 #include "model/StrokeStyle.h"
+#include "model/XojPage.h"
 #include "plugin/PluginController.h"
 #include "stockdlg/XojOpenDlg.h"
 #include "undo/AddUndoAction.h"
 #include "undo/DeleteUndoAction.h"
 #include "undo/InsertDeletePageUndoAction.h"
 #include "undo/InsertUndoAction.h"
+#include "util/GtkDialogUtil.h"
 #include "util/PathUtil.h"
 #include "util/Stacktrace.h"
 #include "util/StringUtils.h"
@@ -2351,13 +2353,10 @@ auto Control::showSaveDialog(std::function<void()> onSave) -> bool {
         fileTmp += ".xopp";
         // Since we add the extension after the OK button, we have to check manually on existing files
 
-        if (Util:: = askToReplace(fileTmp)) {
+        if (Util::askToReplace(fileTmp)) {
             break;
         }
     };
-
-
-    while (true) {}
 }
 
 void Control::onSaveReplace(GtkWidget* fileChooser) {

@@ -4,6 +4,7 @@
 
 #include "model/Layer.h"
 #include "model/Text.h"
+#include "model/XojPage.h"
 #include "view/TextView.h"
 
 using std::string;

@@ -16,6 +16,7 @@
 #include <vector>
 
 #include "control/xml/XmlAudioNode.h"
+#include "model/BackgroundImage.h"
 #include "model/Document.h"
 #include "model/PageRef.h"
 #include "model/Stroke.h"
@@ -25,6 +26,7 @@
 class XmlNode;
 class XmlPointNode;
 class ProgressListener;
+class Layer;
 
 class SaveHandler {
 public:

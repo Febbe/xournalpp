@@ -11,6 +11,8 @@
 
 #pragma once
 
+#include <gdk/gdk.h>
+
 #include "model/PageRef.h"
 #include "pdf/base/XojPdfPage.h"
 

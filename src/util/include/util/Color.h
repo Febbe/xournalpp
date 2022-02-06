@@ -116,17 +116,17 @@ constexpr auto Util::rgb_to_GdkRGBA(Color color) -> GdkRGBA {  //
 }
 
 constexpr auto Util::argb_to_GdkRGBA(const Color color) -> GdkRGBA {
-    return {color.red / 255.0,    //
-            color.green / 255.0,  //
-            color.blue / 255.0,   //
-            color.alpha / 255.0};
+    return {color.red / 255.0f,    //
+            color.green / 255.0f,  //
+            color.blue / 255.0f,   //
+            color.alpha / 255.0f};
 }
 
 constexpr auto Util::argb_to_GdkRGBA(Color color, double alpha) -> GdkRGBA {
-    return {color.red / 255.0,    //
-            color.green / 255.0,  //
-            color.blue / 255.0,   //
-            alpha};
+    return {color.red / 255.0f,    //
+            color.green / 255.0f,  //
+            color.blue / 255.0f,   //
+            float(alpha)};
 }
 
 constexpr auto Util::GdkRGBA_to_argb(const GdkRGBA& color) -> Color {

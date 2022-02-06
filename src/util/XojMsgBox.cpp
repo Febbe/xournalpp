@@ -5,10 +5,9 @@
 #include <type_traits>
 #include <utility>
 
+#include "util/GtkDialogUtil.h"
+#include "util/Util.h"
 #include "util/i18n.h"
-
-#include "GtkDialogUtil.h"
-#include "Util.h"
 
 #ifdef _WIN32
 // Needed for help dialog workaround on Windows; see XojMsgBox::showHelp

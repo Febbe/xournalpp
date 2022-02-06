@@ -4,6 +4,7 @@
 #include <iterator>
 #include <utility>
 
+#include "model/Layer.h"
 #include "util/i18n.h"
 
 #include "BackgroundImage.h"

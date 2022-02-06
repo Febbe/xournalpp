@@ -25,7 +25,7 @@
 
 #include "ElementContainer.h"
 
-
+class Layer;
 class EditSelection;
 class MainBackgroundPainter;
 

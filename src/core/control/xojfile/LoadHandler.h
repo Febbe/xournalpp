@@ -23,10 +23,11 @@
 #include "model/Stroke.h"
 #include "model/TexImage.h"
 #include "model/Text.h"
+#include "util/PathUtil.h"
 
 #include "LoadHandlerHelper.h"
-#include "PathUtil.h"
 
+class Layer;
 
 enum ParserPosition {
     PARSER_POS_NOT_STARTED = 1,  // Waiting for opening <xounal> tag

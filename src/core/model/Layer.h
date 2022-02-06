@@ -11,13 +11,11 @@
 
 #pragma once
 
+#include <optional>
 #include <string>
 #include <vector>
 
-#include "Element.h"
-
-template <class T>
-using optional = std::optional<T>;
+class Element;
 
 class Layer {
 public:
@@ -98,5 +96,5 @@ private:
 
     bool visible = true;
 
-    optional<std::string> name;
+    std::optional<std::string> name;
 };

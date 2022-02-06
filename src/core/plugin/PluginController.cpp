@@ -69,7 +69,7 @@ void PluginController::registerMenu() {
 #ifdef ENABLE_PLUGINS
     GtkWidget* menuPlugin = control->getWindow()->get("menuPlugin");
     for (auto&& p: this->plugins) { p->registerMenu(control->getGtkWindow(), menuPlugin); }
-    gtk_widget_show_all(menuPlugin);
+    gtk_widget_show(menuPlugin);
 
 #else
     // If plugins are disabled - disable menu also

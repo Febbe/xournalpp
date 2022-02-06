@@ -83,7 +83,7 @@ public:
      *
      * @param synchron Whether the save should be run synchronously or asynchronously.
      */
-    bool save(bool synchron = false);
+    void save(bool synchron = false);
     bool saveAs();
 
     /**

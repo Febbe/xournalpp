@@ -10,9 +10,14 @@
  */
 
 #include <cstring>
+#include <functional>
 #include <map>
+#include <memory>
+#include <type_traits>
+#include <utility>
 
 #include <gtk/gtk.h>
+#include <lua.h>
 #include <stdint.h>
 
 #include "control/Control.h"
@@ -26,6 +31,8 @@
 #include "model/Font.h"
 #include "model/StrokeStyle.h"
 #include "model/Text.h"
+#include "util/GtkDialogUtil.h"
+#include "util/PathUtil.h"
 #include "util/StringUtils.h"
 #include "util/XojMsgBox.h"
 #include "util/safe_casts.h"
@@ -61,7 +68,29 @@ static int applib_glib_rename(lua_State* L) {
     }
 }
 
+template <typename... Args, class Fun>
+static void foward_function(Args... args, Fun* data) {
+    (*data)(args...);
+    delete data;
+}
 
+template <class T>
+auto new_auto(T&& t) -> std::remove_cv_t<std::remove_reference_t<T>>* {
+    return new std::remove_cv_t<std::remove_reference_t<T>>(std::forward<T>(t));
+}
+
+
+template <char const* Signal, typename... FunArgs, class GObjectT, class Fun>
+auto g_signal_connect_cpp(GObjectT* obj, Fun&& f) {
+    using FunType = std::remove_reference_t<std::remove_cv_t<Fun>>;
+    FunType* data = new_auto(std::forward<Fun>(f));
+    return g_signal_connect_data(
+            obj, Signal, GCallback(foward_function<FunArgs..., FunType*>), data, +[](FunType* p) { delete p; },
+            GConnectFlags(0));
+}
+
+const char* luaL_checkstring(lua_State* L, int arg);
+#include <lua.h>
 /**
  * Create a 'Save As' native dialog and return as a string
  * the filepath of the location the user chose to save.
@@ -70,11 +99,9 @@ static int applib_glib_rename(lua_State* L) {
  *   local filename = app.saveAs() -- defaults to suggestion "Untitled"
  *   local filename = app.saveAs("foo") -- suggests "foo" as filename
  */
-static int applib_saveAs(lua_State* L) {
+static int applib_saveAs(lua_State* L, std::function<void(gint)> response_handler) {
     GtkFileChooserNative* native;
     gint res;
-    int args_returned = 0;  // change to 1 if user chooses file
-
     const char* filename = luaL_checkstring(L, -1);
 
     // Create a 'Save As' native dialog
@@ -86,22 +113,24 @@ static int applib_saveAs(lua_State* L) {
                                       filename ? filename : (std::string{_("Untitled")}).c_str());
 
     // Wait until user responds to dialog
-    res = gtk_native_dialog_run(GTK_NATIVE_DIALOG(native));
-
-    // Return the filename chosen to lua
-    if (res == GTK_RESPONSE_ACCEPT) {
-        char* filename = static_cast<char*>(gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(native)));
-
-        lua_pushlstring(L, filename, strlen(filename));
-        g_free(static_cast<gchar*>(filename));
-        args_returned = 1;
-    }
-
-    // Destroy the dialog and free memory
-    g_object_unref(native);
-
-    return args_returned;
+    static constexpr char response[] = "response";
+    g_signal_connect_cpp<response, GtkNativeDialog*, gint>(
+            GTK_NATIVE_DIALOG(native), [=](GtkNativeDialog* dlg, gint response) {
+                auto return_code = 0;
+                if (res == GTK_RESPONSE_ACCEPT) {
+                    auto file = Util::GOwned<GFile>(gtk_file_chooser_get_file(GTK_FILE_CHOOSER(native)));
+                    auto const* filename = g_file_peek_path(file.get());
+                    lua_pushlstring(L, filename, strlen(filename));
+                    return_code = 1;
+                }
+                // Destroy the dialog and free memory
+                gtk_native_dialog_destroy(dlg);
+                response_handler(return_code);
+            });
 }
+
+
+void luaL_checktype(lua_State* L, int arg, int t);
 
 /**
  * Example: local result = app.msgbox("Test123", {[1] = "Yes", [2] = "No"})

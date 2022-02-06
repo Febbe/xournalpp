@@ -3,6 +3,7 @@
 #include "gui/Layout.h"
 #include "gui/XournalView.h"
 #include "gui/widgets/SpinPageAdapter.h"
+#include "model/XojPage.h"
 
 #include "Control.h"
 

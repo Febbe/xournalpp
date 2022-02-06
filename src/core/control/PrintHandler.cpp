@@ -5,6 +5,7 @@
 #include <config-dev.h>
 
 #include "model/Document.h"
+#include "model/XojPage.h"
 #include "util/PathUtil.h"
 #include "util/XojMsgBox.h"
 #include "util/i18n.h"

@@ -11,6 +11,7 @@
 #include "control/latex/LatexGenerator.h"
 #include "gui/XournalView.h"
 #include "gui/dialog/LatexDialog.h"
+#include "model/XojPage.h"
 #include "undo/InsertUndoAction.h"
 #include "util/StringUtils.h"
 #include "util/Util.h"
