@@ -443,11 +443,13 @@ void on_startup(GApplication* application, XMPtr app_data) {
 
     // Set up icons
     {
+        // https://docs.gtk.org/gtk3/method.IconTheme.prepend_search_path.html
+        // gtk_icon_theme_prepend_search_path uses OS encoding, so don't use ::u8string
         const auto uiPath = app_data->gladePath->getFirstSearchPath();
-        const auto lightColorIcons = (uiPath / "iconsColor-light").u8string();
-        const auto darkColorIcons = (uiPath / "iconsColor-dark").u8string();
-        const auto lightLucideIcons = (uiPath / "iconsLucide-light").u8string();
-        const auto darkLucideIcons = (uiPath / "iconsLucide-dark").u8string();
+        const auto lightColorIcons = (uiPath / "iconsColor-light").string();
+        const auto darkColorIcons = (uiPath / "iconsColor-dark").string();
+        const auto lightLucideIcons = (uiPath / "iconsLucide-light").string();
+        const auto darkLucideIcons = (uiPath / "iconsLucide-dark").string();
 
         // icon load order from lowest priority to highest priority
         std::vector<std::string> iconLoadOrder = {};
