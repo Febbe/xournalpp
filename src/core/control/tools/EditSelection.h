@@ -46,7 +46,7 @@ class Document;
 class EditSelection;
 
 namespace SelectionFactory {
-auto createFromFloatingElement(Control* ctrl, const PageRef& page, Layer* layer, XojPageView* view, Element* e)
+auto createFromFloatingElement(Control* ctrl, const PageRef& page, Layer* layer, XojPageView* view, ElementPtr e)
         -> std::unique_ptr<EditSelection>;
 auto createFromFloatingElements(Control* ctrl, const PageRef& page, Layer* layer, XojPageView* view,
                                 InsertionOrder elts)  //
@@ -54,7 +54,7 @@ auto createFromFloatingElements(Control* ctrl, const PageRef& page, Layer* layer
 auto createFromElementOnActiveLayer(Control* ctrl, const PageRef& page, XojPageView* view, Element* e,
                                     Element::Index pos = Element::InvalidIndex)  //
         -> std::unique_ptr<EditSelection>;
-auto createFromElementsOnActiveLayer(Control* ctrl, const PageRef& page, XojPageView* view, InsertionOrder elts)
+auto createFromElementsOnActiveLayer(Control* ctrl, const PageRef& page, XojPageView* view, InsertionOrderRef elts)
         -> std::unique_ptr<EditSelection>;
 /**
  * @brief Creates a new instance containing base->getElements() and *e. The content of *base is cleared but *base is not
@@ -66,7 +66,7 @@ auto addElementFromActiveLayer(Control* ctrl, EditSelection* base, Element*, Ele
  * @brief Creates a new instance containing base->getElements() and the content of elts. The content of *base is cleared
  * but *base is not destroyed.
  */
-auto addElementsFromActiveLayer(Control* ctrl, EditSelection* base, const InsertionOrder& elts)
+auto addElementsFromActiveLayer(Control* ctrl, EditSelection* base, const InsertionOrderRef& elts)
         -> std::unique_ptr<EditSelection>;
 };  // namespace SelectionFactory
 
@@ -211,12 +211,14 @@ public:
     /**
      * Returns all containing elements of this selection
      */
-    auto getElements() const -> std::vector<Element*> const& override;
+    auto getElements() const -> std::vector<Element*>;
+
+    void forEachElement(std::function<void(Element*)> f) const override;
 
     /**
      * Returns the insert order of this selection
      */
-    auto getInsertOrder() const -> InsertionOrder const&;
+    auto getInsertionOrder() const -> InsertionOrder const&;
 
     enum class OrderChange {
         BringToFront,
@@ -228,7 +230,7 @@ public:
     /**
      * Change the insert order of this selection.
      */
-    auto rearrangeInsertOrder(const OrderChange change) -> UndoActionPtr;
+    auto rearrangeInsertionOrder(const OrderChange change) -> UndoActionPtr;
 
     /**
      * Finish the current movement

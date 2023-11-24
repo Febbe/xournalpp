@@ -87,9 +87,15 @@ bool VerticalToolHandler::onKeyReleaseEvent(GdkEventKey* event) {
 }
 
 auto VerticalToolHandler::getElements() const -> std::vector<Element*> {
-    auto res = std::vector<Element*>(this->elements.size());
-    std::transform(this->elements.begin(), this->elements.end(), res.begin(), [](auto const& e) { return e.get(); });
-    return res;
+    auto result = std::vector<Element*>(this->elements.size());
+    std::transform(this->elements.begin(), this->elements.end(), result.begin(), [](auto const& e) { return e.get(); });
+    return result;
+}
+
+void VerticalToolHandler::forEachElement(std::function<void(Element*)> f) const {
+    for (auto const& e: this->elements) {
+        f(e.get());
+    }
 }
 
 auto VerticalToolHandler::computeElementsBoundingBox() const -> Range {

@@ -73,7 +73,7 @@ void EditSelectionContents::addElement(ElementPtr e, Element::Index order) {
     xoj_assert(this->selected.size() == this->insertionOrder.size());
     this->selected.emplace_back(e.get());
     this->insertionOrder.emplace(std::upper_bound(this->insertionOrder.begin(), this->insertionOrder.end(), order),  //
-                              std::move(e), order);
+                                 std::move(e), order);
 }
 
 void EditSelectionContents::replaceInsertionOrder(InsertionOrder newInsertionOrder) {
@@ -98,7 +98,13 @@ void EditSelectionContents::addMoveUndo(UndoRedoHandler* undo, double dx, double
 /**
  * Returns all containing elements of this selection
  */
-auto EditSelectionContents::getElements() const -> std::vector<Element*> { return this->selected; }
+auto EditSelectionContents::getElements() const -> std::vector<Element*> const& { return this->selected; }
+
+void EditSelectionContents::forEachElement(std::function<void(Element*)> f) const {
+    for (auto const& e: this->selected) {
+        f(e);
+    }
+}
 
 /**
  * Returns the insert order of this selection

@@ -443,6 +443,10 @@ void EditSelection::addElement(ElementPtr eOwned, Element::Index order) {
  */
 auto EditSelection::getElements() const -> std::vector<Element*> { return this->contents->getElements(); }
 
+void EditSelection::forEachElement(std::function<void(Element*)> f) const {
+    this->contents->forEachElement(std::move(f));
+}
+
 /**
  * Returns the insert order of this selection
  */

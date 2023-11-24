@@ -93,7 +93,9 @@ public:
     /**
      * Returns all containing elements of this selection
      */
-    auto getElements() const -> std::vector<Element*> const& override;
+    auto getElements() const -> std::vector<Element*> const&;
+
+    void forEachElement(std::function<void(Element*)> f) const override;
 
     /**
      * Returns the insert order of this selection

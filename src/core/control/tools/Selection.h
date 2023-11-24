@@ -49,7 +49,7 @@ public:
     /**
      * Get the selected elements and clears them (std::move)
      */
-    auto releaseElements() -> InsertionOrder;
+    auto releaseElements() -> InsertionOrderRef;
 
 private:
 protected:
