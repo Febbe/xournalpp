@@ -88,17 +88,14 @@ auto createFromElementOnActiveLayer(Control* ctrl, const PageRef& page, XojPageV
                                     Element::Index pos) -> std::unique_ptr<EditSelection> {
     Document* doc = ctrl->getDocument();
     Layer* layer = nullptr;
-    auto ownedElem =
-            [&] {
-                std::lock_guard lock(*doc);  // lock scope
-                layer = page->getSelectedLayer();
-                return layer->removeElementAt(e, pos);
-            }()
-                    .e;
-    page->fireElementChanged(e);
 
     InsertionOrder i(1);
-    i[0] = InsertionPosition{std::move(ownedElem), pos};
+    i[0] = [&] {
+        std::lock_guard lock(*doc);  // lock scope
+        layer = page->getSelectedLayer();
+        return layer->removeElementAt(e, pos);
+    }();
+    page->fireElementChanged(e);
     return std::make_unique<EditSelection>(ctrl, std::move(i), page, layer, view, Range(e->boundingRect()),
                                            Range(e->getSnappedBounds()));
 }

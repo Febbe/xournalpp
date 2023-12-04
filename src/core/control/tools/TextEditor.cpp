@@ -1038,8 +1038,7 @@ void TextEditor::finalizeEdition() {
         // Delete the edited element from layer
         if (originalTextElement) {
             auto eraseDeleteUndoAction = std::make_unique<DeleteUndoAction>(page, true);
-            auto elementIndex = layer->indexOf(originalTextElement);
-            auto [orig, _] = layer->removeElement(originalTextElement);
+            auto [orig, elementIndex] = layer->removeElement(originalTextElement);
             xoj_assert(elementIndex != Element::InvalidIndex);
             eraseDeleteUndoAction->addElement(layer, std::move(orig), elementIndex);
             undo->addUndoAction(std::move(eraseDeleteUndoAction));
@@ -1063,7 +1062,6 @@ void TextEditor::finalizeEdition() {
         this->page->fireElementChanged(ptr);
 
         undo->addUndoAction(std::make_unique<TextBoxUndoAction>(this->page, layer, ptr, std::move(orig)));
-        originalTextElement = nullptr;
     } else {
         // Creating a new element
         auto ptr = this->textElement.get();
