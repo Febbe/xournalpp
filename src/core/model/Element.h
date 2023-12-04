@@ -11,7 +11,8 @@
 
 #pragma once
 
-#include <iosfwd>  // for ptrdiff_t
+#include <cstddef>  // for ptrdiff_t
+#include <memory>   // for unique_ptr
 
 #include <gdk/gdk.h>  // for GdkRectangle
 
@@ -30,6 +31,9 @@ public:
 
     virtual ~ShapeContainer() = default;
 };
+
+class Element;
+using ElementPtr = std::unique_ptr<Element>;
 
 class Element: public Serializable {
 protected:
@@ -74,7 +78,7 @@ public:
     /**
      * Take 1:1 copy of this element
      */
-    virtual Element* clone() const = 0;
+    virtual auto clone() const -> ElementPtr = 0;
 
     void serialize(ObjectOutputStream& out) const override;
     void readSerialized(ObjectInputStream& in) override;

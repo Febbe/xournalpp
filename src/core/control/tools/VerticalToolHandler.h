@@ -30,6 +30,8 @@ class MoveUndoAction;
 class Settings;
 class ZoomControl;
 
+using ElementPtr = std::unique_ptr<Element>;
+
 namespace xoj::view {
 class OverlayView;
 class Repaintable;
@@ -67,7 +69,7 @@ public:
 
     std::unique_ptr<MoveUndoAction> finalize();
 
-    const std::vector<Element*>& getElements() const override;
+    auto getElements() const -> std::vector<Element*> override;
 
     auto createView(xoj::view::Repaintable* parent, ZoomControl* zoomControl, const Settings* settings) const
             -> std::unique_ptr<xoj::view::OverlayView>;
@@ -105,7 +107,7 @@ private:
 
     PageRef page;
     Layer* layer;
-    std::vector<Element*> elements;
+    std::vector<ElementPtr> elements;
     /**
      * @brief Stores the smallest box containing all the adopted elements. 
      *     Used to only refresh the part of the screen that needs refreshing.

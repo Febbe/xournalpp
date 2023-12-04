@@ -475,7 +475,7 @@ TEST(ControlLoadHandler, testStrokeWidthRecovery) {
         EXPECT_EQ(p.z, Point::NO_PRESSURE);
     }
 
-    auto testPressureValues = [&elts = layer->getElements()](size_t n, const std::vector<double>& pressures) {
+    auto testPressureValues = [elts = layer->getElements()](size_t n, const std::vector<double>& pressures) {
         Stroke* s = (Stroke*)elts[n];
         printf("Testing stroke %zu\n", n);
         EXPECT_EQ(ELEMENT_STROKE, s->getType());

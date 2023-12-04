@@ -271,16 +271,15 @@ void SplineHandler::finalizeSpline() {
 
     Document* doc = control->getDocument();
     doc->lock();
-    layer->addElement(stroke.get());
+    auto ptr = stroke.get();
+    layer->addElement(std::move(stroke));
     doc->unlock();
-
-    auto rg = this->computeTotalRepaintRange(data, stroke->getWidth());
+    auto rg = this->computeTotalRepaintRange(data, ptr->getWidth());
     this->viewPool->dispatchAndClear(xoj::view::SplineToolView::FINALIZATION_REQUEST, rg);
 
     // Wait until this finishes before releasing `stroke`, so that PageView::elementChanged does not needlessly rerender
     // the stroke
-    this->page->fireElementChanged(stroke.get());
-    stroke.release();
+    this->page->fireElementChanged(ptr);
 
     control->getCursor()->updateCursor();
 }

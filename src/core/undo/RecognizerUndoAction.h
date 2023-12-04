@@ -11,6 +11,7 @@
 
 #pragma once
 
+#include <memory>
 #include <string>  // for string
 #include <vector>  // for vector
 
@@ -21,6 +22,7 @@
 class Layer;
 class Stroke;
 class Control;
+class Element;
 
 class RecognizerUndoAction: public UndoAction {
 public:
@@ -39,4 +41,6 @@ private:
     Layer* layer;
     Stroke* recognized;
     std::vector<Stroke*> original;
+    std::unique_ptr<Element> recognizedOwned;
+    std::vector<std::unique_ptr<Element>> originalOwned;
 };

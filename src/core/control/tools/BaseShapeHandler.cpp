@@ -112,10 +112,10 @@ void BaseShapeHandler::onButtonReleaseEvent(const PositionInputData& pos, double
 
     Document* doc = control->getDocument();
     doc->lock();
-    layer->addElement(stroke.get());
+    auto ptr = stroke.get();
+    layer->addElement(std::move(stroke));
     doc->unlock();
-    page->fireElementChanged(stroke.get());
-    stroke.release();
+    page->fireElementChanged(ptr);
 
     control->getCursor()->updateCursor();
 }

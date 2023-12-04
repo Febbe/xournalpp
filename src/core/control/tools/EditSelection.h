@@ -206,7 +206,7 @@ public:
      * @param pos: specifies the index of the element from the source layer,
      * in case we want to replace it back where it came from.
      */
-    void addElement(Element* e, Element::Index pos);
+    void addElement(ElementPtr e, Element::Index pos);
 
     /**
      * Returns all containing elements of this selection

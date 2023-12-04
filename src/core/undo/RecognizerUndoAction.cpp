@@ -4,6 +4,7 @@
 
 #include <glib.h>  // for g_warning
 
+#include "model/Element.h"
 #include "model/Layer.h"      // for Layer
 #include "model/Stroke.h"     // for Stroke
 #include "model/XojPage.h"    // for XojPage
@@ -14,23 +15,13 @@
 class Control;
 
 RecognizerUndoAction::RecognizerUndoAction(const PageRef& page, Layer* layer, Stroke* original, Stroke* recognized):
-        UndoAction("RecognizerUndoAction") {
+        UndoAction("RecognizerUndoAction"), layer(layer), recognized(recognized) {
     this->page = page;
-    this->layer = layer;
-    this->recognized = recognized;
 
     addSourceElement(original);
 }
 
-RecognizerUndoAction::~RecognizerUndoAction() {
-    if (this->undone) {
-        delete this->recognized;
-    } else {
-        for (Stroke* s: this->original) { delete s; }
-    }
-    this->recognized = nullptr;
-    this->original.clear();
-}
+RecognizerUndoAction::~RecognizerUndoAction() = default;
 
 void RecognizerUndoAction::addSourceElement(Stroke* s) {
     for (Stroke* s2: this->original) {
@@ -45,13 +36,17 @@ void RecognizerUndoAction::addSourceElement(Stroke* s) {
 }
 
 auto RecognizerUndoAction::undo(Control* control) -> bool {
-    Element::Index pos = this->layer->removeElement(this->recognized, false);
+    auto [owned, pos] = this->layer->removeElement(this->recognized);
+    this->recognizedOwned = std::move(owned);
+
     this->page->fireElementChanged(this->recognized);
 
-    for (Stroke* s: this->original) {
-        this->layer->insertElement(s, pos);
-        this->page->fireElementChanged(s);
+    for (auto&& s: this->originalOwned) {
+        auto sptr = s.get();
+        this->layer->insertElement(std::move(s), pos);
+        this->page->fireElementChanged(sptr);
     }
+    this->originalOwned.clear();
 
     this->undone = true;
     return true;
@@ -60,10 +55,12 @@ auto RecognizerUndoAction::undo(Control* control) -> bool {
 auto RecognizerUndoAction::redo(Control* control) -> bool {
     Element::Index pos = 0;
     for (Stroke* s: this->original) {
-        pos = this->layer->removeElement(s, false);
+        auto [owned, posi] = this->layer->removeElement(s);
+        pos = posi;
         this->page->fireElementChanged(s);
+        this->originalOwned.push_back(std::move(owned));
     }
-    this->layer->insertElement(this->recognized, pos);
+    this->layer->insertElement(std::move(this->recognizedOwned), pos);
 
     this->page->fireElementChanged(this->recognized);
 

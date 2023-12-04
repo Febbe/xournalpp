@@ -57,7 +57,7 @@ protected:
 
     bool multiLayer;
 
-    InsertionOrder selectedElements;
+    InsertionOrderRef selectedElements;
     PageRef page;
 
     Range bbox;

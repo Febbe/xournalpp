@@ -1039,9 +1039,9 @@ void TextEditor::finalizeEdition() {
         if (originalTextElement) {
             auto eraseDeleteUndoAction = std::make_unique<DeleteUndoAction>(page, true);
             auto elementIndex = layer->indexOf(originalTextElement);
-            layer->removeElement(originalTextElement, false);
+            auto [orig, _] = layer->removeElement(originalTextElement);
             xoj_assert(elementIndex != Element::InvalidIndex);
-            eraseDeleteUndoAction->addElement(layer, originalTextElement, elementIndex);
+            eraseDeleteUndoAction->addElement(layer, std::move(orig), elementIndex);
             undo->addUndoAction(std::move(eraseDeleteUndoAction));
             originalTextElement = nullptr;
         }
@@ -1056,20 +1056,21 @@ void TextEditor::finalizeEdition() {
 
         this->originalTextElement->setInEditing(false);
 
-        layer->removeElement(this->originalTextElement, false);
-        layer->addElement(this->textElement.get());
+        auto [orig, _] = layer->removeElement(this->originalTextElement);
+        auto ptr = this->textElement.get();
+        layer->addElement(std::move(this->textElement));
 
-        this->page->fireElementChanged(this->textElement.get());
+        this->page->fireElementChanged(ptr);
 
-        undo->addUndoAction(std::make_unique<TextBoxUndoAction>(this->page, layer, this->textElement.release(),
-                                                                this->originalTextElement));
+        undo->addUndoAction(std::make_unique<TextBoxUndoAction>(this->page, layer, ptr, std::move(orig)));
         originalTextElement = nullptr;
     } else {
         // Creating a new element
-        layer->addElement(textElement.get());
+        auto ptr = this->textElement.get();
+        layer->addElement(std::move(this->textElement));
         this->viewPool->dispatchAndClear(xoj::view::TextEditionView::FINALIZATION_REQUEST, this->previousBoundingBox);
-        this->page->fireElementChanged(textElement.get());
-        undo->addUndoAction(std::make_unique<InsertUndoAction>(page, layer, textElement.release()));
+        this->page->fireElementChanged(ptr);
+        undo->addUndoAction(std::make_unique<InsertUndoAction>(page, layer, ptr));
     }
 }
 
@@ -1108,7 +1109,7 @@ void TextEditor::initializeEditionAt(double x, double y) {
         this->control->setFontSelected(text->getFont());
         this->originalTextElement = text;
 
-        this->textElement.reset(text->clone());
+        this->textElement = text->cloneText();
 
         text->setInEditing(true);
         this->page->fireElementChanged(text);

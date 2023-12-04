@@ -72,7 +72,7 @@ void EraseHandler::eraseStroke(Layer* l, Stroke* s, double x, double y, Range& r
 
             // delete the entire stroke
             this->doc->lock();
-            auto pos = l->removeElement(s, false);
+            auto [stroke, pos] = l->removeElement(s);
             this->doc->unlock();
 
             if (pos == -1) {
@@ -90,7 +90,7 @@ void EraseHandler::eraseStroke(Layer* l, Stroke* s, double x, double y, Range& r
                 this->undo->addUndoAction(std::move(eraseDel));
             }
 
-            this->eraseDeleteUndoAction->addElement(l, s, pos);
+            this->eraseDeleteUndoAction->addElement(l, std::move(stroke), pos);
         } else {  // Default eraser
             auto pos = l->indexOf(s);
             if (pos == -1) {

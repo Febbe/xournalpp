@@ -64,7 +64,7 @@ auto Selection::isMultiLayerSelection() -> bool {
     return this->multiLayer;
 }
 
-InsertionOrder Selection::releaseElements() { return std::move(this->selectedElements); }
+auto Selection::releaseElements() -> InsertionOrderRef { return std::move(this->selectedElements); }
 
 //////////////////////////////////////////////////////////
 

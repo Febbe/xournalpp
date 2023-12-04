@@ -1,6 +1,7 @@
 #include "MergeLayerDownUndoAction.h"
 
 #include <memory>  // for __shared_ptr_access
+#include <utility>
 #include <vector>  // for vector
 
 #include "control/Control.h"                // for Control
@@ -33,8 +34,10 @@ auto MergeLayerDownUndoAction::getText() -> std::string { return _("Merge layer 
 
 auto MergeLayerDownUndoAction::undo(Control* control) -> bool {
     // remove all elements present in the upper layer from the lower layer again
-    const bool free_elems = false;  // don't free the elems, they're still used
-    for (Element* elem: this->upperLayer->getElements()) { this->lowerLayer->removeElement(elem, free_elems); }
+    for (Element* elem: upperLayerElements) {
+        this->upperLayer->addElement(this->lowerLayer->removeElement(elem).e);
+    }
+
     // add the upper layer back at its old pos
     layerController->insertLayer(this->page, this->upperLayer, upperLayerPos);
     // set the selected layer back to the ID of the upper layer
@@ -50,8 +53,13 @@ auto MergeLayerDownUndoAction::undo(Control* control) -> bool {
 auto MergeLayerDownUndoAction::redo(Control* control) -> bool {
     // remove the upper layer
     layerController->removeLayer(this->page, this->upperLayer);
+
+    this->upperLayerElements = this->upperLayer->getElements();
+    auto elements = this->upperLayer->clearNoFree();
     // add all elements back to the lower layer
-    for (Element* elem: this->upperLayer->getElements()) { this->lowerLayer->addElement(elem); }
+    for (auto&& elem: elements) {
+        this->lowerLayer->addElement(std::move(elem));
+    }
     // set the selected layer back to the ID of the lower layer
     this->page->setSelectedLayerId(this->lowerLayerID);
 
