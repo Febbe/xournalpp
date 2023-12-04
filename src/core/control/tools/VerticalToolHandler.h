@@ -69,7 +69,6 @@ public:
 
     std::unique_ptr<MoveUndoAction> finalize();
 
-    auto getElements() const -> std::vector<Element*>;
     void forEachElement(std::function<void(Element*)> f) const override;
 
     auto createView(xoj::view::Repaintable* parent, ZoomControl* zoomControl, const Settings* settings) const
@@ -92,6 +91,11 @@ public:
     }
 
 private:
+    /**
+     * Returns a vector of pointers to the elements we have adopted
+     * This function copies the element ptrs into a new vector
+     */
+    auto refElements() const -> std::vector<Element*>;
     /**
      * Clear the currently moved elements, and then select all elements
      * above/below startY (depending on the side) to use for the spacing.

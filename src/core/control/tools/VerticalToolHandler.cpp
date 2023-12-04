@@ -86,7 +86,7 @@ bool VerticalToolHandler::onKeyReleaseEvent(GdkEventKey* event) {
     return false;
 }
 
-auto VerticalToolHandler::getElements() const -> std::vector<Element*> {
+auto VerticalToolHandler::refElements() const -> std::vector<Element*> {
     auto result = std::vector<Element*>(this->elements.size());
     std::transform(this->elements.begin(), this->elements.end(), result.begin(), [](auto const& e) { return e.get(); });
     return result;
@@ -116,7 +116,7 @@ auto VerticalToolHandler::finalize() -> std::unique_ptr<MoveUndoAction> {
     }
 
     const double dY = this->endY - this->startY;
-    auto undo = std::make_unique<MoveUndoAction>(this->layer, this->page, this->getElements(), 0, dY, this->layer,
+    auto undo = std::make_unique<MoveUndoAction>(this->layer, this->page, this->refElements(), 0, dY, this->layer,
                                                  this->page);
 
     for (auto&& e: this->elements) {
