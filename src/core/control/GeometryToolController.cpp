@@ -73,7 +73,7 @@ void GeometryToolController::markPoint(double x, double y) {
     undo->addUndoAction(std::make_unique<InsertUndoAction>(page, layer, ptr));
 
 
-    const Rectangle<double> rect{cross->getX(), cross->getY(), cross->getElementWidth(), cross->getElementHeight()};
+    const Rectangle<double> rect{ptr->getX(), ptr->getY(), ptr->getElementWidth(), ptr->getElementHeight()};
     view->rerenderRect(rect.x, rect.y, rect.width, rect.height);
 }
 
