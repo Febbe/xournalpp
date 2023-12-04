@@ -190,9 +190,9 @@ void StrokeHandler::onButtonReleaseEvent(const PositionInputData& pos, double zo
         }
     }
 
+    auto ptr = stroke.get();
     Document* doc = control->getDocument();
     doc->lock();
-    auto ptr = stroke.get();
     layer->addElement(std::move(stroke));
     doc->unlock();
 
@@ -229,8 +229,8 @@ void StrokeHandler::strokeRecognizerDetected(std::unique_ptr<Stroke> recognized,
     UndoRedoHandler* undo = control->getUndoRedoHandler();
     undo->addUndoAction(std::make_unique<RecognizerUndoAction>(page, layer, stroke.get(), recognized.get()));
 
-    Document* doc = control->getDocument();
     auto recognizedPtr = recognized.get();
+    Document* doc = control->getDocument();
     doc->lock();
     layer->addElement(std::move(recognized));
     doc->unlock();

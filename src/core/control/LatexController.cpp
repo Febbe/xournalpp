@@ -327,12 +327,11 @@ auto LatexController::loadRendered(string renderedTex) -> std::unique_ptr<TexIma
 void LatexController::insertTexImage() {
     xoj_assert(this->isValidTex);
     xoj_assert(this->temporaryRender != nullptr);
-    TexImage* img = this->temporaryRender.get();
 
     this->control->clearSelectionEndText();
     this->deleteOldImage();
 
-    control->getUndoRedoHandler()->addUndoAction(std::make_unique<InsertUndoAction>(page, layer, img));
+    control->getUndoRedoHandler()->addUndoAction(std::make_unique<InsertUndoAction>(page, layer, this->temporaryRender.get()));
 
     // Select element
     auto selection =

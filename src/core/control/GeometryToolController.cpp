@@ -61,11 +61,11 @@ void GeometryToolController::markPoint(double x, double y) {
     cross->addPoint(Point(x + MARK_SIZE, y - MARK_SIZE));
     cross->addPoint(Point(x - MARK_SIZE, y + MARK_SIZE));
 
+    auto* ptr = cross.get();
     const auto doc = control->getDocument();
     const auto page = view->getPage();
     doc->lock();
     const auto layer = page->getSelectedLayer();
-    auto* ptr = cross.get();
     layer->addElement(std::move(cross));
     doc->unlock();
 
@@ -83,9 +83,9 @@ void GeometryToolController::addStrokeToLayer() {
     const auto doc = control->getDocument();
     const auto page = view->getPage();
 
+    auto ptr = stroke.get();
     doc->lock();
     const auto layer = page->getSelectedLayer();
-    auto ptr = stroke.get();
     layer->addElement(std::move(this->stroke));
     doc->unlock();
 

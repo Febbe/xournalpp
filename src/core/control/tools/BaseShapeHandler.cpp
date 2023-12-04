@@ -110,9 +110,9 @@ void BaseShapeHandler::onButtonReleaseEvent(const PositionInputData& pos, double
 
     undo->addUndoAction(std::make_unique<InsertUndoAction>(page, layer, stroke.get()));
 
+    auto ptr = stroke.get();
     Document* doc = control->getDocument();
     doc->lock();
-    auto ptr = stroke.get();
     layer->addElement(std::move(stroke));
     doc->unlock();
     page->fireElementChanged(ptr);
