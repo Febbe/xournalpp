@@ -13,6 +13,7 @@
 
 #include <cstddef>  // for ptrdiff_t
 #include <memory>   // for unique_ptr
+#include <vector>   // for vector
 
 #include <gdk/gdk.h>  // for GdkRectangle
 
@@ -112,3 +113,9 @@ private:
      */
     Color color{0U};
 };
+
+namespace xoj {
+
+auto refElementContainer(const std::vector<ElementPtr>& elements) -> std::vector<Element*>;
+
+}  // namespace xoj::util

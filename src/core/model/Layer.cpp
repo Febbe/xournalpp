@@ -131,11 +131,7 @@ auto Layer::isVisible() const -> bool { return visible; }
  */
 void Layer::setVisible(bool visible) { this->visible = visible; }
 
-auto Layer::getElements() const -> std::vector<Element*> {
-    std::vector<Element*> res{this->elements.size(), nullptr};
-    std::transform(this->elements.begin(), this->elements.end(), res.begin(), [](auto const& e) { return e.get(); });
-    return res;
-}
+auto Layer::getElements() const -> std::vector<ElementPtr> const& { return this->elements; }
 
 auto Layer::hasName() const -> bool { return name.has_value(); }
 

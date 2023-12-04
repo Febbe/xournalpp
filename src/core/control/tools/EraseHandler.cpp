@@ -52,7 +52,7 @@ void EraseHandler::erase(double x, double y) {
 
     Layer* l = page->getSelectedLayer();
 
-    for (Element* e: l->getElements()) {
+    for (Element* e: xoj::refElementContainer(l->getElements())) {
         if (e->getType() == ELEMENT_STROKE && e->intersectsArea(&eraserRect)) {
             eraseStroke(l, dynamic_cast<Stroke*>(e), x, y, range);
         }

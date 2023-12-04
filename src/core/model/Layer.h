@@ -76,7 +76,7 @@ public:
     /**
      * Returns an iterator over the Element%s contained in this Layer
      */
-    auto getElements() const -> std::vector<Element*>;
+    auto getElements() const -> std::vector<ElementPtr> const&;
 
     /**
      * Returns whether or not the Layer is empty

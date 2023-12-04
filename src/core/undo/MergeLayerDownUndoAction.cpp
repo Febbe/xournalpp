@@ -16,6 +16,12 @@
 
 class Element;
 
+namespace xoj {
+
+auto refElementContainer(const std::vector<ElementPtr>& elements) -> std::vector<Element*>;
+
+}  // namespace xoj::util
+
 MergeLayerDownUndoAction::MergeLayerDownUndoAction(LayerController* layerController, const PageRef& page,
                                                    Layer* upperLayer, Layer::Index upperLayerPos, Layer* lowerLayer,
                                                    size_t selectedPage):
@@ -54,7 +60,7 @@ auto MergeLayerDownUndoAction::redo(Control* control) -> bool {
     // remove the upper layer
     layerController->removeLayer(this->page, this->upperLayer);
 
-    this->upperLayerElements = this->upperLayer->getElements();
+    this->upperLayerElements = xoj::refElementContainer(this->upperLayer->getElements());
     auto elements = this->upperLayer->clearNoFree();
     // add all elements back to the lower layer
     for (auto&& elem: elements) {

@@ -60,7 +60,7 @@ auto createFromElementsOnActiveLayer(Control* ctrl, const PageRef& page, XojPage
  * @brief Creates a new instance containing base->getElements() and *e. The content of *base is cleared but *base is not
  * destroyed.
  */
-auto addElementFromActiveLayer(Control* ctrl, EditSelection* base, Element*, Element::Index pos)
+auto addElementFromActiveLayer(Control* ctrl, EditSelection* base, Element* e, Element::Index pos)
         -> std::unique_ptr<EditSelection>;
 /**
  * @brief Creates a new instance containing base->getElements() and the content of elts. The content of *base is cleared
@@ -211,7 +211,7 @@ public:
     /**
      * Returns all containing elements of this selection
      */
-    auto getElements() const -> std::vector<Element*>;
+    auto getElements() const -> std::vector<Element*> const&;
 
     void forEachElement(std::function<void(Element*)> f) const override;
 

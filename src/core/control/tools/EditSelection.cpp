@@ -441,7 +441,7 @@ void EditSelection::addElement(ElementPtr eOwned, Element::Index order) {
 /**
  * Returns all containing elements of this selection
  */
-auto EditSelection::getElements() const -> std::vector<Element*> { return this->contents->getElements(); }
+auto EditSelection::getElements() const -> std::vector<Element*> const& { return this->contents->getElements(); }
 
 void EditSelection::forEachElement(std::function<void(Element*)> f) const {
     this->contents->forEachElement(std::move(f));
