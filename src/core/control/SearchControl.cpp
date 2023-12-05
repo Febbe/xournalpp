@@ -41,7 +41,7 @@ auto SearchControl::search(const std::string& text, size_t index, size_t* occurr
                 continue;
             }
 
-            for (auto&& e: l->getElements()) {
+            for (auto&& e: l->getElements().elements) {
                 if (e->getType() == ELEMENT_TEXT) {
                     Text* t = dynamic_cast<Text*>(e.get());
 

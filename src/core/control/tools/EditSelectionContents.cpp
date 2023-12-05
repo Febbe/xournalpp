@@ -327,7 +327,7 @@ void EditSelectionContents::fillUndoItem(DeleteUndoAction* undo) {
     // Because the elements are already removed
     // and owned by the selection, therefore the layer
     // doesn't know the index anymore
-    Element::Index index = as_signed(layer->getElements().size());
+    Element::Index index = as_signed(layer->getElements().elements.size());
     for (auto& [e, _]: this->insertionOrder) {
         undo->addElement(layer, std::move(e), index);
     }

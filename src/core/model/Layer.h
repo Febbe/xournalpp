@@ -11,13 +11,14 @@
 
 #pragma once
 
-#include <cstddef>   // for size_t
-#include <memory>    // for unique_ptr
+#include <cstddef>  // for size_t
+#include <memory>   // for unique_ptr
+#include <mutex>
 #include <optional>  // for optional
 #include <string>    // for string
 #include <vector>    // for vector
 
-#include "Element.h"  // for Element, Element::Index
+#include "Element.h"                   // for Element, Element::Index
 #include "ElementInsertionPosition.h"  // for InsertionOrder
 
 template <class T>
@@ -25,6 +26,19 @@ using optional = std::optional<T>;
 
 class Layer {
 public:
+    template <class Return>
+    struct GuardedReturn {
+        GuardedReturn(std::mutex& mtx, Return&& elements): guard(mtx), elements(std::forward<Return>(elements)) {}
+        GuardedReturn(GuardedReturn const&) = delete;
+        GuardedReturn(GuardedReturn&&) = delete;
+        auto operator=(GuardedReturn const&) -> GuardedReturn& = delete;
+        auto operator=(GuardedReturn&&) -> GuardedReturn& = delete;
+        ~GuardedReturn() = default;
+
+        std::lock_guard<std::mutex> guard;
+        Return elements;
+    };
+
     Layer();
     virtual ~Layer();
 
@@ -76,7 +90,7 @@ public:
     /**
      * Returns an iterator over the Element%s contained in this Layer
      */
-    auto getElements() const -> std::vector<ElementPtr> const&;
+    auto getElements() const -> GuardedReturn<std::vector<ElementPtr> const&>;
 
     /**
      * Returns whether or not the Layer is empty
@@ -114,6 +128,7 @@ public:
     void setName(const std::string& newName);
 
 private:
+    mutable std::mutex mtx;
     std::vector<ElementPtr> elements;
 
     bool visible = true;
