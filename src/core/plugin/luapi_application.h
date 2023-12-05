@@ -35,6 +35,7 @@
 #include "gui/sidebar/previews/base/SidebarToolbar.h"
 #include "gui/widgets/XournalWidget.h"
 #include "model/Document.h"
+#include "model/Element.h"
 #include "model/Font.h"
 #include "model/SplineSegment.h"
 #include "model/Stroke.h"
@@ -1146,7 +1147,7 @@ static int applib_getTexts(lua_State* L) {
         if (sel) {
             control->clearSelection();  // otherwise texts in the selection won't be recognized
         }
-        elements = control->getCurrentPage()->getSelectedLayer()->getElements();
+        elements = xoj::refElementContainer(control->getCurrentPage()->getSelectedLayer()->getElements());
     } else if (type == "selection") {
         auto sel = control->getWindow()->getXournal()->getSelection();
         if (sel) {
@@ -1265,7 +1266,7 @@ static int applib_getStrokes(lua_State* L) {
         if (sel) {
             control->clearSelection();  // otherwise strokes in the selection won't be recognized
         }
-        elements = control->getCurrentPage()->getSelectedLayer()->getElements();
+        elements = xoj::refElementContainer(control->getCurrentPage()->getSelectedLayer()->getElements());
     } else if (type == "selection") {
         auto sel = control->getWindow()->getXournal()->getSelection();
         if (sel) {
@@ -2223,11 +2224,11 @@ static int applib_scaleTextElements(lua_State* L) {
 
     control->clearSelectionEndText();
 
-    const std::vector<Element*>& elements = control->getCurrentPage()->getSelectedLayer()->getElements();
+    const auto& elements = control->getCurrentPage()->getSelectedLayer()->getElements();
 
-    for (Element* e: elements) {
+    for (auto const& e: elements) {
         if (e->getType() == ELEMENT_TEXT) {
-            Text* t = static_cast<Text*>(e);
+            Text* t = static_cast<Text*>(e.get());
             t->scale(t->getX(), t->getY(), f, f, 0.0, false);
         }
     }
@@ -2605,7 +2606,7 @@ static int applib_getImages(lua_State* L) {
         if (sel) {
             control->clearSelection();  // otherwise strokes in the selection won't be recognized
         }
-        elements = control->getCurrentPage()->getSelectedLayer()->getElements();
+        elements = xoj::refElementContainer(control->getCurrentPage()->getSelectedLayer()->getElements());
     } else if (type == "selection") {
         auto sel = control->getWindow()->getXournal()->getSelection();
         if (sel) {

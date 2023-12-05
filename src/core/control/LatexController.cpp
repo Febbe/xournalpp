@@ -331,7 +331,8 @@ void LatexController::insertTexImage() {
     this->control->clearSelectionEndText();
     this->deleteOldImage();
 
-    control->getUndoRedoHandler()->addUndoAction(std::make_unique<InsertUndoAction>(page, layer, this->temporaryRender.get()));
+    control->getUndoRedoHandler()->addUndoAction(
+            std::make_unique<InsertUndoAction>(page, layer, this->temporaryRender.get()));
 
     // Select element
     auto selection =

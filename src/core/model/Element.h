@@ -118,4 +118,4 @@ namespace xoj {
 
 auto refElementContainer(const std::vector<ElementPtr>& elements) -> std::vector<Element*>;
 
-}  // namespace xoj::util
+}  // namespace xoj
