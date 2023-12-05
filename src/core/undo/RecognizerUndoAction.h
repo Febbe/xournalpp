@@ -11,7 +11,7 @@
 
 #pragma once
 
-#include <memory>
+#include <memory>  // for unique_ptr
 #include <string>  // for string
 #include <vector>  // for vector
 
@@ -26,12 +26,11 @@ class Element;
 
 class RecognizerUndoAction: public UndoAction {
 public:
-    RecognizerUndoAction(const PageRef& page, Layer* layer, Stroke* original, Stroke* recognized);
+    RecognizerUndoAction(const PageRef& page, Layer* layer, std::unique_ptr<Element> original,
+                         Element* recognized);
     ~RecognizerUndoAction() override;
 
 public:
-    void addSourceElement(Stroke* s);
-
     bool undo(Control* control) override;
     bool redo(Control* control) override;
 
@@ -39,8 +38,8 @@ public:
 
 private:
     Layer* layer;
-    Stroke* recognized;
-    std::vector<Stroke*> original;
+    Element* recognized;
+    Element* original;
     std::unique_ptr<Element> recognizedOwned;
-    std::vector<std::unique_ptr<Element>> originalOwned;
+    std::unique_ptr<Element> originalOwned;
 };
