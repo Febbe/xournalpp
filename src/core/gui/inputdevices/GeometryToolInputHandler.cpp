@@ -222,7 +222,7 @@ void GeometryToolInputHandler::sequenceStart(InputEvent const& event) {
     doc->lock();
     // Performance improvement might be obtained by avoiding filtering all elements each
     // time a finger has been put onto the screen
-    for (const auto& e: layer->getElements()) {
+    for (const auto& e: layer->getElements().elements) {
         if (e->getType() == ELEMENT_STROKE) {
             auto* s = dynamic_cast<Stroke*>(e.get());
             if (s->getPointCount() == 2) {

@@ -27,7 +27,7 @@ void LayerView::draw(const Context& ctx) const {
     double maxY;
     cairo_clip_extents(ctx.cr, &minX, &minY, &maxX, &maxY);
 
-    for (auto const& e: layer->getElements()) {
+    for (auto const& e: layer->getElements().elements) {
 
         IF_DEBUG_REPAINT({
             auto cr = ctx.cr;

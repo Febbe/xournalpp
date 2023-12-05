@@ -1077,7 +1077,7 @@ void TextEditor::initializeEditionAt(double x, double y) {
     Text* text = nullptr;
 
     // Should we reverse this loop to select the most recent text rather than the oldest?
-    for (auto&& e: this->page->getSelectedLayer()->getElements()) {
+    for (auto&& e: this->page->getSelectedLayer()->getElements().elements) {
         if (e->getType() == ELEMENT_TEXT) {
             GdkRectangle matchRect = {gint(x), gint(y), 1, 1};
             if (e->intersectsArea(&matchRect)) {
